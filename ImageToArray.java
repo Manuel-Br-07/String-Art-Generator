@@ -6,6 +6,18 @@ public class ImageToArray {
     private int width = 0;
     private int height = 0;
     private double[][] bildArray;
+
+    private double centerX;
+    private double centerY;
+    private double radius;
+
+    private int nails = 0;
+    private int diameter = 0;
+    private double[][] nailCoords;
+    
+    private StringArtPlotter stringArtPlotter = new StringArtPlotter();
+    
+
     public void immageToArray(String DateiName) {
 
         try {
@@ -67,16 +79,17 @@ public class ImageToArray {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        circularMask();
     }
 
-    public void maskCircleInPlace() {
+    public void circularMask() {
 
         // Mittelpunkt bestimmen
-        double centerX = width / 2.0;
-        double centerY = height / 2.0;
+        centerX = width / 2.0;
+        centerY = height / 2.0;
 
         // Radius = halbe kürzeste Seite
-        double radius = Math.min(width, height) / 2.0;
+        radius = Math.min(width, height) / 2.0;
 
         // Alle Pixel durchgehen
         for (int y = 0; y < height; y++) {
@@ -106,11 +119,43 @@ public class ImageToArray {
                 }
                 else
                 {
-                System.out.print("X");
+                    System.out.print("X");
+                    if(bildArray[y][x]>=0)
+                    {
+                        System.out.print("T");
+                    }
                 }
             }
             System.out.println();
         }
+        
+        StringArtPlotter.init(width, height);
+        
     }
 
+    public void nailPositions(int pNails)
+    {
+        nails = pNails;
+
+        nailCoords = new double[nails][2];
+        for (int i = 0; i < nails; i++) {
+            double angle = 2 * Math.PI * i / nails;
+            nailCoords[i][0] = centerX + radius * Math.cos(angle);
+            nailCoords[i][1] = centerY + radius * Math.sin(angle);
+
+            System.out.println("" + i + " W " + angle);
+            System.out.println("" + i + "X" + nailCoords[i][0]);
+            System.out.println("" + i + "Y" + nailCoords[i][1]);
+        }
+    }
+    
+    private void stringGenerator()
+    {
+        
+    }
+
+    public void setDiameter(int pDiameter)
+    {
+        diameter = pDiameter;
+    }
 }
