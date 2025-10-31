@@ -3,9 +3,9 @@ import java.io.File;
 import javax.imageio.ImageIO;
 
 public class ImageToArray {
-    int width = 0;
-    int height = 0;
-    double[][] BildArray;
+    private int width = 0;
+    private int height = 0;
+    private double[][] bildArray;
     public void immageToArray(String DateiName) {
 
         try {
@@ -16,7 +16,7 @@ public class ImageToArray {
             height = image.getHeight();
 
             // 2. Array für Grauwerte (zwischen 0 und 1)
-            BildArray = new double[height][width];
+            bildArray = new double[height][width];
 
             // 3. Pixel auslesen
             for (int y = 0; y < height; y++) {
@@ -32,21 +32,21 @@ public class ImageToArray {
                     double gray = (0.299*r + 0.587*g + 0.114*b);
 
                     // 6. Normalisieren auf 0–1
-                    BildArray[y][x] = gray / 255;
+                    bildArray[y][x] = gray / 255;
 
                     if(x == 0 && y== 0)
                     {
                         System.out.println("R (" + x + "," + y + "): " + r);
                         System.out.println("G (" + x + "," + y + "): " + g);
                         System.out.println("B (" + x + "," + y + "): " + b);
-                        System.out.println("Gray (" + x + "," + y + "): " + BildArray[y][x]);
+                        System.out.println("Gray (" + x + "," + y + "): " + bildArray[y][x]);
                     }
                     if(x == 310 && y== 350)
                     {
                         System.out.println("R (" + x + "," + y + "): " + r);
                         System.out.println("G (" + x + "," + y + "): " + g);
                         System.out.println("B (" + x + "," + y + "): " + b);
-                        System.out.println("Gray (" + x + "," + y + "): " + BildArray[y][x]);
+                        System.out.println("Gray (" + x + "," + y + "): " + bildArray[y][x]);
                     }
 
                     if(x == 270 && y== 300)
@@ -54,19 +54,48 @@ public class ImageToArray {
                         System.out.println("R (" + x + "," + y + "): " + r);
                         System.out.println("G (" + x + "," + y + "): " + g);
                         System.out.println("B (" + x + "," + y + "): " + b);
-                        System.out.println("Gray (" + x + "," + y + "): " + BildArray[y][x]);
+                        System.out.println("Gray (" + x + "," + y + "): " + bildArray[y][x]);
                     }
                 }
             }
 
             // 7. Beispielausgabe
             System.out.println("Breite: " + width + ", Höhe: " + height);
-            System.out.println("Pixelwert (0,0): " + BildArray[0][0]);
-            System.out.println("Pixelwert (300,300): " + BildArray[300][300]);
+            System.out.println("Pixelwert (0,0): " + bildArray[0][0]);
+            System.out.println("Pixelwert (300,300): " + bildArray[300][300]);
 
-            for (int y = 0; y < height; y++) {
-                for (int x = 0; x < width; x++) {
-                    if(BildArray[y][x]> 0.5)
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void maskCircleInPlace() {
+
+        // Mittelpunkt bestimmen
+        double centerX = width / 2.0;
+        double centerY = height / 2.0;
+
+        // Radius = halbe kürzeste Seite
+        double radius = Math.min(width, height) / 2.0;
+
+        // Alle Pixel durchgehen
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
+                double dx = x - centerX;
+                double dy = y - centerY;
+                double distance = Math.sqrt(dx * dx + dy * dy);
+
+                if (distance > radius) {
+                    bildArray[y][x] = -1; // Pixel außerhalb des Kreises
+                }
+            }
+        }
+
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
+                if(bildArray[y][x]>=0)
+                {
+                    if(bildArray[y][x]> 0.5)
                     {
                         System.out.print(" ");
                     }
@@ -75,11 +104,13 @@ public class ImageToArray {
                         System.out.print("█");
                     }
                 }
-                System.out.println();
+                else
+                {
+                System.out.print("X");
+                }
             }
-
-        } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println();
         }
     }
+
 }
