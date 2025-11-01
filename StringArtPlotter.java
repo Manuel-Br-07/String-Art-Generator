@@ -26,6 +26,7 @@ public class StringArtPlotter extends Application {
     private static final List<double[]> lines = new ArrayList<>();
     private static GraphicsContext gc;
     private static Stage stage;
+    private static boolean started = false;
 
     // Wird von JavaFX aufgerufen
     @Override
@@ -52,9 +53,13 @@ public class StringArtPlotter extends Application {
         height = h;
 
         // JavaFX nur einmal starten
-        Thread fxThread = new Thread(() -> Application.launch(StringArtPlotter.class));
-        fxThread.setDaemon(true);
-        fxThread.start();
+        if (!started)
+        {
+            started = true;
+            Thread fxThread = new Thread(() -> Application.launch(StringArtPlotter.class));
+            fxThread.setDaemon(true);
+            fxThread.start();
+        }
 
         // Kleine Pause, damit FX starten kann
         try { Thread.sleep(500); } catch (InterruptedException ignored) {}
@@ -76,16 +81,16 @@ public class StringArtPlotter extends Application {
     private static void redraw() {
         if (gc == null) return;
         Platform.runLater(() -> {
-            gc.setFill(Color.WHITE);
-            gc.fillRect(0, 0, width, height);
+                    gc.setFill(Color.WHITE);
+                    gc.fillRect(0, 0, width, height);
 
-            gc.setStroke(Color.BLACK);
-            gc.setLineWidth(0.8);
+                    gc.setStroke(Color.BLACK);
+                    gc.setLineWidth(0.8);
 
-            for (double[] l : lines) {
-                gc.strokeLine(l[0], l[1], l[2], l[3]);
-            }
-        });
+                    for (double[] l : lines) {
+                        gc.strokeLine(l[0], l[1], l[2], l[3]);
+                    }
+            });
     }
 
     /** Zeigt das Fenster (erneut) */
