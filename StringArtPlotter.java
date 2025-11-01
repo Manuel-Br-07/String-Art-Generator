@@ -21,8 +21,8 @@ import java.util.List;
  */
 public class StringArtPlotter extends Application {
 
-    private static double width = 500;
-    private static double height = 500;
+    private static double width = 510;
+    private static double height = 510;
     private static final List<double[]> lines = new ArrayList<>();
     private static GraphicsContext gc;
     private static Stage stage;
@@ -79,18 +79,21 @@ public class StringArtPlotter extends Application {
 
     /** Zeichnet alle Linien neu */
     private static void redraw() {
-        if (gc == null) return;
-        Platform.runLater(() -> {
-                    gc.setFill(Color.WHITE);
-                    gc.fillRect(0, 0, width, height);
+        if (!(gc == null))
+        {
+            gc.setFill(Color.WHITE);
+            gc.fillRect(0, 0, width, height);
 
-                    gc.setStroke(Color.BLACK);
-                    gc.setLineWidth(0.8);
+            gc.setStroke(Color.BLACK);
+            gc.setLineWidth(0.8);
 
-                    for (double[] l : lines) {
-                        gc.strokeLine(l[0], l[1], l[2], l[3]);
-                    }
-            });
+            for (int i = 0; i < lines.size(); i++) {
+                double[] l = lines.get(i);
+                gc.strokeLine(l[0], l[1], l[2], l[3]);
+            }
+
+            System.out.println("Line Drawn");
+        }
     }
 
     /** Zeigt das Fenster (erneut) */

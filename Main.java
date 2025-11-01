@@ -20,11 +20,6 @@ public class Main {
     // Queue für Linienreihenfolge
     private Queue<int[]> lineOrder = new Queue<>();
 
-    // Stellschrauben für Gewichtung und Aufhellung
-    private double trapezCenterFactor = 1.0;   // max Gewicht in der Mitte
-    private double trapezEdgeFactor = 0.2;     // Gewicht an den Enden
-    private double lineBrightness = 0.05;      // Aufhellung pro Pixel
-
     // ---------------- Bild einlesen ----------------
     public void immageToArray(String DateiName) {
 
@@ -155,6 +150,12 @@ public class Main {
             System.out.println("" + i + " W " + angle);
             System.out.println("" + i + "X" + nailCoords[i][0]);
             System.out.println("" + i + "Y" + nailCoords[i][1]);
+
+            if(i >= 1)
+            {
+                StringArtPlotter.addLine(nailCoords[i-1][0], nailCoords[i-1][1], nailCoords[i][0], nailCoords[i][1]);
+                System.out.println("xmin " + nailCoords[i-1][0] + " ymin " + nailCoords[i-1][1] + " xmax " + nailCoords[i][0] + " ymax " + nailCoords[i][1]);
+            }
         }
     }
 
@@ -164,23 +165,17 @@ public class Main {
 
         for(int i = 0; i < iterations; i++)
         {
-            double bestScore = Double.NEGATIVE_INFINITY;
+            double bestScore = 0;
             int bestEndNail = -1;
             for (int endNail = 0; endNail < nails; endNail++)
             {
                 if (endNail != startNail)// gleiche Nagel überspringen
                 {
                     // Berechne Score für Linie von startNail zu endNail
-                    double rawScore = calculateLineScore(startNail, endNail);
-
-                    // Länge der Linie berücksichtigen
-                    double length = calculateLineLength(startNail, endNail);
-                    double score = rawScore / length; // kurze Linien nicht bevorteilen
+                    double score = calculateLineScore(startNail, endNail);
 
                     System.out.println("score: " + score);
                     // System.out.println("length: " + length);
-                    System.out.println("BestScore: " + bestScore);
-                    // StringArtPlotter.addLine(nailCoords[startNail][0], nailCoords[startNail][1], nailCoords[endNail][0], nailCoords[endNail][1]);
 
                     if (score > bestScore) {
                         bestScore = score;
@@ -188,8 +183,9 @@ public class Main {
                     }
                 }
             }
-            
+
             System.out.println("xmin " + nailCoords[startNail][0] + " ymin " + nailCoords[startNail][1] + " xmax " + nailCoords[bestEndNail][0] + " ymax " + nailCoords[bestEndNail][1]);
+            System.out.println("Start " + startNail + " Ende " + bestEndNail);
             StringArtPlotter.addLine(nailCoords[startNail][0], nailCoords[startNail][1], nailCoords[bestEndNail][0], nailCoords[bestEndNail][1]);
             StringArtPlotter.show();
             startNail = bestEndNail;
@@ -198,43 +194,92 @@ public class Main {
 
     public double calculateLineScore(int startNail, int endNail)
     {
-        // Koordinaten aus dem Array holen
+        // Reelle Start- und Endkoordinaten
         double startX = nailCoords[startNail][0];
         double startY = nailCoords[startNail][1];
-        double endX = nailCoords[endNail][0];
-        double endY = nailCoords[endNail][1];
+        double endX   = nailCoords[endNail][0];
+        double endY   = nailCoords[endNail][1];
 
         double dx = endX - startX;
         double dy = endY - startY;
-        double steps = Math.max(Math.abs(dx), Math.abs(dy));
 
-        double score = 0;
+        int steps = (int)Math.max(Math.abs(dx), Math.abs(dy));
+        double xIncrement = dx / steps;
+        double yIncrement = dy / steps;
+
+        double x = startX;
+        double y = startY;
+
+        double score = 0.0;
+        int countedPoints = 0;
 
         for (int i = 0; i <= steps; i++) {
-            double t = (steps == 0) ? 0 : (double)i / steps; // 0..1 entlang der Linie
-            int x = (int)Math.round(startX + t * dx);
-            int y = (int)Math.round(startY + t * dy);
+            int px = (int)Math.round(x);
+            int py = (int)Math.round(y);
 
-            if (x < 0 || y < 0 || x >= bildArray.length || y >= bildArray[0].length) continue;
+            if (px >= 0 && py >= 0 && px < bildArray[0].length && py < bildArray.length) {
+                score += 1.0 - bildArray[py][px];
+                countedPoints++;
+            }
 
-            // Einfacher Score: Pixelwert summieren
-            score += 1 - bildArray[y][x];
+            x += xIncrement;
+            y += yIncrement;
         }
 
-        return score;
+        return countedPoints > 0 ? score / countedPoints : 0.0;
+
+        // double dx = Math.abs(endX - startX);
+        // double dy = Math.abs(endY - startY);
+        // double sx = startX < endX ? 1.0 : -1.0;
+        // double sy = startY < endY ? 1.0 : -1.0;
+        // double err = dx - dy;
+
+        // double score = 0.0;
+        // int countedPoints = 0;
+
+        // double x = startX;
+        // double y = startY;
+
+        // while (true) {
+        // int px = (int)Math.round(x);
+        // int py = (int)Math.round(y);
+
+        // if (px >= 0 && py >= 0 && px < bildArray[0].length && py < bildArray.length) {
+        // score += 1.0 - bildArray[py][px];
+        // countedPoints++;
+        // }
+
+        // if (Math.round(x) == Math.round(endX) && Math.round(y) == Math.round(endY)) break;
+
+        // double e2 = 2.0 * err;
+        // if (e2 > -dy) {
+        // err -= dy;
+        // x += sx;
+        // }
+        // if (e2 < dx) {
+        // err += dx;
+        // y += sy;
+        // }
+        // }
+
+        // // Die VAriabele Error gibt den Fehler in einer Zahl zwichen () an und kann somit für eine Trapezkorrektur verwendet werden.
+
+        // System.out.println("Error " + err);
+
+        // return countedPoints > 0 ? score / countedPoints : 0.0;
     }
 
-    public double calculateLineLength(int startNail, int endNail)
-    {
-        double startX = nailCoords[startNail][0];
-        double startY = nailCoords[startNail][1];
-        double endX = nailCoords[endNail][0];
-        double endY = nailCoords[endNail][1];
+    // public double calculateLineLength(int startNail, int endNail)
+    // {
+    // double startX = nailCoords[startNail][0];
+    // double startY = nailCoords[startNail][1];
+    // double endX = nailCoords[endNail][0];
+    // double endY = nailCoords[endNail][1];
 
-        double dx = endX - startX;
-        double dy = endY - startY;
-        return Math.sqrt(dx * dx + dy * dy);
-    }
+    // double dx = endX - startX;
+    // double dy = endY - startY;
+    // return Math.sqrt(dx * dx + dy * dy);
+    // }
 
     public void setDiameter(int pDiameter)
     {
