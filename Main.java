@@ -160,8 +160,8 @@ public class Main {
                 }
             }
 
-            System.out.println("xmin " + nailCoords[startNail][0] + " ymin " + nailCoords[startNail][1] + " xmax " + nailCoords[bestEndNail][0] + " ymax " + nailCoords[bestEndNail][1]);
-            System.out.println("Start " + startNail + " Ende " + bestEndNail);
+            // System.out.println("xmin " + nailCoords[startNail][0] + " ymin " + nailCoords[startNail][1] + " xmax " + nailCoords[bestEndNail][0] + " ymax " + nailCoords[bestEndNail][1]);
+            // System.out.println("Start " + startNail + " Ende " + bestEndNail);
             StringArtPlotter.addLine(nailCoords[startNail][0], nailCoords[startNail][1], nailCoords[bestEndNail][0], nailCoords[bestEndNail][1]);
             StringArtPlotter.show();
 
@@ -232,7 +232,6 @@ public class Main {
         return countedPoints > 0 ? score / countedPoints : 0.0;
     }
 
-    // Linie zwischen zwei Punkten aufhellen
     public void lightenLine(int startNail, int endNail, double increment)
     {
         // Reelle Start- und Endkoordinaten

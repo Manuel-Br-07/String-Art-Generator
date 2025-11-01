@@ -71,7 +71,7 @@ public class StringArtPlotter extends Application {
 
         if (gc != null) {
             gc.setStroke(Color.BLACK);
-            gc.setLineWidth(0.1);
+            gc.setLineWidth(0.08);
             gc.strokeLine(x1, y1, x2, y2); // Zeichnet die neue Linie direkt auf den Canvas
         }
     }
