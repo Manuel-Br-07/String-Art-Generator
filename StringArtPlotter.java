@@ -67,8 +67,13 @@ public class StringArtPlotter extends Application {
 
     /** Fügt eine Linie hinzu (Start- und Endkoordinaten in Pixeln) */
     public static void addLine(double x1, double y1, double x2, double y2) {
-        lines.add(new double[]{x1, y1, x2, y2});
-        redraw();
+        lines.add(new double[]{x1, y1, x2, y2}); // optional, wenn du die Linien später noch brauchst
+
+        if (gc != null) {
+            gc.setStroke(Color.BLACK);
+            gc.setLineWidth(0.1);
+            gc.strokeLine(x1, y1, x2, y2); // Zeichnet die neue Linie direkt auf den Canvas
+        }
     }
 
     /** Löscht alle Linien */
@@ -85,7 +90,7 @@ public class StringArtPlotter extends Application {
             gc.fillRect(0, 0, width, height);
 
             gc.setStroke(Color.BLACK);
-            gc.setLineWidth(0.8);
+            gc.setLineWidth(0.2);
 
             for (int i = 0; i < lines.size(); i++) {
                 double[] l = lines.get(i);

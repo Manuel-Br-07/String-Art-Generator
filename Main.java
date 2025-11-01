@@ -48,33 +48,9 @@ public class Main {
 
                     // 6. Normalisieren auf 0–1
                     bildArray[y][x] = gray / 255;
-
-                    if(x == 0 && y== 0)
-                    {
-                        System.out.println("R (" + x + "," + y + "): " + r);
-                        System.out.println("G (" + x + "," + y + "): " + g);
-                        System.out.println("B (" + x + "," + y + "): " + b);
-                        System.out.println("Gray (" + x + "," + y + "): " + bildArray[y][x]);
-                    }
-                    if(x == 310 && y== 350)
-                    {
-                        System.out.println("R (" + x + "," + y + "): " + r);
-                        System.out.println("G (" + x + "," + y + "): " + g);
-                        System.out.println("B (" + x + "," + y + "): " + b);
-                        System.out.println("Gray (" + x + "," + y + "): " + bildArray[y][x]);
-                    }
-
-                    if(x == 270 && y== 300)
-                    {
-                        System.out.println("R (" + x + "," + y + "): " + r);
-                        System.out.println("G (" + x + "," + y + "): " + g);
-                        System.out.println("B (" + x + "," + y + "): " + b);
-                        System.out.println("Gray (" + x + "," + y + "): " + bildArray[y][x]);
-                    }
                 }
             }
 
-            // 7. Beispielausgabe
             System.out.println("Breite: " + width + ", Höhe: " + height);
             System.out.println("Pixelwert (0,0): " + bildArray[0][0]);
             System.out.println("Pixelwert (300,300): " + bildArray[300][300]);
@@ -174,7 +150,7 @@ public class Main {
                     // Berechne Score für Linie von startNail zu endNail
                     double score = calculateLineScore(startNail, endNail);
 
-                    System.out.println("score: " + score);
+                    // System.out.println("score: " + score);
                     // System.out.println("length: " + length);
 
                     if (score > bestScore) {
@@ -188,8 +164,35 @@ public class Main {
             System.out.println("Start " + startNail + " Ende " + bestEndNail);
             StringArtPlotter.addLine(nailCoords[startNail][0], nailCoords[startNail][1], nailCoords[bestEndNail][0], nailCoords[bestEndNail][1]);
             StringArtPlotter.show();
+
+            lightenLine(startNail, bestEndNail, 0.8);
             startNail = bestEndNail;
         }
+        
+        for (int y = 0; y < height; y++) {
+                for (int x = 0; x < width; x++) {
+                    if(bildArray[y][x]>=0)
+                    {
+                        if(bildArray[y][x]> 0.5)
+                        {
+                            System.out.print(" ");
+                        }
+                        else
+                        {
+                            System.out.print("█");
+                        }
+                    }
+                    else
+                    {
+                        System.out.print("X");
+                        if(bildArray[y][x]>=0)
+                        {
+                            System.out.print("T");
+                        }
+                    }
+                }
+                System.out.println();
+            }
     }
 
     public double calculateLineScore(int startNail, int endNail)
@@ -227,59 +230,44 @@ public class Main {
         }
 
         return countedPoints > 0 ? score / countedPoints : 0.0;
-
-        // double dx = Math.abs(endX - startX);
-        // double dy = Math.abs(endY - startY);
-        // double sx = startX < endX ? 1.0 : -1.0;
-        // double sy = startY < endY ? 1.0 : -1.0;
-        // double err = dx - dy;
-
-        // double score = 0.0;
-        // int countedPoints = 0;
-
-        // double x = startX;
-        // double y = startY;
-
-        // while (true) {
-        // int px = (int)Math.round(x);
-        // int py = (int)Math.round(y);
-
-        // if (px >= 0 && py >= 0 && px < bildArray[0].length && py < bildArray.length) {
-        // score += 1.0 - bildArray[py][px];
-        // countedPoints++;
-        // }
-
-        // if (Math.round(x) == Math.round(endX) && Math.round(y) == Math.round(endY)) break;
-
-        // double e2 = 2.0 * err;
-        // if (e2 > -dy) {
-        // err -= dy;
-        // x += sx;
-        // }
-        // if (e2 < dx) {
-        // err += dx;
-        // y += sy;
-        // }
-        // }
-
-        // // Die VAriabele Error gibt den Fehler in einer Zahl zwichen () an und kann somit für eine Trapezkorrektur verwendet werden.
-
-        // System.out.println("Error " + err);
-
-        // return countedPoints > 0 ? score / countedPoints : 0.0;
     }
 
-    // public double calculateLineLength(int startNail, int endNail)
-    // {
-    // double startX = nailCoords[startNail][0];
-    // double startY = nailCoords[startNail][1];
-    // double endX = nailCoords[endNail][0];
-    // double endY = nailCoords[endNail][1];
+    // Linie zwischen zwei Punkten aufhellen
+    public void lightenLine(int startNail, int endNail, double increment)
+    {
+        // Reelle Start- und Endkoordinaten
+        double startX = nailCoords[startNail][0];
+        double startY = nailCoords[startNail][1];
+        double endX   = nailCoords[endNail][0];
+        double endY   = nailCoords[endNail][1];
 
-    // double dx = endX - startX;
-    // double dy = endY - startY;
-    // return Math.sqrt(dx * dx + dy * dy);
-    // }
+        double dx = endX - startX;
+        double dy = endY - startY;
+
+        int steps = (int)Math.max(Math.abs(dx), Math.abs(dy));
+        double xIncrement = dx / steps;
+        double yIncrement = dy / steps;
+
+        double x = startX;
+        double y = startY;
+
+        for (int i = 0; i <= steps; i++) {
+            int px = (int)Math.round(x);
+            int py = (int)Math.round(y);
+
+            if (px >= 0 && py >= 0 && px < bildArray[0].length && py < bildArray.length) {
+                bildArray[py][px] += increment;
+                if(bildArray[py][px] > 1)
+                {
+                    bildArray[py][px] = 1;
+                }
+            }
+
+            x += xIncrement;
+            y += yIncrement;
+        }
+
+    }
 
     public void setDiameter(int pDiameter)
     {
