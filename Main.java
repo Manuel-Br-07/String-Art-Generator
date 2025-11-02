@@ -45,9 +45,20 @@ public class Main {
 
                     // 5. Grau berechnen (Durchschnitt oder Luminanz)
                     double gray = (0.299*r + 0.587*g + 0.114*b);
+                    // System.out.println("" + gray);
+
+                    if(gray > 255)
+                    {
+                        gray = 255;
+                    }
+                    else if(gray < 0)
+                    {
+                        gray = 0;
+                    }
 
                     // 6. Normalisieren auf 0–1
                     bildArray[y][x] = gray / 255;
+                    bildArray[y][x] = 1 - Math.min(1.0, Math.max(0.0, (1 - bildArray[y][x]) * 1.2));
                 }
             }
 
@@ -135,11 +146,14 @@ public class Main {
         }
     }
 
-    public void stringArtGenerator(int iterations)
+    public int stringArtGenerator()
     {
         int startNail = 0;
+        int iterations = 0;
+        double endpoint = averageColour() + (1 - averageColour()) / 10 * 9.1;
+        System.out.println("Endpoint " + endpoint);
 
-        for(int i = 0; i < iterations; i++)
+        while(averageColour() <= endpoint )
         {
             double bestScore = 0;
             int bestEndNail = -1;
@@ -162,37 +176,43 @@ public class Main {
 
             // System.out.println("xmin " + nailCoords[startNail][0] + " ymin " + nailCoords[startNail][1] + " xmax " + nailCoords[bestEndNail][0] + " ymax " + nailCoords[bestEndNail][1]);
             // System.out.println("Start " + startNail + " Ende " + bestEndNail);
-            StringArtPlotter.addLine(nailCoords[startNail][0], nailCoords[startNail][1], nailCoords[bestEndNail][0], nailCoords[bestEndNail][1]);
-            StringArtPlotter.show();
+            if(bestEndNail != -1)
+            {
+                StringArtPlotter.addLine(nailCoords[startNail][0], nailCoords[startNail][1], nailCoords[bestEndNail][0], nailCoords[bestEndNail][1]);
+                StringArtPlotter.show();
 
-            lightenLine(startNail, bestEndNail, 0.8);
-            startNail = bestEndNail;
+                lightenLine(startNail, bestEndNail, 0.2);
+                startNail = bestEndNail;
+                iterations ++;
+                System.out.println("iterations " + iterations + " average " + averageColour() );
+            }
         }
-        
+
         for (int y = 0; y < height; y++) {
-                for (int x = 0; x < width; x++) {
-                    if(bildArray[y][x]>=0)
+            for (int x = 0; x < width; x++) {
+                if(bildArray[y][x]>=0)
+                {
+                    if(bildArray[y][x]> 0.5)
                     {
-                        if(bildArray[y][x]> 0.5)
-                        {
-                            System.out.print(" ");
-                        }
-                        else
-                        {
-                            System.out.print("█");
-                        }
+                        System.out.print(" ");
                     }
                     else
                     {
-                        System.out.print("X");
-                        if(bildArray[y][x]>=0)
-                        {
-                            System.out.print("T");
-                        }
+                        System.out.print("█");
                     }
                 }
-                System.out.println();
+                else
+                {
+                    System.out.print("X");
+                    if(bildArray[y][x]>=0)
+                    {
+                        System.out.print("T");
+                    }
+                }
             }
+            System.out.println();
+        }
+        return iterations;
     }
 
     public double calculateLineScore(int startNail, int endNail)
@@ -266,6 +286,23 @@ public class Main {
             y += yIncrement;
         }
 
+    }
+    
+    public double averageColour()
+    {
+        double summ = 0;
+        double ans = 0;
+        
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) 
+            {
+                if (bildArray[y][x] != -1) {
+                    summ = summ + bildArray[y][x];
+                    ans ++;
+                }
+            }
+        }
+        return summ / ans;
     }
 
     public void setDiameter(int pDiameter)
