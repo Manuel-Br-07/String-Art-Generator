@@ -12,8 +12,11 @@ public class Main {
     private double radius;
 
     private int nails = 0;
-    private int diameter = 0;
+    private double diameter = 0;
+    private double mmProPixel = 0;
     private double[][] nailCoords;
+
+    double lineWidth = 2;
 
     private StringArtPlotter stringArtPlotter = new StringArtPlotter();
 
@@ -129,9 +132,9 @@ public class Main {
 
             if (i >= 1) {
                 StringArtPlotter.addLine(nailCoords[i - 1][0], nailCoords[i - 1][1], nailCoords[i][0],
-                        nailCoords[i][1]);
+                    nailCoords[i][1]);
                 System.out.println("xmin " + nailCoords[i - 1][0] + " ymin " + nailCoords[i - 1][1] + " xmax "
-                        + nailCoords[i][0] + " ymax " + nailCoords[i][1]);
+                    + nailCoords[i][0] + " ymax " + nailCoords[i][1]);
             }
         }
     }
@@ -140,10 +143,10 @@ public class Main {
         int startNail = 0;
         int iterations = 0;
         int[] linePos;
-        double endpoint = averageColour() + (1 - averageColour()) / 10 * 9.1;
+        double endpoint = averageColour() + (1 - averageColour()) / 10 * 9;
         System.out.println("Endpoint " + endpoint);
 
-        while (averageColour() <= endpoint) {
+        while (averageColour() <= endpoint && iterations < 50000) {
             double bestScore = 0;
             int bestEndNail = -1;
             for (int endNail = 0; endNail < nails; endNail++) {
@@ -267,8 +270,56 @@ public class Main {
             x += xIncrement;
             y += yIncrement;
         }
-
     }
+
+    // public void lightenLine(int startNail, int endNail, double increment) {
+        // double startX = nailCoords[startNail][0];
+        // double startY = nailCoords[startNail][1];
+        // double endX = nailCoords[endNail][0];
+        // double endY = nailCoords[endNail][1];
+
+        // double dx = endX - startX;
+        // double dy = endY - startY;
+
+        // int steps = (int) Math.max(Math.abs(dx), Math.abs(dy));
+        // double xIncrement = dx / steps;
+        // double yIncrement = dy / steps;
+
+        // double x = startX;
+        // double y = startY;
+
+        // int halfWidth = (int) lineWidth / 2;
+
+        // // Verwende ein Set, um bereits bearbeitete Pixel zu merken
+        // boolean[][] visited = new boolean[bildArray.length][bildArray[0].length];
+
+        // for (int i = 0; i <= steps; i++) {
+            // int px = (int) Math.round(x);
+            // int py = (int) Math.round(y);
+
+            // for (int wx = -halfWidth; wx <= halfWidth; wx++) {
+                // for (int wy = -halfWidth; wy <= halfWidth; wy++) {
+                    // int nx = px + wx;
+                    // int ny = py + wy;
+
+                    // if (nx >= 0 && ny >= 0 && nx < bildArray[0].length && ny < bildArray.length) {
+                        // if (!visited[ny][nx]) {
+                            // // Abstand zum Linienmittelpunkt
+                            // double distance = Math.sqrt(wx * wx + wy * wy);
+                            // // Intensität abnehmen: trapezförmig
+                            // double factor = Math.max(0, 1 - distance / (halfWidth + 1));
+                            // bildArray[ny][nx] += increment * factor;
+                            // if (bildArray[ny][nx] > 1) bildArray[ny][nx] = 1;
+                            // visited[ny][nx] = true;
+                        // }
+                    // }
+                // }
+            // }
+
+            // x += xIncrement;
+            // y += yIncrement;
+        // }
+    // }
 
     public double averageColour() {
         double summ = 0;

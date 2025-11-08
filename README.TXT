@@ -12,3 +12,6 @@ VERSION oder DATUM:
 WIE IST DAS PROJEKT ZU STARTEN:
 AUTOR(EN):
 BENUTZERHINWEISE:
+
+
+Bisher nur verwendbar für Bilder bis ca. 750x750p
