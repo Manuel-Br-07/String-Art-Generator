@@ -22,6 +22,11 @@ public class Main {
 
     // Queue für Linienreihenfolge
     private Queue<int[]> lineOrder = new Queue();
+    
+    public Main()
+    {
+        
+    }
 
     // ---------------- Bild einlesen ----------------
     public void immageToArray(String DateiName) {
