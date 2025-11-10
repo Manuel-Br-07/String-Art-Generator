@@ -10,20 +10,28 @@ public class Data
     // Instanzvariablen
     
     //immageToArray
-    private int width = 0;
-    private int height = 0;
+    private int width;
+    private int height;
     private double[][] bildArray;
     private String  dateiName;
 
+    //circularMask
     private double centerX;
     private double centerY;
     private double radius;
 
-    private int nails = 0;
-    private double diameter = 0;
-    private double mmProPixel = 0;
-    private double[][] nailCoords;
-
+    //nailPositions
+    private int nails;
+    private double[][] nailCoords;  
+    
+    //setScale
+    private double diameter;
+    private double mmProPixel;
+    
+    //calculateStringLength
+    private double stringLength;
+    
+    //StringArtGenerator
     double lineWidth = 2;
 
     /**
@@ -114,6 +122,14 @@ public class Data
 
     public void setMmProPixel(double mmProPixel) {
         this.mmProPixel = mmProPixel;
+    }
+    
+    public double getStringLength() {
+        return stringLength;
+    }
+
+    public void setStringLength(double stringLength) {
+        this.stringLength = stringLength;
     }
 
     public double[][] getNailCoords() {

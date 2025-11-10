@@ -11,17 +11,21 @@ public class StringartGenerator
     private Queue<int[]> lineOrder;
     private StringArtPlotter stringArtPlotter;
     
-    
-    private int width = 0;
-    private int height = 0;
+    //immageToArray
+    private int width;
+    private int height;
     private double[][] bildArray;
 
-    private int nails = 0;
-    private double diameter = 0;
-    private double mmProPixel = 0;
+    //nailPositions
+    private int nails;
     private double[][] nailCoords;
+    
+    //setScale
+    private double diameter;
+    private double mmProPixel;
+    
 
-    double lineWidth = 2;
+    double lineWidth;
 
     /**
      * Konstruktor für Objekte der Klasse StringartGenerator
@@ -41,9 +45,10 @@ public class StringartGenerator
         bildArray = data.getBildArray();
 
         nails = data.getNails();
+        nailCoords = data.getNailCoords();
+        
         diameter = data.getDiameter();
         mmProPixel = data.getMmProPixel();
-        nailCoords = data.getNailCoords();
 
         lineWidth = data.getLineWidth();
 
@@ -75,8 +80,7 @@ public class StringartGenerator
                 {
                     // Berechne Score für Linie von startNail zu endNail
                     double score = calculateLineScore(startNail, endNail);
-
-
+                    // System.out.println("Scores " + score + " " + bestScore);
                     if (score > bestScore) {
                         bestScore = score;
                         bestEndNail = endNail;
@@ -84,18 +88,16 @@ public class StringartGenerator
                 }
             }
 
-            // System.out.println("xmin " + nailCoords[startNail][0] + " ymin " +
-            // nailCoords[startNail][1] + " xmax " + nailCoords[bestEndNail][0] + " ymax " +
-            // nailCoords[bestEndNail][1]);
+            // System.out.println("xmin " + nailCoords[startNail][0] + " ymin " + nailCoords[startNail][1] + " xmax " + nailCoords[bestEndNail][0] + " ymax " + nailCoords[bestEndNail][1]);
             // System.out.println("Start " + startNail + " Ende " + bestEndNail);
             if (bestEndNail != -1) {
                 StringArtPlotter.addLine(nailCoords[startNail][0], nailCoords[startNail][1], nailCoords[bestEndNail][0], nailCoords[bestEndNail][1]);
-                StringArtPlotter.show();
+                // StringArtPlotter.show();
 
                 linePos = new int[]{startNail, bestEndNail};
                 lineOrder.enqueue(linePos);
 
-                lightenLine(startNail, bestEndNail, 0.2);
+                lightenLine(startNail, bestEndNail, 0.3);
                 startNail = bestEndNail;
                 iterations++;
                 System.out.println("iterations " + iterations + " average " + averageColour());
@@ -141,7 +143,7 @@ public class StringartGenerator
 
         double score = 0.0;
         int countedPoints = 0;
-
+    
         for (int i = 0; i <= steps; i++) {
             int px = (int) Math.round(x);
             int py = (int) Math.round(y);

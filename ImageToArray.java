@@ -15,8 +15,8 @@ public class ImageToArray
     private StringArtPlotter stringArtPlotter;
 
     //immageToArray
-    private int width = 0;
-    private int height = 0;
+    private int width;
+    private int height;
     private double[][] bildArray;
     private String  dateiName;
 
