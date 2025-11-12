@@ -10,23 +10,24 @@ public class StringartGenerator
     private Data data;
     private Queue<int[]> lineOrder;
     private StringArtPlotter stringArtPlotter;
-    
+
     //immageToArray
     private int width;
     private int height;
     private double[][] bildArray;
 
+    //listToArray
+    private int[][] lineOrderArray;
+
     //nailPositions
     private int nails;
     private double[][] nailCoords;
-    
+
     //setScale
     private double diameter;
     private double mmProPixel;
-    
 
     double lineWidth;
-
     /**
      * Konstruktor für Objekte der Klasse StringartGenerator
      */
@@ -36,7 +37,7 @@ public class StringartGenerator
         lineOrder = pLineOrder;
         stringArtPlotter = pStringArtPlotter;
     }
-    
+
     public void main()
     {
         // ------------------ GET ------------------
@@ -46,18 +47,19 @@ public class StringartGenerator
 
         nails = data.getNails();
         nailCoords = data.getNailCoords();
-        
+
         diameter = data.getDiameter();
         mmProPixel = data.getMmProPixel();
 
         lineWidth = data.getLineWidth();
 
         // ------------------ BEARBEITUNG ------------------
-        
+
         stringArtGenerator();
-        
+
         // ------------------ SET ------------------
         // data.setBildArray(bildArray); // falls bearbeitet
+        data.setlineOrderArray(lineOrderArray);
         data.setNails(nails);
         data.setDiameter(diameter);
         data.setMmProPixel(mmProPixel);
@@ -69,7 +71,7 @@ public class StringartGenerator
         int startNail = 0;
         int iterations = 0;
         int[] linePos;
-        double endpoint = averageColour() + (1 - averageColour()) / 10 * 9;
+        double endpoint = averageColour() + (1 - averageColour()) / 10 * 9.3;
         System.out.println("Endpoint " + endpoint);
 
         while (averageColour() <= endpoint && iterations < 50000) {
@@ -97,30 +99,32 @@ public class StringartGenerator
                 linePos = new int[]{startNail, bestEndNail};
                 lineOrder.enqueue(linePos);
 
-                lightenLine(startNail, bestEndNail, 0.3);
+                lightenLine(startNail, bestEndNail, 0.6);
                 startNail = bestEndNail;
                 iterations++;
                 System.out.println("iterations " + iterations + " average " + averageColour());
             }
         }
 
-        for (int y = 0; y < height; y++) {
-            for (int x = 0; x < width; x++) {
-                if (bildArray[y][x] >= 0) {
-                    if (bildArray[y][x] > 0.5) {
-                        System.out.print(" ");
-                    } else {
-                        System.out.print("█");
-                    }
-                } else {
-                    System.out.print("X");
-                    if (bildArray[y][x] >= 0) {
-                        System.out.print("T");
-                    }
-                }
-            }
-            System.out.println();
-        }
+        listToArray();
+
+        // for (int y = 0; y < height; y++) {
+        // for (int x = 0; x < width; x++) {
+        // if (bildArray[y][x] >= 0) {
+        // if (bildArray[y][x] > 0.5) {
+        // System.out.print(" ");
+        // } else {
+        // System.out.print("█");
+        // }
+        // } else {
+        // System.out.print("X");
+        // if (bildArray[y][x] >= 0) {
+        // System.out.print("T");
+        // }
+        // }
+        // }
+        // System.out.println();
+        // }
         return iterations;
     }
 
@@ -143,7 +147,7 @@ public class StringartGenerator
 
         double score = 0.0;
         int countedPoints = 0;
-    
+
         for (int i = 0; i <= steps; i++) {
             int px = (int) Math.round(x);
             int py = (int) Math.round(y);
@@ -194,53 +198,80 @@ public class StringartGenerator
     }
 
     // public void lightenLine(int startNail, int endNail, double increment) {
-        // double startX = nailCoords[startNail][0];
-        // double startY = nailCoords[startNail][1];
-        // double endX = nailCoords[endNail][0];
-        // double endY = nailCoords[endNail][1];
+    // double startX = nailCoords[startNail][0];
+    // double startY = nailCoords[startNail][1];
+    // double endX = nailCoords[endNail][0];
+    // double endY = nailCoords[endNail][1];
 
-        // double dx = endX - startX;
-        // double dy = endY - startY;
+    // double dx = endX - startX;
+    // double dy = endY - startY;
 
-        // int steps = (int) Math.max(Math.abs(dx), Math.abs(dy));
-        // double xIncrement = dx / steps;
-        // double yIncrement = dy / steps;
+    // int steps = (int) Math.max(Math.abs(dx), Math.abs(dy));
+    // double xIncrement = dx / steps;
+    // double yIncrement = dy / steps;
 
-        // double x = startX;
-        // double y = startY;
+    // double x = startX;
+    // double y = startY;
 
-        // int halfWidth = (int) lineWidth / 2;
+    // int halfWidth = (int) lineWidth / 2;
 
-        // // Verwende ein Set, um bereits bearbeitete Pixel zu merken
-        // boolean[][] visited = new boolean[bildArray.length][bildArray[0].length];
+    // // Verwende ein Set, um bereits bearbeitete Pixel zu merken
+    // boolean[][] visited = new boolean[bildArray.length][bildArray[0].length];
 
-        // for (int i = 0; i <= steps; i++) {
-            // int px = (int) Math.round(x);
-            // int py = (int) Math.round(y);
+    // for (int i = 0; i <= steps; i++) {
+    // int px = (int) Math.round(x);
+    // int py = (int) Math.round(y);
 
-            // for (int wx = -halfWidth; wx <= halfWidth; wx++) {
-                // for (int wy = -halfWidth; wy <= halfWidth; wy++) {
-                    // int nx = px + wx;
-                    // int ny = py + wy;
+    // for (int wx = -halfWidth; wx <= halfWidth; wx++) {
+    // for (int wy = -halfWidth; wy <= halfWidth; wy++) {
+    // int nx = px + wx;
+    // int ny = py + wy;
 
-                    // if (nx >= 0 && ny >= 0 && nx < bildArray[0].length && ny < bildArray.length) {
-                        // if (!visited[ny][nx]) {
-                            // // Abstand zum Linienmittelpunkt
-                            // double distance = Math.sqrt(wx * wx + wy * wy);
-                            // // Intensität abnehmen: trapezförmig
-                            // double factor = Math.max(0, 1 - distance / (halfWidth + 1));
-                            // bildArray[ny][nx] += increment * factor;
-                            // if (bildArray[ny][nx] > 1) bildArray[ny][nx] = 1;
-                            // visited[ny][nx] = true;
-                        // }
-                    // }
-                // }
-            // }
-
-            // x += xIncrement;
-            // y += yIncrement;
-        // }
+    // if (nx >= 0 && ny >= 0 && nx < bildArray[0].length && ny < bildArray.length) {
+    // if (!visited[ny][nx]) {
+    // // Abstand zum Linienmittelpunkt
+    // double distance = Math.sqrt(wx * wx + wy * wy);
+    // // Intensität abnehmen: trapezförmig
+    // double factor = Math.max(0, 1 - distance / (halfWidth + 1));
+    // bildArray[ny][nx] += increment * factor;
+    // if (bildArray[ny][nx] > 1) bildArray[ny][nx] = 1;
+    // visited[ny][nx] = true;
     // }
+    // }
+    // }
+    // }
+
+    // x += xIncrement;
+    // y += yIncrement;
+    // }
+    // }
+
+    public void listToArray()
+    {
+        int length = 0;
+
+        int[] lEndpoint = lineOrder.front();
+        int[] lLineData = null;
+
+        while(lLineData != lEndpoint)
+        {
+            lLineData = lineOrder.front();
+            length ++;
+            lineOrder.dequeue();
+            lineOrder.enqueue(lLineData);
+            lLineData = lineOrder.front();
+        }
+
+        lineOrderArray = new int[length][2];
+
+        for(int i = 0; i < lineOrderArray.length; i++)
+        {
+            lineOrderArray[i][0] = lineOrder.front()[0];
+            lineOrderArray[i][1] = lineOrder.front()[1];
+            lineOrder.dequeue();
+        }
+
+    }
 
     public double averageColour()
     {

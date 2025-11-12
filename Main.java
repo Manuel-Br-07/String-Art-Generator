@@ -30,10 +30,11 @@ public class Main {
     public Main()
     {
         // imageToArray("SmileyRGB.png");
-        // nailPositions(150);
-        // stringartGenerator();
-        // setScale(250);
-        // calculateStringLength();
+        imageToArray("TestPortrait.png");
+        nailPositions(150);
+        stringartGenerator();
+        setScale(250);
+        calculateStringLength();
     }
 
     public void imageToArray(String  dateiName)
@@ -87,22 +88,17 @@ public class Main {
     public void calculateStringLength()
     {
         double length = 0;
-        int nails = data.getNails();
+        // int nails = data.getNails();
         double[][] nailCoords = data.getNailCoords();
         double mmProPixel = data.getMmProPixel();
-        
-        int[] lEndpoint = lineOrder.front();
-        int[] lLineData = null;
+        int[][] lineOrderArray = data.getlineOrderArray();
 
-        while(lLineData != lEndpoint)
+        for(int i = 0; i < lineOrderArray.length; i++)
         {
-            lLineData = lineOrder.front();
-            length = length + Math.sqrt(Math.pow(nailCoords[lLineData[1]][0] - nailCoords[lLineData[0]][0], 2) + Math.pow(nailCoords[lLineData[1]][1] - nailCoords[lLineData[0]][1], 2)) * mmProPixel;
-            lineOrder.dequeue();
-            lineOrder.enqueue(lLineData);
-            lLineData = lineOrder.front();
+            length = length + Math.sqrt(Math.pow(nailCoords[lineOrderArray[i][01]][0] - nailCoords[lineOrderArray[i][0]][0], 2) + Math.pow(nailCoords[lineOrderArray[i][1]][1] - nailCoords[lineOrderArray[i][1]][1], 2)) * mmProPixel;
+            System.out.println("length " + length);
         }
-        
+
         System.out.println("length " + length);
         data.setStringLength(length);
     }

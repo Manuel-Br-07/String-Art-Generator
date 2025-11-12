@@ -8,7 +8,7 @@
 public class Data
 {
     // Instanzvariablen
-    
+
     //immageToArray
     private int width;
     private int height;
@@ -20,17 +20,20 @@ public class Data
     private double centerY;
     private double radius;
 
+    //listToArray
+    private int[][] lineOrderArray;
+
     //nailPositions
     private int nails;
     private double[][] nailCoords;  
-    
+
     //setScale
     private double diameter;
     private double mmProPixel;
-    
+
     //calculateStringLength
     private double stringLength;
-    
+
     //StringArtGenerator
     double lineWidth = 2;
 
@@ -39,11 +42,11 @@ public class Data
      */
     public Data()
     {
-        
+
     }
-    
+
     // get- / set-Methoden:
-    
+
     public int getWidth() {
         return width;
     }
@@ -67,7 +70,7 @@ public class Data
     public void setBildArray(double[][] bildArray) {
         this.bildArray = bildArray;
     }
-    
+
     public String getDateiName() {
         return dateiName;
     }
@@ -100,6 +103,14 @@ public class Data
         this.radius = radius;
     }
 
+    public int[][] getlineOrderArray() {
+        return lineOrderArray;
+    }
+
+    public void setlineOrderArray(int[][] lineOrderArray) {
+        this.lineOrderArray = lineOrderArray;
+    }
+
     public int getNails() {
         return nails;
     }
@@ -123,7 +134,7 @@ public class Data
     public void setMmProPixel(double mmProPixel) {
         this.mmProPixel = mmProPixel;
     }
-    
+
     public double getStringLength() {
         return stringLength;
     }

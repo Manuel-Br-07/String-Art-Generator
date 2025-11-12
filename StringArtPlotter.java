@@ -70,7 +70,7 @@ public class StringArtPlotter extends Application {
         lines.add(new double[]{x1, y1, x2, y2}); // optional, wenn du die Linien später noch brauchst
 
         if (gc != null) {
-            gc.setStroke(Color.BLACK);
+            gc.setStroke(new Color(0.8, 0.8, 0.8, 0.0001));
             gc.setLineWidth(0.08);
             gc.strokeLine(x1, y1, x2, y2); // Zeichnet die neue Linie direkt auf den Canvas
         }
