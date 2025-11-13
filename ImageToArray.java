@@ -101,6 +101,10 @@ public class ImageToArray
 
                     // 6. Normalisieren auf 0–1
                     bildArray[y][x] = gray / 255;
+                    // if(bildArray[y][x] < 0.8)
+                    // {
+                        // bildArray[y][x] = 0.6;
+                    // }
                     bildArray[y][x] = 1 - Math.min(1.0, Math.max(0.0, (1 - bildArray[y][x]) * 1.4));
                 }
             }

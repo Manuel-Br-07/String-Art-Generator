@@ -30,11 +30,12 @@ public class Main {
     public Main()
     {
         // imageToArray("SmileyRGB.png");
-        imageToArray("TestPortrait.png");
+        imageToArray("TestPortraitRGB.png");
         nailPositions(150);
         stringartGenerator();
         setScale(250);
         calculateStringLength();
+        gcodeGenerator();
     }
 
     public void imageToArray(String  dateiName)
@@ -96,7 +97,6 @@ public class Main {
         for(int i = 0; i < lineOrderArray.length; i++)
         {
             length = length + Math.sqrt(Math.pow(nailCoords[lineOrderArray[i][01]][0] - nailCoords[lineOrderArray[i][0]][0], 2) + Math.pow(nailCoords[lineOrderArray[i][1]][1] - nailCoords[lineOrderArray[i][1]][1], 2)) * mmProPixel;
-            System.out.println("length " + length);
         }
 
         System.out.println("length " + length);

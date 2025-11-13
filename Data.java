@@ -36,6 +36,10 @@ public class Data
 
     //StringArtGenerator
     double lineWidth = 2;
+    
+    //calculateCoordinates
+    double[][] absoluteNailPositions;
+    double gapsize = 3;
 
     /**
      * Konstruktor für Objekte der Klasse Data
@@ -157,5 +161,21 @@ public class Data
 
     public void setLineWidth(double lineWidth) {
         this.lineWidth = lineWidth;
+    }
+    
+    public double[][] getAbsoluteNailPositions() {
+        return absoluteNailPositions;
+    }
+
+    public void setAbsoluteNailPositions(double[][] absoluteNailPositions) {
+        this.absoluteNailPositions = absoluteNailPositions;
+    }
+    
+    public double getGapsize() {
+        return gapsize;
+    }
+
+    public void setGapsize(double gapsize) {
+        this.gapsize = gapsize;
     }
 }

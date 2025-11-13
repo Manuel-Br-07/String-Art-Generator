@@ -22,6 +22,14 @@ public class GcodeGenerator
     // private double[][] bildArray;
     private String  dateiName;
 
+    //circularMask
+    private double centerX;
+    private double centerY;
+    private double radius;
+
+    //listToArray
+    private int[][] lineOrderArray;
+
     //nailPositions
     private int nails;
     private double[][] nailCoords;
@@ -30,7 +38,10 @@ public class GcodeGenerator
     private double mmProPixel;
     private double stringLength;
 
-    // double lineWidth;
+    //calculateCoordinates
+    double[][] absoluteNailPositions;
+    double gapsize;
+
     /**
      * Konstruktor für Objekte der Klasse GcodeGenerator
      */
@@ -49,8 +60,14 @@ public class GcodeGenerator
         // bildArray = data.getBildArray();
         dateiName = data.getDateiName();
 
+        centerX = data.getCenterX();
+        centerY = data.getCenterY();
+        radius = data.getRadius();
+
         nails = data.getNails();
         nailCoords = data.getNailCoords();
+
+        lineOrderArray = data.getlineOrderArray();
 
         diameter = data.getDiameter();
         mmProPixel = data.getMmProPixel();
@@ -58,11 +75,12 @@ public class GcodeGenerator
 
         // lineWidth = data.getLineWidth();
 
+        absoluteNailPositions = data.getAbsoluteNailPositions();
+        gapsize = data.getGapsize();
+
         // ------------------ BEARBEITUNG ------------------
 
-        GcodeFileGen();
-        schreibeZeile();
-        schliessen();
+        GCodeControll();
 
         // ------------------ SET ------------------
         // data.setBildArray(bildArray); // falls bearbeitet
@@ -71,9 +89,51 @@ public class GcodeGenerator
         // data.setMmProPixel(mmProPixel);
         // data.setNailCoords(nailCoords);
         // data.setLineWidth(lineWidth);
+        data.setCenterX(centerX);
+        data.setCenterY(centerY);
+        data.setRadius(radius);
+        data.setAbsoluteNailPositions(absoluteNailPositions);
+        data.setGapsize(gapsize);
     }
 
-    public void GcodeFileGen()
+    public void GCodeControll()
+    {
+        calculateCoordinates();
+        fileGen();
+
+        for(int i = 1; i < absoluteNailPositions.length; i++)
+        {
+            double NailX = absoluteNailPositions[i][0];
+            double NailY = absoluteNailPositions[i][1];
+            double BorderX = absoluteNailPositions[i][2];
+            double BorderY = absoluteNailPositions[i][3];
+
+        }
+
+        schliessen();
+    }
+
+    public void calculateCoordinates()
+    {
+        absoluteNailPositions = new double[lineOrderArray.length][4];
+        
+        for(int i = 0; i < absoluteNailPositions.length; i++)
+        {
+            double dx = nailCoords[lineOrderArray[i][1]][0] - centerX;
+            double dy = nailCoords[lineOrderArray[i][1]][1] - centerY;
+            double length = Math.sqrt(dx * dx + dy * dy);
+            double factor = (length - gapsize) / length;
+
+            absoluteNailPositions[i][0] = nailCoords[lineOrderArray[i][1]][0];
+            absoluteNailPositions[i][1] = nailCoords[lineOrderArray[i][1]][1];
+            absoluteNailPositions[i][2] = centerX + dx * factor;
+            absoluteNailPositions[i][3] = centerY + dy * factor;
+            System.out.println("x " + absoluteNailPositions[i][0] + " y " + absoluteNailPositions[i][1] + " x1 " + absoluteNailPositions[i][2] + " y1 " + absoluteNailPositions[i][3]);
+        }
+
+    }
+
+    public void fileGen()
     {
         String string = ("StringArtGcode.txt");
         try {
@@ -83,15 +143,15 @@ public class GcodeGenerator
         }
     }
 
-    public void schreibeZeile() {
+    public void writeLine(String pString) {
         try {
-            writer.write("Test");
+            writer.write(pString);
             writer.newLine();  // Zeilenumbruch
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-    
+
     public void schliessen() {
         try {
             writer.close();
