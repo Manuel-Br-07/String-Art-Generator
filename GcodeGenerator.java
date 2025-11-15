@@ -99,15 +99,32 @@ public class GcodeGenerator
     public void GCodeControll()
     {
         calculateCoordinates();
+        double nailX = absoluteNailPositions[0][0];
+        double nailY = absoluteNailPositions[0][1];
+        double borderX = absoluteNailPositions[0][2];
+        double borderY = absoluteNailPositions[0][3];
+
         fileGen();
+
+        //G-Code initialize:
+
+        writeLine("G1 F8000");
+        writeLine("G1 X" + borderX + "Y " + borderY);
+        // writeLine(calculateG2(nailX, nailY, borderX, borderY, true));
+        writeLine(calculateG2(nailX, nailY, borderX, borderY, false));
 
         for(int i = 1; i < absoluteNailPositions.length; i++)
         {
-            double NailX = absoluteNailPositions[i][0];
-            double NailY = absoluteNailPositions[i][1];
-            double BorderX = absoluteNailPositions[i][2];
-            double BorderY = absoluteNailPositions[i][3];
+            nailX = absoluteNailPositions[i][0];
+            nailY = absoluteNailPositions[i][1];
+            borderX = absoluteNailPositions[i][2];
+            borderY = absoluteNailPositions[i][3];
 
+            //G-Code write:
+
+            writeLine("G1 X" + borderX + "Y " + borderY);
+            // writeLine(calculateG2(nailX, nailY, borderX, borderY, true));
+            writeLine(calculateG2(nailX, nailY, borderX, borderY, false));
         }
 
         schliessen();
@@ -116,7 +133,7 @@ public class GcodeGenerator
     public void calculateCoordinates()
     {
         absoluteNailPositions = new double[lineOrderArray.length][4];
-        
+
         for(int i = 0; i < absoluteNailPositions.length; i++)
         {
             double dx = nailCoords[lineOrderArray[i][1]][0] - centerX;
@@ -124,18 +141,32 @@ public class GcodeGenerator
             double length = Math.sqrt(dx * dx + dy * dy);
             double factor = (length - gapsize) / length;
 
-            absoluteNailPositions[i][0] = nailCoords[lineOrderArray[i][1]][0];
-            absoluteNailPositions[i][1] = nailCoords[lineOrderArray[i][1]][1];
-            absoluteNailPositions[i][2] = centerX + dx * factor;
-            absoluteNailPositions[i][3] = centerY + dy * factor;
-            System.out.println("x " + absoluteNailPositions[i][0] + " y " + absoluteNailPositions[i][1] + " x1 " + absoluteNailPositions[i][2] + " y1 " + absoluteNailPositions[i][3]);
+            absoluteNailPositions[i][0] = ((nailCoords[lineOrderArray[i][1]][0]) * mmProPixel) + 5;
+            absoluteNailPositions[i][1] = ((nailCoords[lineOrderArray[i][1]][1]) * mmProPixel) + 5;
+            absoluteNailPositions[i][2] = ((centerX + dx * factor) * mmProPixel) + 5;
+            absoluteNailPositions[i][3] = ((centerY + dy * factor) * mmProPixel) + 5;
+            // System.out.println("x " + absoluteNailPositions[i][0] + " y " + absoluteNailPositions[i][1] + " x1 " + absoluteNailPositions[i][2] + " y1 " + absoluteNailPositions[i][3]);
         }
+
+    }
+
+    public String calculateG2(double nailX, double nailY, double borderX, double borderY, boolean half)
+    {
+        double i = nailX - borderX;
+        double j = nailY - borderY;
+        double x = 2 * nailX - borderX;
+        double y = 2 * nailY - borderY;
+        if(half == true)
+        {
+            return "G2 X" + x + " Y" + y + " I" + i + " J" + j;
+        }
+        return "G2 X" + borderX + " Y" + borderY + " I" + i + " J" + j;
 
     }
 
     public void fileGen()
     {
-        String string = ("StringArtGcode.txt");
+        String string = ("StringArtGcode.gcode");
         try {
             writer = new BufferedWriter(new FileWriter(string, false));
         } catch (IOException e) {

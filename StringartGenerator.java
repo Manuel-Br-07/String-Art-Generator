@@ -71,7 +71,7 @@ public class StringartGenerator
         int startNail = 0;
         int iterations = 0;
         int[] linePos;
-        double endpoint = averageColour() + (1 - averageColour()) / 10 * 9.3;
+        double endpoint = averageColour() + (1 - averageColour()) / 10 * 9;
         System.out.println("Endpoint " + endpoint);
 
         while (averageColour() <= endpoint && iterations < 50000) {
@@ -99,7 +99,7 @@ public class StringartGenerator
                 linePos = new int[]{startNail, bestEndNail};
                 lineOrder.enqueue(linePos);
 
-                lightenLine(startNail, bestEndNail, 0.6);
+                lightenLine(startNail, bestEndNail, 0.4);
                 startNail = bestEndNail;
                 iterations++;
                 System.out.println("iterations " + iterations + " average " + averageColour());
