@@ -48,9 +48,9 @@ public class ImageToArray
         radius = data.getRadius();
 
         // ------------------ BEARBEITUNG ------------------
-        
+
         imageToArray();
-        
+
         // ------------------ SET ------------------
         data.setWidth(width);
         data.setHeight(height);
@@ -60,14 +60,13 @@ public class ImageToArray
         data.setCenterY(centerY);
         data.setRadius(radius);
     }
-    
+
     // ---------------- Bild einlesen ----------------
     public void imageToArray()
     {
         try {
             // 1. Bild laden
             BufferedImage image = ImageIO.read(new File(dateiName));
-            System.out.println("" + image);
 
             width = image.getWidth();
             height = image.getHeight();
@@ -104,7 +103,7 @@ public class ImageToArray
                     bildArray[y][x] = gray / 255;
                     // if(bildArray[y][x] < 0.8)
                     // {
-                        // bildArray[y][x] = 0.6;
+                    // bildArray[y][x] = 0.6;
                     // }
                     // Bildbearbeitung
                     // bildArray[y][x] = 1 - Math.min(1.0, Math.max(0.0, (1 - bildArray[y][x]) * 1.4));
@@ -147,35 +146,36 @@ public class ImageToArray
                 }
             }
         }
+        
+        // Console Print
+        // for (int y = 0; y < height; y++)
+        // {
+            // for (int x = 0; x < width; x++)
+            // {
+                // if (bildArray[y][x] >= 0)
+                // {
+                    // if (bildArray[y][x] > 0.5)
+                    // {
+                        // System.out.print(" ");
+                    // }
+                    // else
+                    // {
+                        // System.out.print("█");
+                    // }
+                // }
+                // else
+                // {
+                    // System.out.print("X");
+                    // if (bildArray[y][x] >= 0)
+                    // {
+                        // System.out.print("T");
+                    // }
+                // }
+            // }
+            // System.out.println();
+        // }
 
-        for (int y = 0; y < height; y++)
-        {
-            for (int x = 0; x < width; x++)
-            {
-                if (bildArray[y][x] >= 0)
-                {
-                    if (bildArray[y][x] > 0.5)
-                    {
-                        System.out.print(" ");
-                    }
-                    else
-                    {
-                        System.out.print("█");
-                    }
-                }
-                else
-                {
-                    System.out.print("X");
-                    if (bildArray[y][x] >= 0)
-                    {
-                        System.out.print("T");
-                    }
-                }
-            }
-            System.out.println();
-        }
-
-        StringArtPlotter.init(width, height);
+        // StringArtPlotter.init(width, height);
 
     }
 }

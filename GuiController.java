@@ -10,7 +10,10 @@ import javafx.stage.DirectoryChooser;
 import java.io.File;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.Button;
 
+import javafx.scene.image.WritableImage;
 /**
  * Beschreiben Sie hier die Klasse GuiController.
  * 
@@ -21,10 +24,17 @@ public class GuiController extends Application
 {
     private Data data = new Data();
     private Main main = new Main(data);
-    
+    private HeatmapGen heatmapGen = new HeatmapGen();
+
     @FXML
     private ImageView imageView;
-    
+    @FXML    
+    private ImageView convertedImage;
+    @FXML
+    private ScrollPane scrollPane;
+    @FXML
+    private Button refresh;
+
     
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -60,6 +70,26 @@ public class GuiController extends Application
             main.imageToArray();
         }
 
+        if(data.getBildArray() != null)
+        {
+            generateHeatmap();
+
+            refresh.setDisable(false);
+            scrollPane.setDisable(false);
+        }
+        else
+        {
+            refresh.setDisable(true);
+            scrollPane.setDisable(true);
+        }
+    }
+
+    @FXML
+    public void generateHeatmap()
+    {
+        WritableImage heatmap = heatmapGen.createHeatmap(data.getBildArray());
+        System.out.println("IMG " + heatmap);
+        convertedImage.setImage(heatmap);
     }
 }
 

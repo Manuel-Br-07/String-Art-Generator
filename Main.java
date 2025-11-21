@@ -30,7 +30,9 @@ public class Main {
     public Main(Data pData)
     {
         data = pData;
-        System.out.println("" + data);
+        imageToArray = new ImageToArray(data, lineOrder, stringArtPlotter);
+        stringartGen = new StringartGenerator(data, lineOrder, stringArtPlotter);
+        gcodeGen = new GcodeGenerator(data, lineOrder, stringArtPlotter);
         
         // imageToArray("SmileyRGB.png");
         // imageToArray("TestPortraitRGB.png");
