@@ -12,6 +12,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Button;
+import javafx.scene.control.Tab;
 
 import javafx.scene.image.WritableImage;
 /**
@@ -34,6 +35,10 @@ public class GuiController extends Application
     private ScrollPane scrollPane;
     @FXML
     private Button refresh;
+    @FXML
+    private Tab stringartTab;
+    @FXML
+    private Tab gcodeTab;
 
     
     @Override
@@ -76,11 +81,13 @@ public class GuiController extends Application
 
             refresh.setDisable(false);
             scrollPane.setDisable(false);
+            stringartTab.setDisable(false);
         }
         else
         {
             refresh.setDisable(true);
             scrollPane.setDisable(true);
+            stringartTab.setDisable(true);
         }
     }
 
