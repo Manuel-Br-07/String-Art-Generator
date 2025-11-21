@@ -30,8 +30,9 @@ public class Main {
     public Main()
     {
         // imageToArray("SmileyRGB.png");
-        imageToArray("TestPortraitRGB.png");
-        nailPositions(150);
+        // imageToArray("TestPortraitRGB.png");
+        imageToArray("IMG_1443.png");
+        nailPositions(300);
         stringartGenerator();
         setScale(250);
         calculateStringLength();
