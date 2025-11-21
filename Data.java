@@ -13,7 +13,7 @@ public class Data
     private int width;
     private int height;
     private double[][] bildArray;
-    private String  dateiName;
+    private String dateiName;
 
     //circularMask
     private double centerX;

@@ -1,6 +1,6 @@
 
 public class Main {
-    private Data data = new Data();
+    private Data data;
     private Queue<int[]> lineOrder = new Queue();
     private StringArtPlotter stringArtPlotter = new StringArtPlotter();
 
@@ -27,21 +27,25 @@ public class Main {
     // private double mmProPixel;
 
     // double lineWidth;
-    public Main()
+    public Main(Data pData)
     {
+        data = pData;
+        System.out.println("" + data);
+        
         // imageToArray("SmileyRGB.png");
         // imageToArray("TestPortraitRGB.png");
-        imageToArray("IMG_1443.png");
-        nailPositions(300);
-        stringartGenerator();
-        setScale(250);
-        calculateStringLength();
-        gcodeGenerator();
+        // imageToArray("IMG_1443.png");
+        // imageToArray();
+        // nailPositions(300);
+        // stringartGenerator();
+        // setScale(250);
+        // calculateStringLength();
+        // gcodeGenerator();
     }
 
-    public void imageToArray(String  dateiName)
+    public void imageToArray()//String  dateiName)
     {
-        data.setDateiName(dateiName);
+        // data.setDateiName(dateiName);
         imageToArray.main();
     }
 

@@ -38,9 +38,9 @@ public class ImageToArray
     public void main()
     {
         // ------------------ GET ------------------
-        width = data.getWidth();
-        height = data.getHeight();
-        bildArray = data.getBildArray();
+        // width = data.getWidth();
+        // height = data.getHeight();
+        // bildArray = data.getBildArray();
         dateiName = data.getDateiName();
 
         centerX = data.getCenterX();
@@ -67,6 +67,7 @@ public class ImageToArray
         try {
             // 1. Bild laden
             BufferedImage image = ImageIO.read(new File(dateiName));
+            System.out.println("" + image);
 
             width = image.getWidth();
             height = image.getHeight();
@@ -105,7 +106,8 @@ public class ImageToArray
                     // {
                         // bildArray[y][x] = 0.6;
                     // }
-                    bildArray[y][x] = 1 - Math.min(1.0, Math.max(0.0, (1 - bildArray[y][x]) * 1.4));
+                    // Bildbearbeitung
+                    // bildArray[y][x] = 1 - Math.min(1.0, Math.max(0.0, (1 - bildArray[y][x]) * 1.4));
                 }
             }
 
