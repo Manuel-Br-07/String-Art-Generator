@@ -32,6 +32,7 @@
   OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 -->
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.canvas.Canvas?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
@@ -46,7 +47,9 @@
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
 
 <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="656.0" prefWidth="860.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GuiController">
    <children>
@@ -85,7 +88,7 @@
                      </children></AnchorPane>
             </content>
           </Tab>
-          <Tab fx:id="stringartTab" disable="true" text="2. Stringart Generator">
+          <Tab fx:id="stringartTab" text="2. Stringart Generator">
             <content>
               <AnchorPane disable="true" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
@@ -95,42 +98,70 @@
                         <Canvas fx:id="canvas" height="500.0" layoutX="476.0" layoutY="100.0" width="500.0" AnchorPane.leftAnchor="335.0" AnchorPane.topAnchor="25.0" />
                         <Spinner editable="true" layoutX="347.0" layoutY="564.0" AnchorPane.bottomAnchor="20.0" />
                         <Slider layoutX="551.0" layoutY="569.0" majorTickUnit="100.0" prefHeight="38.0" prefWidth="174.0" showTickLabels="true" showTickMarks="true" AnchorPane.bottomAnchor="15.0" />
-                        <TabPane layoutX="6.0" layoutY="23.0" prefHeight="578.0" prefWidth="315.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="80.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="25.0">
-                          <tabs>
-                            <Tab text="Fadeneinstellungen">
-                              <content>
-                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="469.0" prefWidth="330.0">
-                                       <children>
-                                          <Label layoutX="123.0" layoutY="194.0" text="Durchmesser" />
-                                          <Label layoutX="147.0" layoutY="106.0" text="Anzahl Nägel" />
-                                          <Label layoutX="104.0" layoutY="136.0" text="Linienbreite" />
-                                          <Label layoutX="50.0" layoutY="166.0" text="Linienstärke" />
-                                       </children>
-                                    </AnchorPane>
-                              </content>
-                            </Tab>
-                            <Tab text="Anzeigeeinstellungen">
-                              <content>
-                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                                       <children>
-                                          <Label layoutX="25.0" layoutY="310.0" text="Linienbreite?" />
-                                          <Label layoutX="123.0" layoutY="293.0" text="Linienstärke?" />
-                                          <Label layoutX="104.0" layoutY="233.0" text="Max iterations" />
-                                          <Label layoutX="59.0" layoutY="189.0" text="Slider iterations" />
-                                          <Label layoutX="133.0" layoutY="51.0" text="AutoModus?" />
-                                          <Label layoutX="120.0" layoutY="17.0" text="Endwert" />
-                                          <Label layoutX="30.0" layoutY="80.0" text="Hintergrundfarbe" />
-                                          <Label layoutX="68.0" layoutY="122.0" text="Linienfarbe?" />
-                                       </children>
-                                    </AnchorPane>
-                              </content>
-                            </Tab>
-                          </tabs>
-                        </TabPane>
+                        <ScrollPane layoutY="26.0" prefHeight="496.0" prefWidth="318.0" AnchorPane.bottomAnchor="79.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="26.0">
+                           <content>
+                              <VBox prefHeight="765.0" prefWidth="303.0" spacing="5.0">
+                                 <children>
+                                    <Label text="Anzahl Nägel">
+                                       <font>
+                                          <Font name="System Bold" size="12.0" />
+                                       </font>
+                                    </Label>
+                                    <Spinner editable="true" />
+                                    <Label prefHeight="17.0" prefWidth="138.0" text="Nagelabstand; n mm" />
+                                    <Separator prefHeight="12.0" prefWidth="273.0" />
+                                    <Label text="Durchmesser">
+                                       <font>
+                                          <Font name="System Bold" size="12.0" />
+                                       </font>
+                                    </Label>
+                                    <Spinner editable="true" />
+                                    <Separator layoutX="25.0" layoutY="99.0" prefHeight="12.0" prefWidth="285.0" />
+                                    <Label layoutX="25.0" layoutY="116.0" prefHeight="17.0" prefWidth="108.0" text="Linienbreite">
+                                       <font>
+                                          <Font name="System Bold" size="12.0" />
+                                       </font>
+                                    </Label>
+                                    <Label prefHeight="17.0" prefWidth="112.0" text="Linienbreite: 1 " />
+                                    <Slider minorTickCount="4" prefHeight="14.0" prefWidth="226.0" showTickLabels="true" showTickMarks="true" />
+                                    <Separator layoutX="25.0" layoutY="168.0" prefHeight="12.0" prefWidth="285.0" />
+                                    <Label layoutX="25.0" layoutY="185.0" prefHeight="17.0" prefWidth="108.0" text="Linienstärke">
+                                       <font>
+                                          <Font name="System Bold" size="12.0" />
+                                       </font>
+                                    </Label>
+                                    <Label text="Linienstärke: 0" />
+                                    <Slider blockIncrement="0.01" majorTickUnit="0.25" max="1.0" minorTickCount="4" showTickLabels="true" showTickMarks="true" />
+                                    <Separator layoutX="25.0" layoutY="272.0" prefHeight="12.0" prefWidth="285.0" />
+                                    <Label text="Anzeigeeinstellungen">
+                                       <font>
+                                          <Font name="System Bold" size="15.0" />
+                                       </font>
+                                    </Label>
+                                    <Separator layoutX="25.0" layoutY="376.0" prefHeight="12.0" prefWidth="285.0" />
+                                    <Label layoutX="25.0" layoutY="289.0" prefHeight="17.0" prefWidth="108.0" text="Linienstärke">
+                                       <font>
+                                          <Font name="System Bold" size="12.0" />
+                                       </font>
+                                    </Label>
+                                    <Label layoutX="25.0" layoutY="311.0" text="Linienstärke: 0" />
+                                    <Slider blockIncrement="0.01" layoutX="25.0" layoutY="333.0" majorTickUnit="0.25" max="1.0" minorTickCount="4" showTickLabels="true" showTickMarks="true" />
+                                    <Separator layoutX="25.0" layoutY="376.0" prefHeight="12.0" prefWidth="285.0" />
+                                    <Label text="AutoModus?" />
+                                    <Label text="Endwert" />
+                                    <Label text="Hintergrundfarbe" />
+                                    <Label text="Linienfarbe?" />
+                                 </children>
+                                 <padding>
+                                    <Insets left="15.0" right="15.0" top="15.0" />
+                                 </padding>
+                              </VBox>
+                           </content>
+                        </ScrollPane>
                      </children></AnchorPane>
             </content>
           </Tab>
-            <Tab fx:id="gcodeTab" disable="true" text="3. G-Code Generator">
+            <Tab fx:id="gcodeTab" text="3. G-Code Generator">
                <content>
                   <AnchorPane prefHeight="200.0" prefWidth="200.0" />
                </content></Tab>
