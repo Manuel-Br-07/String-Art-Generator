@@ -28,6 +28,7 @@ public class StringartGenerator
     private double mmProPixel;
 
     double lineWidth;
+    double lineStrength;
     /**
      * Konstruktor für Objekte der Klasse StringartGenerator
      */
@@ -52,13 +53,12 @@ public class StringartGenerator
         mmProPixel = data.getMmProPixel();
 
         lineWidth = data.getLineWidth();
-
+        lineStrength = data.getLineStrength();
         // ------------------ BEARBEITUNG ------------------
 
         stringArtGenerator();
 
         // ------------------ SET ------------------
-        // data.setBildArray(bildArray); // falls bearbeitet
         data.setlineOrderArray(lineOrderArray);
         data.setNails(nails);
         data.setDiameter(diameter);
@@ -99,7 +99,7 @@ public class StringartGenerator
                 linePos = new int[]{startNail, bestEndNail};
                 lineOrder.enqueue(linePos);
 
-                lightenLine(startNail, bestEndNail, 0.6);
+                lightenLine(startNail, bestEndNail, lineStrength);
                 startNail = bestEndNail;
                 iterations++;
                 System.out.println("iterations " + iterations + " average " + averageColour());

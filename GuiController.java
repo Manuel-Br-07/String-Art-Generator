@@ -13,6 +13,12 @@ import javafx.scene.image.ImageView;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Button;
 import javafx.scene.control.Tab;
+import javafx.scene.control.Spinner;
+import javafx.scene.control.SpinnerValueFactory;
+import javafx.scene.control.Label;
+import javafx.scene.control.Slider;
+import javafx.scene.control.ColorPicker;
+import javafx.scene.control.TextArea;
 
 import javafx.scene.image.WritableImage;
 /**
@@ -27,6 +33,7 @@ public class GuiController extends Application
     private Main main = new Main(data);
     private HeatmapGen heatmapGen = new HeatmapGen();
 
+    //---------- 1. Seite ----------
     @FXML
     private ImageView imageView;
     @FXML    
@@ -40,7 +47,38 @@ public class GuiController extends Application
     @FXML
     private Tab gcodeTab;
 
-    
+    //---------- 2. Seite ----------
+    @FXML
+    private Spinner<Integer> spinnerMaxIterations;
+    @FXML
+    private Slider sliderCurrentIteration;
+    @FXML
+    private Spinner<Integer> spinnerAnzahlNaegel;
+    @FXML
+    private Label labelNagelabstand;
+    @FXML 
+    private Spinner<Integer> spinnerDurchmesser;
+    @FXML
+    private Label labelLinienbreite;
+    @FXML
+    private Slider sliderLinienbreite;
+    @FXML
+    private Label labelLinienstaerke;
+    @FXML
+    private Slider sliderLinienstaerke;
+    @FXML 
+    private Label labelLinienbreiteAnzeige;
+    @FXML
+    private Slider sliderlinienbreiteAnzeige;
+    @FXML
+    private ColorPicker colorPickerHintergrund;
+    @FXML
+    private ColorPicker colorPickerLinie;
+    @FXML
+    private TextArea textAreaAusgabe;
+
+    //---------- 3. Seite ----------
+    //---------- Initialisierung ----------
     @Override
     public void start(Stage primaryStage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("GUI.fxml")); 
@@ -53,6 +91,68 @@ public class GuiController extends Application
         launch(args);
     }
 
+    @FXML
+    public void initialize() {
+
+        // Spinner konfiguration
+
+        //---------- 2. Seite ----------
+        SpinnerValueFactory<Integer> maxIterationsFactory =
+            new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 10000, 5000);
+        spinnerMaxIterations.setValueFactory(maxIterationsFactory);
+        sliderCurrentIteration.setMax(spinnerMaxIterations.getValue());
+
+        SpinnerValueFactory<Integer> anzahlNaegelFactory =
+            new SpinnerValueFactory.IntegerSpinnerValueFactory(2, 1000, 0);
+        spinnerAnzahlNaegel.setValueFactory(anzahlNaegelFactory);
+
+        SpinnerValueFactory<Integer> durchmesserFactory =
+            new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 10000, 0);
+        spinnerDurchmesser.setValueFactory(durchmesserFactory);
+
+        eventListeners();
+    }
+
+    @FXML
+    public void eventListeners()
+    {   
+        //spinnerMaxIterations
+        spinnerMaxIterations.valueProperty().addListener((obs, oldValue, newValue) -> {
+
+                    // Maximalwert des Sliders setzen
+                    sliderCurrentIteration.setMax(newValue);
+
+                    // Falls der Slider gerade über dem Limit liegt → heruntersetzen
+                    if (sliderCurrentIteration.getValue() > newValue) {
+                        sliderCurrentIteration.setValue(newValue);
+                    }
+            });
+
+        // sliderCurrentIteration nur bei loslassen!!
+        sliderCurrentIteration.valueChangingProperty().addListener((obs, wasChanging, isChanging) -> {
+                    if (!isChanging) {
+                        // Benutzer hat den Slider losgelassen
+                        data.setCurrentIteration((int) sliderCurrentIteration.getValue());
+                        System.out.println(data.getCurrentIteration() + "");
+                    }
+            });
+
+        //spinnerAnzahlNaegel
+        spinnerAnzahlNaegel.valueProperty().addListener((obs, oldValue, newValue) -> {
+
+                    data.setNails(newValue);
+                    labelNagelabstand.setText("Nagelabstand: " + main.setAbstand() + " mm");
+            });
+
+        //spinnerDurchmesser
+        spinnerDurchmesser.valueProperty().addListener((obs, oldValue, newValue) -> {
+
+                    main.setScale(newValue);
+                    labelNagelabstand.setText("Nagelabstand: " + main.setAbstand() + " mm");
+            });
+    }
+
+    //---------- 1. Seite ----------
     @FXML
     public void chooseFile()
     {
@@ -98,5 +198,7 @@ public class GuiController extends Application
         System.out.println("IMG " + heatmap);
         convertedImage.setImage(heatmap);
     }
-}
 
+    //---------- 2. Seite ----------
+
+}

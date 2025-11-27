@@ -35,11 +35,20 @@ public class Data
     private double stringLength;
 
     //StringArtGenerator
-    double lineWidth = 2;
+    private double lineWidth = 2;
     
     //calculateCoordinates
-    double[][] absoluteNailPositions;
-    double gapsize = 3;
+    private double[][] absoluteNailPositions;
+    private double gapsize = 3;
+    
+    //GuiControllerSettings
+    private int maxIterations;
+    private int currentIteration;
+    private double lineStrength = 0.6;
+    private double lineWidthDisplay;
+    private double nailDistance;
+    // private backgroundColour;
+    // private lineColour;
 
     /**
      * Konstruktor für Objekte der Klasse Data
@@ -177,5 +186,45 @@ public class Data
 
     public void setGapsize(double gapsize) {
         this.gapsize = gapsize;
+    }
+    
+    public int getMaxIterations() {
+        return maxIterations;
+    }
+
+    public void setMaxIterations(int maxIterations) {
+        this.maxIterations = maxIterations;
+    }
+    
+    public int getCurrentIteration() {
+        return currentIteration;
+    }
+
+    public void setCurrentIteration(int currentIteration) {
+        this.currentIteration = currentIteration;
+    }
+    
+    public double getLineStrength() {
+        return lineStrength;
+    }
+
+    public void setLineStrength(double lineStrength) {
+        this.lineStrength = lineStrength;
+    }
+    
+    public double getLineWidthDisplay() {
+        return lineWidthDisplay;
+    }
+
+    public void setLineWidthDisplay(double lineWidthDisplay) {
+        this.lineWidthDisplay = lineWidthDisplay;
+    }
+    
+    public double getNailDistance() {
+        return nailDistance;
+    }
+
+    public void setNailDistance(double nailDistance) {
+        this.nailDistance = nailDistance;
     }
 }

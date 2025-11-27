@@ -113,6 +113,11 @@ public class Main {
     public void setScale(int pDiameter) {
         data.setDiameter(pDiameter);
         data.setMmProPixel((double) pDiameter / data.getWidth());
-        calculateStringLength();
+    }
+    
+    public double setAbstand()
+    {
+        data.setNailDistance((Math.PI * data.getDiameter()) / data.getNails());
+        return (Math.PI * data.getDiameter()) / data.getNails();
     }
 }

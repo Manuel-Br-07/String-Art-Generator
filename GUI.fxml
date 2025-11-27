@@ -46,6 +46,7 @@
 <?import javafx.scene.control.Spinner?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
@@ -97,8 +98,8 @@
                         <Separator layoutX="135.0" layoutY="524.0" prefHeight="2.0" prefWidth="337.0" AnchorPane.bottomAnchor="80.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="523.0" />
                         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="500.0" layoutX="343.0" layoutY="18.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0" width="500.0" AnchorPane.leftAnchor="335.0" AnchorPane.topAnchor="25.0" />
                         <Canvas fx:id="canvas" height="500.0" layoutX="476.0" layoutY="100.0" width="500.0" AnchorPane.leftAnchor="335.0" AnchorPane.topAnchor="25.0" />
-                        <Spinner editable="true" layoutX="347.0" layoutY="564.0" AnchorPane.bottomAnchor="20.0" />
-                        <Slider layoutX="551.0" layoutY="569.0" majorTickUnit="100.0" prefHeight="38.0" prefWidth="174.0" showTickLabels="true" showTickMarks="true" AnchorPane.bottomAnchor="15.0" />
+                        <Spinner fx:id="spinnerMaxIterations" editable="true" layoutX="347.0" layoutY="564.0" AnchorPane.bottomAnchor="20.0" />
+                        <Slider fx:id="sliderCurrentIteration" blockIncrement="100.0" layoutX="548.0" layoutY="552.0" majorTickUnit="100.0" minorTickCount="4" prefHeight="38.0" prefWidth="174.0" showTickLabels="true" showTickMarks="true" AnchorPane.bottomAnchor="13.0" />
                         <ScrollPane layoutY="26.0" prefHeight="496.0" prefWidth="318.0" AnchorPane.bottomAnchor="79.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="26.0">
                            <content>
                               <VBox prefWidth="303.0" spacing="5.0">
@@ -109,7 +110,7 @@
                                        </font>
                                     </Label>
                                     <Spinner fx:id="spinnerAnzahlNaegel" editable="true" />
-                                    <Label fx:id="LabelNagelabstand" prefHeight="17.0" prefWidth="138.0" text="Nagelabstand; n mm" />
+                                    <Label fx:id="labelNagelabstand" prefHeight="17.0" prefWidth="138.0" text="Nagelabstand; n mm" />
                                     <Separator prefHeight="12.0" prefWidth="273.0" />
                                     <Label text="Durchmesser">
                                        <font>
@@ -124,7 +125,7 @@
                                        </font>
                                     </Label>
                                     <Label fx:id="labelLinienbreite" prefHeight="17.0" prefWidth="112.0" text="Linienbreite: 1 " />
-                                    <Slider fx:id="SliderLinienbreite" minorTickCount="4" prefHeight="14.0" prefWidth="226.0" showTickLabels="true" showTickMarks="true" />
+                                    <Slider fx:id="sliderLinienbreite" minorTickCount="4" prefHeight="14.0" prefWidth="226.0" showTickLabels="true" showTickMarks="true" />
                                     <Separator layoutX="25.0" layoutY="168.0" prefHeight="12.0" prefWidth="285.0" />
                                     <Label layoutX="25.0" layoutY="185.0" prefHeight="17.0" prefWidth="108.0" text="Linienstärke">
                                        <font>
@@ -132,7 +133,7 @@
                                        </font>
                                     </Label>
                                     <Label fx:id="labelLinienstaerke" text="Linienstärke: 0" />
-                                    <Slider fx:id="SliderLinienstärke" blockIncrement="0.01" majorTickUnit="0.25" max="1.0" minorTickCount="4" showTickLabels="true" showTickMarks="true" />
+                                    <Slider fx:id="sliderLinienstärke" blockIncrement="0.01" majorTickUnit="0.25" max="1.0" minorTickCount="4" showTickLabels="true" showTickMarks="true" />
                                     <Separator layoutX="25.0" layoutY="272.0" prefHeight="12.0" prefWidth="285.0" />
                                     <Label text="Anzeigeeinstellungen">
                                        <font>
@@ -146,7 +147,7 @@
                                        </font>
                                     </Label>
                                     <Label fx:id="labelLinienbreiteAnzeige" layoutX="25.0" layoutY="311.0" text="Linienbreite: 0" />
-                                    <Slider fx:id="SliderLinienbreiteAnzeige" blockIncrement="0.01" layoutX="25.0" layoutY="333.0" majorTickUnit="0.25" max="1.0" minorTickCount="4" showTickLabels="true" showTickMarks="true" />
+                                    <Slider fx:id="sliderLinienbreiteAnzeige" blockIncrement="0.01" layoutX="25.0" layoutY="333.0" majorTickUnit="0.25" max="1.0" minorTickCount="4" showTickLabels="true" showTickMarks="true" />
                                     <Separator layoutX="25.0" layoutY="376.0" prefHeight="12.0" prefWidth="285.0" />
                                     <Label layoutX="25.0" layoutY="609.0" text="Hintegrundfarbe">
                                        <font>
@@ -167,6 +168,9 @@
                               </VBox>
                            </content>
                         </ScrollPane>
+                        <Label layoutX="347.0" layoutY="533.0" text="Max. Iterationen" />
+                        <Label layoutX="548.0" layoutY="533.0" text="Aktuelle Iteration" />
+                        <TextArea fx:id="textAreaAusgabe" editable="false" layoutX="289.0" layoutY="527.0" prefHeight="56.0" prefWidth="274.0" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="25.0" />
                      </children></AnchorPane>
             </content>
           </Tab>
