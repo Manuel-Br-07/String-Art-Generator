@@ -35,6 +35,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.canvas.Canvas?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ColorPicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
@@ -100,38 +101,38 @@
                         <Slider layoutX="551.0" layoutY="569.0" majorTickUnit="100.0" prefHeight="38.0" prefWidth="174.0" showTickLabels="true" showTickMarks="true" AnchorPane.bottomAnchor="15.0" />
                         <ScrollPane layoutY="26.0" prefHeight="496.0" prefWidth="318.0" AnchorPane.bottomAnchor="79.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="26.0">
                            <content>
-                              <VBox prefHeight="765.0" prefWidth="303.0" spacing="5.0">
+                              <VBox prefWidth="303.0" spacing="5.0">
                                  <children>
                                     <Label text="Anzahl Nägel">
                                        <font>
                                           <Font name="System Bold" size="12.0" />
                                        </font>
                                     </Label>
-                                    <Spinner editable="true" />
-                                    <Label prefHeight="17.0" prefWidth="138.0" text="Nagelabstand; n mm" />
+                                    <Spinner fx:id="spinnerAnzahlNaegel" editable="true" />
+                                    <Label fx:id="LabelNagelabstand" prefHeight="17.0" prefWidth="138.0" text="Nagelabstand; n mm" />
                                     <Separator prefHeight="12.0" prefWidth="273.0" />
                                     <Label text="Durchmesser">
                                        <font>
                                           <Font name="System Bold" size="12.0" />
                                        </font>
                                     </Label>
-                                    <Spinner editable="true" />
+                                    <Spinner fx:id="spinnerDurchmesser" editable="true" />
                                     <Separator layoutX="25.0" layoutY="99.0" prefHeight="12.0" prefWidth="285.0" />
                                     <Label layoutX="25.0" layoutY="116.0" prefHeight="17.0" prefWidth="108.0" text="Linienbreite">
                                        <font>
                                           <Font name="System Bold" size="12.0" />
                                        </font>
                                     </Label>
-                                    <Label prefHeight="17.0" prefWidth="112.0" text="Linienbreite: 1 " />
-                                    <Slider minorTickCount="4" prefHeight="14.0" prefWidth="226.0" showTickLabels="true" showTickMarks="true" />
+                                    <Label fx:id="labelLinienbreite" prefHeight="17.0" prefWidth="112.0" text="Linienbreite: 1 " />
+                                    <Slider fx:id="SliderLinienbreite" minorTickCount="4" prefHeight="14.0" prefWidth="226.0" showTickLabels="true" showTickMarks="true" />
                                     <Separator layoutX="25.0" layoutY="168.0" prefHeight="12.0" prefWidth="285.0" />
                                     <Label layoutX="25.0" layoutY="185.0" prefHeight="17.0" prefWidth="108.0" text="Linienstärke">
                                        <font>
                                           <Font name="System Bold" size="12.0" />
                                        </font>
                                     </Label>
-                                    <Label text="Linienstärke: 0" />
-                                    <Slider blockIncrement="0.01" majorTickUnit="0.25" max="1.0" minorTickCount="4" showTickLabels="true" showTickMarks="true" />
+                                    <Label fx:id="labelLinienstaerke" text="Linienstärke: 0" />
+                                    <Slider fx:id="SliderLinienstärke" blockIncrement="0.01" majorTickUnit="0.25" max="1.0" minorTickCount="4" showTickLabels="true" showTickMarks="true" />
                                     <Separator layoutX="25.0" layoutY="272.0" prefHeight="12.0" prefWidth="285.0" />
                                     <Label text="Anzeigeeinstellungen">
                                        <font>
@@ -139,21 +140,29 @@
                                        </font>
                                     </Label>
                                     <Separator layoutX="25.0" layoutY="376.0" prefHeight="12.0" prefWidth="285.0" />
-                                    <Label layoutX="25.0" layoutY="289.0" prefHeight="17.0" prefWidth="108.0" text="Linienstärke">
+                                    <Label layoutX="25.0" layoutY="289.0" prefHeight="17.0" prefWidth="108.0" text="Linienbreite">
                                        <font>
                                           <Font name="System Bold" size="12.0" />
                                        </font>
                                     </Label>
-                                    <Label layoutX="25.0" layoutY="311.0" text="Linienstärke: 0" />
-                                    <Slider blockIncrement="0.01" layoutX="25.0" layoutY="333.0" majorTickUnit="0.25" max="1.0" minorTickCount="4" showTickLabels="true" showTickMarks="true" />
+                                    <Label fx:id="labelLinienbreiteAnzeige" layoutX="25.0" layoutY="311.0" text="Linienbreite: 0" />
+                                    <Slider fx:id="SliderLinienbreiteAnzeige" blockIncrement="0.01" layoutX="25.0" layoutY="333.0" majorTickUnit="0.25" max="1.0" minorTickCount="4" showTickLabels="true" showTickMarks="true" />
                                     <Separator layoutX="25.0" layoutY="376.0" prefHeight="12.0" prefWidth="285.0" />
-                                    <Label text="AutoModus?" />
-                                    <Label text="Endwert" />
-                                    <Label text="Hintergrundfarbe" />
-                                    <Label text="Linienfarbe?" />
+                                    <Label layoutX="25.0" layoutY="609.0" text="Hintegrundfarbe">
+                                       <font>
+                                          <Font name="System Bold" size="12.0" />
+                                       </font>
+                                    </Label>
+                                    <ColorPicker fx:id="colorPickerHintergrund" />
+                                    <Separator layoutX="25.0" layoutY="523.0" prefHeight="12.0" prefWidth="285.0" />
+                                    <Label text="Linienfarbe">
+                                       <font>
+                                          <Font name="System Bold" size="12.0" />
+                                       </font></Label>
+                                    <ColorPicker fx:id="colorPickerLinie" />
                                  </children>
                                  <padding>
-                                    <Insets left="15.0" right="15.0" top="15.0" />
+                                    <Insets bottom="20.0" left="15.0" right="15.0" top="15.0" />
                                  </padding>
                               </VBox>
                            </content>
