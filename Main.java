@@ -1,12 +1,12 @@
 
 public class Main {
     private Data data;
-    private Queue<int[]> lineOrder = new Queue();
-    private StringArtPlotter stringArtPlotter = new StringArtPlotter();
+    private Queue<int[]> lineOrder;
+    private StringArtPlotter stringArtPlotter;
 
-    private ImageToArray imageToArray = new ImageToArray(data, lineOrder, stringArtPlotter);
-    private StringartGenerator stringartGen = new StringartGenerator(data, lineOrder, stringArtPlotter);
-    private GcodeGenerator gcodeGen = new GcodeGenerator(data, lineOrder, stringArtPlotter);
+    private ImageToArray imageToArray;
+    private StringartGenerator stringartGen;
+    private GcodeGenerator gcodeGen;
 
     // //immageToArray
     // private int width;
@@ -27,12 +27,14 @@ public class Main {
     // private double mmProPixel;
 
     // double lineWidth;
-    public Main(Data pData)
+    public Main(Data pData, Queue<int[]> pLineOrder, StringArtPlotter pStringArtPlotter, ImageToArray pImageToArray, StringartGenerator pStringartGen, GcodeGenerator pGcodeGen)
     {
         data = pData;
-        imageToArray = new ImageToArray(data, lineOrder, stringArtPlotter);
-        stringartGen = new StringartGenerator(data, lineOrder, stringArtPlotter);
-        gcodeGen = new GcodeGenerator(data, lineOrder, stringArtPlotter);
+        lineOrder = pLineOrder;
+        stringArtPlotter = pStringArtPlotter;
+        imageToArray = pImageToArray;
+        stringartGen = pStringartGen;
+        gcodeGen = pGcodeGen;
         
         // imageToArray("SmileyRGB.png");
         // imageToArray("TestPortraitRGB.png");

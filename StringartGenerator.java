@@ -1,3 +1,4 @@
+import java.util.function.Consumer;
 
 /**
  * Beschreiben Sie hier die Klasse StringartGenerator.
@@ -29,6 +30,16 @@ public class StringartGenerator
 
     double lineWidth;
     double lineStrength;
+    int maxIterations;
+
+    // Listener für Fortschritt
+    private Consumer<Double> progressListener;
+
+    // Setter für den Listener
+    public void setProgressListener(Consumer<Double> listener) {
+        this.progressListener = listener;
+    }
+
     /**
      * Konstruktor für Objekte der Klasse StringartGenerator
      */
@@ -44,7 +55,7 @@ public class StringartGenerator
         // ------------------ GET ------------------
         width = data.getWidth();
         height = data.getHeight();
-        bildArray = data.getBildArray();
+        bildArray = generateArray(data.getBildArray());
 
         nails = data.getNails();
         nailCoords = data.getNailCoords();
@@ -54,12 +65,13 @@ public class StringartGenerator
 
         lineWidth = data.getLineWidth();
         lineStrength = data.getLineStrength();
+        maxIterations = data.getMaxIterations();
         // ------------------ BEARBEITUNG ------------------
 
         stringArtGenerator();
 
         // ------------------ SET ------------------
-        data.setlineOrderArray(lineOrderArray);
+        // data.setlineOrderArray(lineOrderArray);
         data.setNails(nails);
         data.setDiameter(diameter);
         data.setMmProPixel(mmProPixel);
@@ -74,7 +86,9 @@ public class StringartGenerator
         double endpoint = averageColour() + (1 - averageColour()) / 10 * 8.5;
         System.out.println("Endpoint " + endpoint);
 
-        while (averageColour() <= endpoint && iterations < 50000) {
+        for(int i=0; i < maxIterations; i++)
+        {
+            // while (averageColour() <= endpoint && iterations < 50000) {
             double bestScore = 0;
             int bestEndNail = -1;
             for (int endNail = 0; endNail < nails; endNail++) {
@@ -102,29 +116,18 @@ public class StringartGenerator
                 lightenLine(startNail, bestEndNail, lineStrength);
                 startNail = bestEndNail;
                 iterations++;
-                System.out.println("iterations " + iterations + " average " + averageColour());
+
+                // meldet Progress an die Progressbar
+                if (progressListener != null) {
+                    progressListener.accept((double) iterations / maxIterations);
+                    // System.out.println("Wert weitergegeben");
+                }
             }
         }
 
+        System.out.println("iterations " + iterations + " average " + averageColour());
         listToArray();
 
-        // for (int y = 0; y < height; y++) {
-        // for (int x = 0; x < width; x++) {
-        // if (bildArray[y][x] >= 0) {
-        // if (bildArray[y][x] > 0.5) {
-        // System.out.print(" ");
-        // } else {
-        // System.out.print("█");
-        // }
-        // } else {
-        // System.out.print("X");
-        // if (bildArray[y][x] >= 0) {
-        // System.out.print("T");
-        // }
-        // }
-        // }
-        // System.out.println();
-        // }
         return iterations;
     }
 
@@ -290,5 +293,22 @@ public class StringartGenerator
             }
         }
         return summ / ans;
+    }
+
+    private double[][] generateArray(double[][] pArray)
+    {
+        int x = pArray.length;
+        int y = pArray[0].length;
+        double[][] array = new double[x][y];
+
+        for(int i = 0; i < x; i++)
+        {
+            for(int j = 0; j < y; j++)
+            {
+                array[i][j] = pArray[i][j];
+            }
+        }
+
+        return array;
     }
 }

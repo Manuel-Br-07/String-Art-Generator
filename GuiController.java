@@ -18,7 +18,11 @@ import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.control.ColorPicker;
+import javafx.scene.paint.Color;
 import javafx.scene.control.TextArea;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.control.ProgressBar;
 
 import javafx.scene.image.WritableImage;
 /**
@@ -30,7 +34,12 @@ import javafx.scene.image.WritableImage;
 public class GuiController extends Application
 {
     private Data data = new Data();
-    private Main main = new Main(data);
+    private Queue<int[]> lineOrder = new Queue();
+    private StringArtPlotter stringArtPlotter = new StringArtPlotter();
+    private ImageToArray imageToArray = new ImageToArray(data, lineOrder, stringArtPlotter);
+    private StringartGenerator stringartGen = new StringartGenerator(data, lineOrder, stringArtPlotter);
+    private GcodeGenerator gcodeGen = new GcodeGenerator(data, lineOrder, stringArtPlotter);
+    private Main main = new Main(data, lineOrder, stringArtPlotter, imageToArray, stringartGen, gcodeGen);
     private HeatmapGen heatmapGen = new HeatmapGen();
 
     //---------- 1. Seite ----------
@@ -53,6 +62,8 @@ public class GuiController extends Application
     @FXML
     private Slider sliderCurrentIteration;
     @FXML
+    private Label labelCurrentIteration;
+    @FXML
     private Spinner<Integer> spinnerAnzahlNaegel;
     @FXML
     private Label labelNagelabstand;
@@ -69,15 +80,22 @@ public class GuiController extends Application
     @FXML 
     private Label labelLinienbreiteAnzeige;
     @FXML
-    private Slider sliderlinienbreiteAnzeige;
+    private Slider sliderLinienbreiteAnzeige;
     @FXML
     private ColorPicker colorPickerHintergrund;
     @FXML
     private ColorPicker colorPickerLinie;
     @FXML
     private TextArea textAreaAusgabe;
+    @FXML
+    private Canvas canvas;
+    @FXML
+    private Rectangle rectangleBGCanvas;
+    @FXML
+    private ProgressBar progressbarStringGenerator;
 
     //---------- 3. Seite ----------
+
     //---------- Initialisierung ----------
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -103,7 +121,7 @@ public class GuiController extends Application
         sliderCurrentIteration.setMax(spinnerMaxIterations.getValue());
 
         SpinnerValueFactory<Integer> anzahlNaegelFactory =
-            new SpinnerValueFactory.IntegerSpinnerValueFactory(2, 1000, 0);
+            new SpinnerValueFactory.IntegerSpinnerValueFactory(2, 1000, 150);
         spinnerAnzahlNaegel.setValueFactory(anzahlNaegelFactory);
 
         SpinnerValueFactory<Integer> durchmesserFactory =
@@ -111,16 +129,19 @@ public class GuiController extends Application
         spinnerDurchmesser.setValueFactory(durchmesserFactory);
 
         eventListeners();
+        bindings();
+        stringartProgress();
     }
 
     @FXML
     public void eventListeners()
     {   
-        //spinnerMaxIterations
+        //ssetMaxIterations
         spinnerMaxIterations.valueProperty().addListener((obs, oldValue, newValue) -> {
 
                     // Maximalwert des Sliders setzen
                     sliderCurrentIteration.setMax(newValue);
+                    data.setMaxIterations(newValue);
 
                     // Falls der Slider gerade über dem Limit liegt → heruntersetzen
                     if (sliderCurrentIteration.getValue() > newValue) {
@@ -128,7 +149,7 @@ public class GuiController extends Application
                     }
             });
 
-        // sliderCurrentIteration nur bei loslassen!!
+        // setCurrentIteration nur bei loslassen!!
         sliderCurrentIteration.valueChangingProperty().addListener((obs, wasChanging, isChanging) -> {
                     if (!isChanging) {
                         // Benutzer hat den Slider losgelassen
@@ -137,19 +158,55 @@ public class GuiController extends Application
                     }
             });
 
-        //spinnerAnzahlNaegel
+        //setNails
         spinnerAnzahlNaegel.valueProperty().addListener((obs, oldValue, newValue) -> {
 
-                    data.setNails(newValue);
+                    main.nailPositions(newValue);
                     labelNagelabstand.setText("Nagelabstand: " + main.setAbstand() + " mm");
             });
 
-        //spinnerDurchmesser
+        //setScale
         spinnerDurchmesser.valueProperty().addListener((obs, oldValue, newValue) -> {
 
                     main.setScale(newValue);
                     labelNagelabstand.setText("Nagelabstand: " + main.setAbstand() + " mm");
             });
+
+        //setlineWidth
+        sliderLinienbreite.valueProperty().addListener((obs, oldVal, newVal) ->
+                data.setLineWidth((double)newVal)
+        );
+
+        //setlineStrength
+        sliderLinienstaerke.valueProperty().addListener((obs, oldVal, newVal) ->
+                data.setLineStrength((double)newVal)
+        );
+
+        //setLineWidthDisplay
+        sliderLinienbreiteAnzeige.valueProperty().addListener((obs, oldVal, newVal) ->
+                data.setLineWidthDisplay((double)newVal)
+        );
+
+        //setBackgroundColor
+        colorPickerHintergrund.valueProperty().addListener((obs, oldVal, newVal) -> {
+                    data.setBackgroundColor(newVal);
+                    rectangleBGCanvas.setFill(newVal);
+            });
+
+        //setLineColor
+        colorPickerLinie.valueProperty().addListener((obs, oldVal, newVal) ->
+                data.setLineColor(newVal)
+        );
+
+    }
+
+    @FXML
+    public void bindings()
+    {
+        bindSliderToLabel(sliderCurrentIteration, labelCurrentIteration, "%.0f");
+        bindSliderToLabel(sliderLinienbreite, labelLinienbreite, "Linienbreite: %.3f");
+        bindSliderToLabel(sliderLinienstaerke, labelLinienstaerke, "Linienstärke: %.3f");
+        bindSliderToLabel(sliderLinienbreiteAnzeige, labelLinienbreiteAnzeige, "Linienbreite: %.3f");
     }
 
     //---------- 1. Seite ----------
@@ -195,10 +252,36 @@ public class GuiController extends Application
     public void generateHeatmap()
     {
         WritableImage heatmap = heatmapGen.createHeatmap(data.getBildArray());
-        System.out.println("IMG " + heatmap);
         convertedImage.setImage(heatmap);
     }
 
     //---------- 2. Seite ----------
+    @FXML
+    public void bindSliderToLabel(Slider slider, Label label, String format)
+    {
+        slider.valueProperty().addListener((obs, oldVal, newVal) ->
+                label.setText(String.format(format, newVal.doubleValue()))
+        );
+    }
 
+    @FXML
+    public void generateArray()
+    {
+        progressbarStringGenerator.setProgress(-1);
+        main.stringartGenerator();
+    }
+
+    public void stringartProgress()
+    {
+        stringartGen.setProgressListener(progress -> {
+                    // progressbarStringGenerator.setProgress(progress);
+                    // System.out.println("update" + progress);
+                    if(progress == 1)
+                    {
+                        progressbarStringGenerator.setProgress(0);
+                    }
+            });
+    }
+
+    //---------- 3. Seite ----------
 }

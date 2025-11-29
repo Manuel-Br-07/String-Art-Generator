@@ -40,6 +40,7 @@
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.ProgressBar?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.Slider?>
@@ -53,7 +54,7 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="656.0" prefWidth="860.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GuiController">
+<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="690.0" prefWidth="860.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GuiController">
    <children>
       <MenuBar layoutX="2.0" layoutY="8.0" prefHeight="25.0" prefWidth="267.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <menus>
@@ -94,13 +95,14 @@
             <content>
               <AnchorPane disable="true" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <Separator layoutX="361.0" layoutY="18.0" orientation="VERTICAL" AnchorPane.bottomAnchor="80.0" AnchorPane.leftAnchor="315.0" AnchorPane.topAnchor="0.0" />
-                        <Separator layoutX="135.0" layoutY="524.0" prefHeight="2.0" prefWidth="337.0" AnchorPane.bottomAnchor="80.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="523.0" />
-                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="500.0" layoutX="343.0" layoutY="18.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0" width="500.0" AnchorPane.leftAnchor="335.0" AnchorPane.topAnchor="25.0" />
+                        <Separator layoutX="361.0" layoutY="18.0" orientation="VERTICAL" prefHeight="526.0" prefWidth="5.0" AnchorPane.bottomAnchor="111.0" AnchorPane.leftAnchor="315.0" AnchorPane.topAnchor="0.0" />
+                        <Separator layoutY="524.0" prefHeight="2.0" prefWidth="337.0" AnchorPane.bottomAnchor="110.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="523.0" />
+                        <Rectangle fx:id="rectangleBGCanvas" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="500.0" layoutX="343.0" layoutY="18.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0" width="500.0" AnchorPane.leftAnchor="335.0" AnchorPane.topAnchor="25.0" />
                         <Canvas fx:id="canvas" height="500.0" layoutX="476.0" layoutY="100.0" width="500.0" AnchorPane.leftAnchor="335.0" AnchorPane.topAnchor="25.0" />
-                        <Spinner fx:id="spinnerMaxIterations" editable="true" layoutX="347.0" layoutY="564.0" AnchorPane.bottomAnchor="20.0" />
-                        <Slider fx:id="sliderCurrentIteration" blockIncrement="100.0" layoutX="548.0" layoutY="552.0" majorTickUnit="100.0" minorTickCount="4" prefHeight="38.0" prefWidth="174.0" showTickLabels="true" showTickMarks="true" AnchorPane.bottomAnchor="13.0" />
-                        <ScrollPane layoutY="26.0" prefHeight="496.0" prefWidth="318.0" AnchorPane.bottomAnchor="79.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="26.0">
+                        <Spinner fx:id="spinnerMaxIterations" editable="true" layoutX="347.0" layoutY="564.0" AnchorPane.bottomAnchor="50.0" />
+                        <Slider fx:id="sliderCurrentIteration" blockIncrement="100.0" layoutX="548.0" layoutY="552.0" majorTickUnit="100.0" minorTickCount="5" prefHeight="38.0" prefWidth="174.0" showTickLabels="true" showTickMarks="true" AnchorPane.bottomAnchor="43.0" />
+                        <Label fx:id="labelCurrentIteration" layoutX="728.0" layoutY="552.0" prefHeight="17.0" prefWidth="62.0" text="0" AnchorPane.bottomAnchor="62.0" />
+                        <ScrollPane layoutY="26.0" prefHeight="498.0" prefWidth="318.0" AnchorPane.bottomAnchor="113.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="26.0">
                            <content>
                               <VBox prefWidth="303.0" spacing="5.0">
                                  <children>
@@ -133,7 +135,7 @@
                                        </font>
                                     </Label>
                                     <Label fx:id="labelLinienstaerke" text="Linienstärke: 0" />
-                                    <Slider fx:id="sliderLinienstärke" blockIncrement="0.01" majorTickUnit="0.25" max="1.0" minorTickCount="4" showTickLabels="true" showTickMarks="true" />
+                                    <Slider fx:id="sliderLinienstaerke" blockIncrement="0.01" majorTickUnit="0.25" max="1.0" minorTickCount="4" showTickLabels="true" showTickMarks="true" />
                                     <Separator layoutX="25.0" layoutY="272.0" prefHeight="12.0" prefWidth="285.0" />
                                     <Label text="Anzeigeeinstellungen">
                                        <font>
@@ -159,7 +161,8 @@
                                     <Label text="Linienfarbe">
                                        <font>
                                           <Font name="System Bold" size="12.0" />
-                                       </font></Label>
+                                       </font>
+                                    </Label>
                                     <ColorPicker fx:id="colorPickerLinie" />
                                  </children>
                                  <padding>
@@ -168,9 +171,11 @@
                               </VBox>
                            </content>
                         </ScrollPane>
-                        <Label layoutX="347.0" layoutY="533.0" text="Max. Iterationen" />
-                        <Label layoutX="548.0" layoutY="533.0" text="Aktuelle Iteration" />
-                        <TextArea fx:id="textAreaAusgabe" editable="false" layoutX="289.0" layoutY="527.0" prefHeight="56.0" prefWidth="274.0" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="25.0" />
+                        <Label layoutX="347.0" layoutY="533.0" text="Max. Iterationen" AnchorPane.bottomAnchor="88.0" />
+                        <Label layoutX="548.0" layoutY="533.0" text="Aktuelle Iteration" AnchorPane.bottomAnchor="88.0" />
+                        <TextArea fx:id="textAreaAusgabe" editable="false" layoutX="289.0" layoutY="527.0" prefHeight="81.0" prefWidth="274.0" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="25.0" />
+                        <Button layoutX="760.0" layoutY="546.0" mnemonicParsing="false" onAction="#generateArray" text="Generieren" AnchorPane.bottomAnchor="62.0" AnchorPane.leftAnchor="760.0" />
+                        <ProgressBar fx:id="progressbarStringGenerator" layoutX="322.0" layoutY="597.0" prefWidth="200.0" progress="0.0" AnchorPane.bottomAnchor="22.0" />
                      </children></AnchorPane>
             </content>
           </Tab>

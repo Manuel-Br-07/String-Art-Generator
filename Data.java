@@ -1,4 +1,4 @@
-
+import javafx.scene.paint.Color;
 /**
  * Beschreiben Sie hier die Klasse Data.
  * 
@@ -36,19 +36,22 @@ public class Data
 
     //StringArtGenerator
     private double lineWidth = 2;
-    
+
     //calculateCoordinates
     private double[][] absoluteNailPositions;
     private double gapsize = 3;
-    
-    //GuiControllerSettings
+
+    //GuiControllerSettings  
     private int maxIterations;
     private int currentIteration;
     private double lineStrength = 0.6;
     private double lineWidthDisplay;
     private double nailDistance;
-    // private backgroundColour;
-    // private lineColour;
+    private Color backgroundColor;
+    private Color lineColor;
+
+    //rückgabewerte
+    private String textOutputStrings;
 
     /**
      * Konstruktor für Objekte der Klasse Data
@@ -171,7 +174,7 @@ public class Data
     public void setLineWidth(double lineWidth) {
         this.lineWidth = lineWidth;
     }
-    
+
     public double[][] getAbsoluteNailPositions() {
         return absoluteNailPositions;
     }
@@ -179,7 +182,7 @@ public class Data
     public void setAbsoluteNailPositions(double[][] absoluteNailPositions) {
         this.absoluteNailPositions = absoluteNailPositions;
     }
-    
+
     public double getGapsize() {
         return gapsize;
     }
@@ -187,7 +190,7 @@ public class Data
     public void setGapsize(double gapsize) {
         this.gapsize = gapsize;
     }
-    
+
     public int getMaxIterations() {
         return maxIterations;
     }
@@ -195,7 +198,7 @@ public class Data
     public void setMaxIterations(int maxIterations) {
         this.maxIterations = maxIterations;
     }
-    
+
     public int getCurrentIteration() {
         return currentIteration;
     }
@@ -203,7 +206,7 @@ public class Data
     public void setCurrentIteration(int currentIteration) {
         this.currentIteration = currentIteration;
     }
-    
+
     public double getLineStrength() {
         return lineStrength;
     }
@@ -211,7 +214,7 @@ public class Data
     public void setLineStrength(double lineStrength) {
         this.lineStrength = lineStrength;
     }
-    
+
     public double getLineWidthDisplay() {
         return lineWidthDisplay;
     }
@@ -219,12 +222,36 @@ public class Data
     public void setLineWidthDisplay(double lineWidthDisplay) {
         this.lineWidthDisplay = lineWidthDisplay;
     }
-    
+
     public double getNailDistance() {
         return nailDistance;
     }
 
     public void setNailDistance(double nailDistance) {
         this.nailDistance = nailDistance;
+    }
+
+    public Color getBackgroundColor() {
+        return backgroundColor;
+    }
+
+    public void setBackgroundColor(Color backgroundColor) {
+        this.backgroundColor = backgroundColor;
+    }
+
+    public Color getLineColor() {
+        return lineColor;
+    }
+
+    public void setLineColor(Color lineColor) {
+        this.lineColor = lineColor;
+    }
+
+    public String getTextOutputStrings() {
+        return textOutputStrings;
+    }
+
+    public void setTextOutputStrings(String textOutputStrings) {
+        this.textOutputStrings = textOutputStrings;
     }
 }
