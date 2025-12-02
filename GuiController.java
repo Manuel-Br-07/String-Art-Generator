@@ -22,6 +22,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.control.TextArea;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.ProgressBar;
 
 import javafx.scene.image.WritableImage;
@@ -41,6 +42,7 @@ public class GuiController extends Application
     private GcodeGenerator gcodeGen = new GcodeGenerator(data, lineOrder, stringArtPlotter);
     private Main main = new Main(data, lineOrder, stringArtPlotter, imageToArray, stringartGen, gcodeGen);
     private HeatmapGen heatmapGen = new HeatmapGen();
+    private GraphicsContext gc;
 
     //---------- 1. Seite ----------
     @FXML
@@ -154,7 +156,7 @@ public class GuiController extends Application
                     if (!isChanging) {
                         // Benutzer hat den Slider losgelassen
                         data.setCurrentIteration((int) sliderCurrentIteration.getValue());
-                        System.out.println(data.getCurrentIteration() + "");
+                        drawLines();
                     }
             });
 
@@ -183,9 +185,10 @@ public class GuiController extends Application
         );
 
         //setLineWidthDisplay
-        sliderLinienbreiteAnzeige.valueProperty().addListener((obs, oldVal, newVal) ->
-                data.setLineWidthDisplay((double)newVal)
-        );
+        sliderLinienbreiteAnzeige.valueProperty().addListener((obs, oldVal, newVal) ->{
+                data.setLineWidthDisplay((double)newVal);
+                drawLines();
+            });
 
         //setBackgroundColor
         colorPickerHintergrund.valueProperty().addListener((obs, oldVal, newVal) -> {
@@ -194,9 +197,10 @@ public class GuiController extends Application
             });
 
         //setLineColor
-        colorPickerLinie.valueProperty().addListener((obs, oldVal, newVal) ->
-                data.setLineColor(newVal)
-        );
+        colorPickerLinie.valueProperty().addListener((obs, oldVal, newVal) ->{
+                data.setLineColor(newVal);
+                drawLines();
+            });
 
     }
 
@@ -267,20 +271,50 @@ public class GuiController extends Application
     @FXML
     public void generateArray()
     {
-        progressbarStringGenerator.setProgress(-1);
+        // progressbarStringGenerator.setProgress(-1);
         main.stringartGenerator();
+    }
+
+    @FXML
+    public void drawLines()
+    { // Sicherung einbauen, dass keine PArameter null sind
+        int[][] lineOrderArray = data.getlineOrderArray();
+        double[][] nailCoords = data.getNailCoords();
+        int currentIteration = data.getCurrentIteration();
+        Color lineColor = data.getLineColor();
+        double lineWidthDisplay = data.getLineWidthDisplay();
+        gc = canvas.getGraphicsContext2D();
+
+        double scaleX = canvas.getWidth() / data.getWidth();
+        double scaleY = canvas.getHeight() / data.getHeight();
+
+        gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+        for(int i = 0; i < currentIteration; i++)
+        {
+            double x1 = nailCoords[lineOrderArray[i][0]][0] * scaleX;
+            double x2 = nailCoords[lineOrderArray[i][1]][0] * scaleX;
+            double y1 = nailCoords[lineOrderArray[i][0]][1] * scaleY;
+            double y2 = nailCoords[lineOrderArray[i][1]][1] * scaleY;
+            System.out.println("x" + x1 + "y" + y1);
+            if (gc != null) {
+                gc.setStroke(lineColor);
+                gc.setLineWidth(lineWidthDisplay);
+                gc.strokeLine(x1, y1, x2, y2); // Zeichnet die neue Linie direkt auf den Canvas
+            }
+        }
+
     }
 
     public void stringartProgress()
     {
-        stringartGen.setProgressListener(progress -> {
-                    // progressbarStringGenerator.setProgress(progress);
-                    // System.out.println("update" + progress);
-                    if(progress == 1)
-                    {
-                        progressbarStringGenerator.setProgress(0);
-                    }
-            });
+        // stringartGen.setProgressListener(progress -> {
+        // // progressbarStringGenerator.setProgress(progress);
+        // // System.out.println("update" + progress);
+        // if(progress == 1)
+        // {
+        // progressbarStringGenerator.setProgress(0);
+        // }
+        // });
     }
 
     //---------- 3. Seite ----------

@@ -25,7 +25,7 @@ public class Data
 
     //nailPositions
     private int nails;
-    private double[][] nailCoords;  
+    private double[][] nailCoords;
 
     //setScale
     private double diameter;

@@ -71,7 +71,7 @@ public class StringartGenerator
         stringArtGenerator();
 
         // ------------------ SET ------------------
-        // data.setlineOrderArray(lineOrderArray);
+        data.setlineOrderArray(lineOrderArray);
         data.setNails(nails);
         data.setDiameter(diameter);
         data.setMmProPixel(mmProPixel);
