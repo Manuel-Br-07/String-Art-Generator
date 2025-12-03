@@ -1,3 +1,4 @@
+import javafx.application.Platform;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -95,6 +96,8 @@ public class GuiController extends Application
     private Rectangle rectangleBGCanvas;
     @FXML
     private ProgressBar progressbarStringGenerator;
+    @FXML
+    private Button generateArt;
 
     //---------- 3. Seite ----------
 
@@ -158,6 +161,7 @@ public class GuiController extends Application
                         data.setCurrentIteration((int) sliderCurrentIteration.getValue());
                         drawLines();
                     }
+
             });
 
         //setNails
@@ -186,8 +190,8 @@ public class GuiController extends Application
 
         //setLineWidthDisplay
         sliderLinienbreiteAnzeige.valueProperty().addListener((obs, oldVal, newVal) ->{
-                data.setLineWidthDisplay((double)newVal);
-                drawLines();
+                    data.setLineWidthDisplay((double)newVal);
+                    drawLines();
             });
 
         //setBackgroundColor
@@ -198,8 +202,8 @@ public class GuiController extends Application
 
         //setLineColor
         colorPickerLinie.valueProperty().addListener((obs, oldVal, newVal) ->{
-                data.setLineColor(newVal);
-                drawLines();
+                    data.setLineColor(newVal);
+                    drawLines();
             });
 
     }
@@ -272,12 +276,16 @@ public class GuiController extends Application
     public void generateArray()
     {
         // progressbarStringGenerator.setProgress(-1);
-        main.stringartGenerator();
+        generateArt.setDisable(true);
+                    main.stringartGenerator();
+                    drawLines();
+                    generateArt.setDisable(false);
+                    // progressbarStringGenerator.setProgress(0);
     }
 
     @FXML
     public void drawLines()
-    { // Sicherung einbauen, dass keine PArameter null sind
+    { // Sicherung einbauen, dass keine Parameter null sind
         int[][] lineOrderArray = data.getlineOrderArray();
         double[][] nailCoords = data.getNailCoords();
         int currentIteration = data.getCurrentIteration();
@@ -288,18 +296,21 @@ public class GuiController extends Application
         double scaleX = canvas.getWidth() / data.getWidth();
         double scaleY = canvas.getHeight() / data.getHeight();
 
-        gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
-        for(int i = 0; i < currentIteration; i++)
+        if(lineOrderArray != null && nailCoords != null && currentIteration > 0 && lineWidthDisplay > 0.0)
         {
-            double x1 = nailCoords[lineOrderArray[i][0]][0] * scaleX;
-            double x2 = nailCoords[lineOrderArray[i][1]][0] * scaleX;
-            double y1 = nailCoords[lineOrderArray[i][0]][1] * scaleY;
-            double y2 = nailCoords[lineOrderArray[i][1]][1] * scaleY;
-            System.out.println("x" + x1 + "y" + y1);
-            if (gc != null) {
-                gc.setStroke(lineColor);
-                gc.setLineWidth(lineWidthDisplay);
-                gc.strokeLine(x1, y1, x2, y2); // Zeichnet die neue Linie direkt auf den Canvas
+            gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+            for(int i = 0; i < currentIteration && i < lineOrderArray.length; i++)
+            {
+                double x1 = nailCoords[lineOrderArray[i][0]][0] * scaleX;
+                double x2 = nailCoords[lineOrderArray[i][1]][0] * scaleX;
+                double y1 = nailCoords[lineOrderArray[i][0]][1] * scaleY;
+                double y2 = nailCoords[lineOrderArray[i][1]][1] * scaleY;
+
+                if (gc != null) {
+                    gc.setStroke(lineColor);
+                    gc.setLineWidth(lineWidthDisplay);
+                    gc.strokeLine(x1, y1, x2, y2); // Zeichnet die neue Linie direkt auf den Canvas
+                }
             }
         }
 
@@ -308,8 +319,8 @@ public class GuiController extends Application
     public void stringartProgress()
     {
         // stringartGen.setProgressListener(progress -> {
-        // // progressbarStringGenerator.setProgress(progress);
-        // // System.out.println("update" + progress);
+        // progressbarStringGenerator.setProgress(progress);
+        // System.out.println("update" + progress);
         // if(progress == 1)
         // {
         // progressbarStringGenerator.setProgress(0);
