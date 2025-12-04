@@ -155,12 +155,10 @@ public class GuiController extends Application
             });
 
         // setCurrentIteration nur bei loslassen!!
-        sliderCurrentIteration.valueChangingProperty().addListener((obs, wasChanging, isChanging) -> {
-                    if (!isChanging) {
-                        // Benutzer hat den Slider losgelassen
-                        data.setCurrentIteration((int) sliderCurrentIteration.getValue());
-                        drawLines();
-                    }
+        sliderCurrentIteration.valueProperty().addListener((obs, oldVal, newVal) -> {
+                    // Benutzer hat den Slider losgelassen
+                    data.setCurrentIteration((int) sliderCurrentIteration.getValue());
+                    drawLines();
 
             });
 
@@ -277,10 +275,10 @@ public class GuiController extends Application
     {
         // progressbarStringGenerator.setProgress(-1);
         generateArt.setDisable(true);
-                    main.stringartGenerator();
-                    drawLines();
-                    generateArt.setDisable(false);
-                    // progressbarStringGenerator.setProgress(0);
+        main.stringartGenerator();
+        drawLines();
+        generateArt.setDisable(false);
+        // progressbarStringGenerator.setProgress(0);
     }
 
     @FXML
@@ -313,7 +311,8 @@ public class GuiController extends Application
                 }
             }
         }
-
+        
+        textAreaAusgabe.setText("Faldenlänge: " + (Math.round(main.calculateStringLength() / 10.0)/100.0) + " m");
     }
 
     public void stringartProgress()

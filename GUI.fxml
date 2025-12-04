@@ -150,7 +150,7 @@
                                        </font>
                                     </Label>
                                     <Label fx:id="labelLinienbreiteAnzeige" layoutX="25.0" layoutY="311.0" text="Linienbreite: 0" />
-                                    <Slider fx:id="sliderLinienbreiteAnzeige" blockIncrement="0.01" layoutX="25.0" layoutY="333.0" majorTickUnit="0.25" max="1.0" minorTickCount="4" showTickLabels="true" showTickMarks="true" />
+                                    <Slider fx:id="sliderLinienbreiteAnzeige" blockIncrement="0.01" layoutX="25.0" layoutY="333.0" majorTickUnit="0.25" max="1.0" minorTickCount="4" showTickLabels="true" showTickMarks="true" value="0.15" />
                                     <Separator layoutX="25.0" layoutY="376.0" prefHeight="12.0" prefWidth="285.0" />
                                     <Label layoutX="25.0" layoutY="609.0" text="Hintegrundfarbe">
                                        <font>

@@ -95,21 +95,22 @@ public class Main {
         data.setNails(nails);
     }
 
-    public void calculateStringLength()
+    public double calculateStringLength()
     {
         double length = 0;
-        // int nails = data.getNails();
         double[][] nailCoords = data.getNailCoords();
         double mmProPixel = data.getMmProPixel();
         int[][] lineOrderArray = data.getlineOrderArray();
+        int currentIteration = data.getCurrentIteration();
 
-        for(int i = 0; i < lineOrderArray.length; i++)
+        if(lineOrderArray != null)
+        for(int i = 0; i < lineOrderArray.length && i < currentIteration; i++)
         {
             length = length + Math.sqrt(Math.pow(nailCoords[lineOrderArray[i][01]][0] - nailCoords[lineOrderArray[i][0]][0], 2) + Math.pow(nailCoords[lineOrderArray[i][1]][1] - nailCoords[lineOrderArray[i][1]][1], 2)) * mmProPixel;
         }
 
-        System.out.println("length " + length);
         data.setStringLength(length);
+        return length;
     }
 
     public void setScale(int pDiameter) {
