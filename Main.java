@@ -36,31 +36,6 @@ public class Main {
         stringartGen = pStringartGen;
         gcodeGen = pGcodeGen;
         
-        // imageToArray("SmileyRGB.png");
-        // imageToArray("TestPortraitRGB.png");
-        // imageToArray("IMG_1443.png");
-        // imageToArray();
-        // nailPositions(300);
-        // stringartGenerator();
-        // setScale(250);
-        // calculateStringLength();
-        // gcodeGenerator();
-    }
-
-    public void imageToArray()//String  dateiName)
-    {
-        // data.setDateiName(dateiName);
-        imageToArray.main();
-    }
-
-    public void stringartGenerator()
-    {
-        stringartGen.main();
-    }
-
-    public void gcodeGenerator()
-    {
-        gcodeGen.main();
     }
 
     // ---------------- Nägel ----------------

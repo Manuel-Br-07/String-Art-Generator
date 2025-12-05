@@ -14,6 +14,7 @@ public class Data
     private int height;
     private double[][] bildArray;
     private String dateiName;
+    private String ordnerName;
 
     //circularMask
     private double centerX;
@@ -24,7 +25,7 @@ public class Data
     private int[][] lineOrderArray;
 
     //nailPositions
-    private int nails;
+    private int nails = 0;
     private double[][] nailCoords;
 
     //setScale
@@ -93,6 +94,14 @@ public class Data
 
     public void setDateiName(String dateiName) {
         this.dateiName = dateiName;
+    }
+
+    public String getOrdnerName() {
+        return ordnerName;
+    }
+
+    public void setOrdnerName(String ordnerName) {
+        this.ordnerName = ordnerName;
     }
 
     public double getCenterX() {

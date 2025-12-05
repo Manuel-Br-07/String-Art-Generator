@@ -52,7 +52,7 @@ public class GcodeGenerator
         stringArtPlotter = pStringArtPlotter;
     }
 
-    public void main()
+    public void main(String filename)
     {
         // ------------------ GET ------------------
         // width = data.getWidth();
@@ -80,7 +80,7 @@ public class GcodeGenerator
 
         // ------------------ BEARBEITUNG ------------------
 
-        GCodeControll();
+        GCodeControll(filename);
 
         // ------------------ SET ------------------
         // data.setBildArray(bildArray); // falls bearbeitet
@@ -96,7 +96,7 @@ public class GcodeGenerator
         data.setGapsize(gapsize);
     }
 
-    public void GCodeControll()
+    public void GCodeControll(String filename)
     {
         calculateCoordinates();
         double nailX = absoluteNailPositions[0][0];
@@ -104,7 +104,7 @@ public class GcodeGenerator
         double borderX = absoluteNailPositions[0][2];
         double borderY = absoluteNailPositions[0][3];
 
-        fileGen();
+        fileGen(filename);
 
         //G-Code initialize:
 
@@ -132,7 +132,7 @@ public class GcodeGenerator
 
     public void calculateCoordinates()
     {
-        absoluteNailPositions = new double[lineOrderArray.length][4];
+        absoluteNailPositions = new double[data.getCurrentIteration()][4];
 
         for(int i = 0; i < absoluteNailPositions.length; i++)
         {
@@ -164,9 +164,8 @@ public class GcodeGenerator
 
     }
 
-    public void fileGen()
+    public void fileGen(String string)
     {
-        String string = ("StringArtGcode.gcode");
         try {
             writer = new BufferedWriter(new FileWriter(string, false));
         } catch (IOException e) {

@@ -166,14 +166,34 @@ public class GuiController extends Application
         spinnerAnzahlNaegel.valueProperty().addListener((obs, oldValue, newValue) -> {
 
                     main.nailPositions(newValue);
-                    labelNagelabstand.setText("Nagelabstand: " + main.setAbstand() + " mm");
+                    double abstand = main.setAbstand();
+                    labelNagelabstand.setText("Nagelabstand: " + abstand + " mm");
+                    if(abstand <= 4.0)
+                    {
+                        textAreaAusgabe.setText("Fehler: \n Nagelabstand darf 4mm nicht unterschreiten!");
+                        generateArt.setDisable(true);
+                    }
+                    else
+                    {
+                        generateArt.setDisable(false);
+                    }
             });
 
         //setScale
         spinnerDurchmesser.valueProperty().addListener((obs, oldValue, newValue) -> {
 
                     main.setScale(newValue);
-                    labelNagelabstand.setText("Nagelabstand: " + main.setAbstand() + " mm");
+                    double abstand = main.setAbstand();
+                    labelNagelabstand.setText("Nagelabstand: " + abstand + " mm");
+                    if(abstand <= 4.0)
+                    {
+                        textAreaAusgabe.setText("Fehler: \n Nagelabstand darf 4mm nicht unterschreiten!");
+                        generateArt.setDisable(true);
+                    }
+                    else
+                    {
+                        generateArt.setDisable(false);
+                    }
             });
 
         //setlineWidth
@@ -235,12 +255,13 @@ public class GuiController extends Application
             Image image = new Image(file.toURI().toString());
             imageView.setImage(image);
             data.setDateiName(file.getAbsolutePath());
-            main.imageToArray();
+            imageToArray.main();
         }
 
         if(data.getBildArray() != null)
         {
             generateHeatmap();
+            main.nailPositions(data.getNails());
 
             refresh.setDisable(false);
             scrollPane.setDisable(false);
@@ -275,7 +296,7 @@ public class GuiController extends Application
     {
         // progressbarStringGenerator.setProgress(-1);
         generateArt.setDisable(true);
-        main.stringartGenerator();
+        stringartGen.main();
         drawLines();
         generateArt.setDisable(false);
         // progressbarStringGenerator.setProgress(0);
@@ -310,8 +331,15 @@ public class GuiController extends Application
                     gc.strokeLine(x1, y1, x2, y2); // Zeichnet die neue Linie direkt auf den Canvas
                 }
             }
+
+            gcodeTab.setDisable(false);
+
         }
-        
+        else
+        {
+            gcodeTab.setDisable(true);
+        }
+
         textAreaAusgabe.setText("Faldenlänge: " + (Math.round(main.calculateStringLength() / 10.0)/100.0) + " m");
     }
 
