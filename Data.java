@@ -51,6 +51,16 @@ public class Data
     private Color backgroundColor;
     private Color lineColor;
 
+    //printerControlls
+    private String gCodeName;
+    private int zHop;
+    private int speedCircle;
+    private int speedTravel;
+    private int acceleration;
+    private int radiusNails;
+    private int distanceX;
+    private int distanceY;
+
     //rückgabewerte
     private String textOutputStrings;
 
@@ -254,6 +264,70 @@ public class Data
 
     public void setLineColor(Color lineColor) {
         this.lineColor = lineColor;
+    }
+
+    public String getGCodeName() {
+        return gCodeName;
+    }
+
+    public void setGCodeName(String gCodeName) {
+        this.gCodeName = gCodeName;
+    }
+
+    public int getZHop() {
+        return zHop;
+    }
+
+    public void setZHop(int zHop) {
+        this.zHop = zHop;
+    }
+
+    public int getSpeedCircle() {
+        return speedCircle;
+    }
+
+    public void setSpeedCircle(int speedCircle) {
+        this.speedCircle = speedCircle;
+    }
+
+    public int getSpeedTravel() {
+        return speedTravel;
+    }
+
+    public void setSpeedTravel(int speedTravel) {
+        this.speedTravel = speedTravel;
+    }
+
+    public int getAcceleration() {
+        return acceleration;
+    }
+
+    public void setAcceleration(int acceleration) {
+        this.acceleration = acceleration;
+    }
+
+    public int getRadiusNails() {
+        return radiusNails;
+    }
+
+    public void setRadiusNails(int radiusNails) {
+        this.radiusNails = radiusNails;
+    }
+
+    public int getDistanceX() {
+        return distanceX;
+    }
+
+    public void setDistanceX(int distanceX) {
+        this.distanceX = distanceX;
+    }
+
+    public int getDistanceY() {
+        return distanceY;
+    }
+
+    public void setDistanceY(int distanceY) {
+        this.distanceY = distanceY;
     }
 
     public String getTextOutputStrings() {

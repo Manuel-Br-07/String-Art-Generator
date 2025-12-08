@@ -193,7 +193,7 @@
                         <HBox layoutX="33.0" layoutY="22.0" prefHeight="25.0" prefWidth="270.0">
                            <children>
                               <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="106.0" text="Ordnerauswahl" />
-                              <TextField promptText="Dateiname">
+                              <TextField fx:id="textFieldDateiname" promptText="Dateiname">
                                  <HBox.margin>
                                     <Insets left="15.0" />
                                  </HBox.margin>
@@ -216,25 +216,25 @@
                                           <Font name="System Bold" size="12.0" />
                                        </font>
                                     </Label>
-                                    <Spinner />
+                                    <Spinner fx:id="spinnerZHop" />
                                     <Label prefHeight="17.0" prefWidth="184.0" text="Geschwindigkeit Kurve (mm/s)">
                                        <font>
                                           <Font name="System Bold" size="12.0" />
                                        </font>
                                     </Label>
-                                    <Spinner />
+                                    <Spinner fx:id="spinnerGeschwKurve" />
                                     <Label text="Geschwindigkeit Travel (mm/s)">
                                        <font>
                                           <Font name="System Bold" size="12.0" />
                                        </font>
                                     </Label>
-                                    <Spinner />
+                                    <Spinner fx:id="spinnerGeschwTravel" />
                                     <Label text="Beschleunigung (mm/s^2)">
                                        <font>
                                           <Font name="System Bold" size="12.0" />
                                        </font>
                                     </Label>
-                                    <Spinner />
+                                    <Spinner fx:id="spinnerBeschleunigung" />
                                  </children>
                                  <padding>
                                     <Insets bottom="20.0" left="15.0" right="15.0" top="5.0" />
@@ -248,24 +248,24 @@
                                        </font>
                                     </Label>
                                     <Separator prefHeight="0.0" prefWidth="250.0" />
-                                    <Label text="Abstand (mm)">
+                                    <Label prefHeight="17.0" prefWidth="145.0" text="Abstand zu Nägel (mm)">
                                        <font>
                                           <Font name="System Bold" size="12.0" />
                                        </font>
                                     </Label>
-                                    <Spinner />
+                                    <Spinner fx:id="spinnerAbstandNaegel" />
                                     <Label text="Abstand X (mm)">
                                        <font>
                                           <Font name="System Bold" size="12.0" />
                                        </font>
                                     </Label>
-                                    <Spinner />
+                                    <Spinner fx:id="spinnerAbstandX" />
                                     <Label text="Abstand Y (mm)">
                                        <font>
                                           <Font name="System Bold" size="12.0" />
                                        </font>
                                     </Label>
-                                    <Spinner />
+                                    <Spinner fx:id="spinnerAbstandY" />
                                  </children>
                                  <padding>
                                     <Insets bottom="20.0" left="15.0" right="15.0" top="5.0" />
@@ -273,7 +273,7 @@
                               </VBox>
                               <AnchorPane prefHeight="200.0" prefWidth="200.0">
                                  <children>
-                                    <TextArea editable="false" layoutX="35.0" layoutY="58.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="30.0" />
+                                    <TextArea fx:id="textAreaVorschau" editable="false" layoutX="35.0" layoutY="58.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="30.0" />
                                     <Label text="Vorschau" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="5.0">
                                        <font>
                                           <Font name="System Bold" size="15.0" />

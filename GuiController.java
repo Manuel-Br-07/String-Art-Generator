@@ -21,6 +21,7 @@ import javafx.scene.control.Slider;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.paint.Color;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -100,6 +101,24 @@ public class GuiController extends Application
     private Button generateArt;
 
     //---------- 3. Seite ----------
+    @FXML
+    private TextField textFieldDateiname;
+    @FXML
+    private Spinner spinnerZHop;
+    @FXML
+    private Spinner spinnerGeschwKurve;
+    @FXML
+    private Spinner spinnerGeschwTravel;
+    @FXML
+    private Spinner spinnerBeschleunigung;
+    @FXML
+    private Spinner spinnerAbstandNaegel;
+    @FXML
+    private Spinner spinnerAbstandX;
+    @FXML
+    private Spinner spinnerAbstandY;
+    @FXML
+    private TextArea textAreaVorschau;
 
     //---------- Initialisierung ----------
     @Override
@@ -125,23 +144,43 @@ public class GuiController extends Application
         spinnerMaxIterations.setValueFactory(maxIterationsFactory);
         sliderCurrentIteration.setMax(spinnerMaxIterations.getValue());
 
-        SpinnerValueFactory<Integer> anzahlNaegelFactory =
-            new SpinnerValueFactory.IntegerSpinnerValueFactory(2, 1000, 150);
-        spinnerAnzahlNaegel.setValueFactory(anzahlNaegelFactory);
+        initIntegerSpinner(spinnerAnzahlNaegel, 2, 1000, 150);
 
-        SpinnerValueFactory<Integer> durchmesserFactory =
-            new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 10000, 0);
-        spinnerDurchmesser.setValueFactory(durchmesserFactory);
+        initIntegerSpinner(spinnerDurchmesser, 0, 1000, 0);
+
+        //---------- 3. Seite ----------
+        initIntegerSpinner(spinnerZHop, 0, 1000, 0);
+
+        initIntegerSpinner(spinnerGeschwKurve, 0, 10000, 0);
+
+        initIntegerSpinner(spinnerGeschwTravel, 0, 10000, 0);
+
+        initIntegerSpinner(spinnerBeschleunigung, 0, 100000, 0);
+
+        initIntegerSpinner(spinnerAbstandNaegel, 0, 10, 0);
+
+        initIntegerSpinner(spinnerAbstandX, 0, 100, 0);
+
+        initIntegerSpinner(spinnerAbstandY, 0, 100, 0);
 
         eventListeners();
         bindings();
         stringartProgress();
     }
 
+    private void initIntegerSpinner(Spinner<Integer> spinner, int min, int max, int startwert) {
+
+        SpinnerValueFactory<Integer> factory =
+            new SpinnerValueFactory.IntegerSpinnerValueFactory(min, max, startwert);
+        spinner.setValueFactory(factory);
+    }
+
     @FXML
     public void eventListeners()
     {   
-        //ssetMaxIterations
+        //---------- 2. Seite ----------
+
+        //setMaxIterations
         spinnerMaxIterations.valueProperty().addListener((obs, oldValue, newValue) -> {
 
                     // Maximalwert des Sliders setzen
@@ -168,7 +207,7 @@ public class GuiController extends Application
                     main.nailPositions(newValue);
                     double abstand = main.setAbstand();
                     labelNagelabstand.setText("Nagelabstand: " + abstand + " mm");
-                    if(abstand <= 4.0)
+                    if(abstand <= 4.0 || abstand >= 1000000)
                     {
                         textAreaAusgabe.setText("Fehler: \n Nagelabstand darf 4mm nicht unterschreiten!");
                         generateArt.setDisable(true);
@@ -176,6 +215,7 @@ public class GuiController extends Application
                     else
                     {
                         generateArt.setDisable(false);
+                        textAreaAusgabe.setText("");
                     }
             });
 
@@ -185,7 +225,7 @@ public class GuiController extends Application
                     main.setScale(newValue);
                     double abstand = main.setAbstand();
                     labelNagelabstand.setText("Nagelabstand: " + abstand + " mm");
-                    if(abstand <= 4.0)
+                    if(abstand <= 4.0 || abstand >= 1000000)
                     {
                         textAreaAusgabe.setText("Fehler: \n Nagelabstand darf 4mm nicht unterschreiten!");
                         generateArt.setDisable(true);
@@ -193,6 +233,7 @@ public class GuiController extends Application
                     else
                     {
                         generateArt.setDisable(false);
+                        textAreaAusgabe.setText("");
                     }
             });
 
@@ -224,6 +265,44 @@ public class GuiController extends Application
                     drawLines();
             });
 
+            
+        //---------- 3. Seite ----------
+        
+        //setlineWidth
+        spinnerZHop.valueProperty().addListener((obs, oldVal, newVal) ->
+                data.setZHop((int)newVal)
+        );
+        
+        //setlineWidth
+        spinnerGeschwKurve.valueProperty().addListener((obs, oldVal, newVal) ->
+                data.setSpeedCircle((int)newVal)
+        );
+        
+        //setlineWidth
+        spinnerGeschwTravel.valueProperty().addListener((obs, oldVal, newVal) ->
+                data.setSpeedTravel((int)newVal)
+        );
+        
+        //setlineWidth
+        spinnerBeschleunigung.valueProperty().addListener((obs, oldVal, newVal) ->
+                data.setAcceleration((int)newVal)
+        );
+        
+        //setlineWidth
+        spinnerAbstandNaegel.valueProperty().addListener((obs, oldVal, newVal) ->
+                data.setRadiusNails((int)newVal)
+        );
+        
+        //setlineWidth
+        spinnerAbstandX.valueProperty().addListener((obs, oldVal, newVal) ->
+                data.setDistanceX((int)newVal)
+        );
+        
+        //setlineWidth
+        spinnerAbstandY.valueProperty().addListener((obs, oldVal, newVal) ->
+                data.setDistanceY((int)newVal)
+        );
+        
     }
 
     @FXML
