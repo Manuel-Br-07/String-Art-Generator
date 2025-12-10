@@ -216,25 +216,25 @@
                                           <Font name="System Bold" size="12.0" />
                                        </font>
                                     </Label>
-                                    <Spinner fx:id="spinnerZHop" />
+                                    <Spinner fx:id="spinnerZHop" editable="true" />
                                     <Label prefHeight="17.0" prefWidth="184.0" text="Geschwindigkeit Kurve (mm/s)">
                                        <font>
                                           <Font name="System Bold" size="12.0" />
                                        </font>
                                     </Label>
-                                    <Spinner fx:id="spinnerGeschwKurve" />
+                                    <Spinner fx:id="spinnerGeschwKurve" editable="true" />
                                     <Label text="Geschwindigkeit Travel (mm/s)">
                                        <font>
                                           <Font name="System Bold" size="12.0" />
                                        </font>
                                     </Label>
-                                    <Spinner fx:id="spinnerGeschwTravel" />
+                                    <Spinner fx:id="spinnerGeschwTravel" editable="true" />
                                     <Label text="Beschleunigung (mm/s^2)">
                                        <font>
                                           <Font name="System Bold" size="12.0" />
                                        </font>
                                     </Label>
-                                    <Spinner fx:id="spinnerBeschleunigung" />
+                                    <Spinner fx:id="spinnerBeschleunigung" editable="true" />
                                  </children>
                                  <padding>
                                     <Insets bottom="20.0" left="15.0" right="15.0" top="5.0" />
@@ -253,19 +253,19 @@
                                           <Font name="System Bold" size="12.0" />
                                        </font>
                                     </Label>
-                                    <Spinner fx:id="spinnerAbstandNaegel" />
+                                    <Spinner fx:id="spinnerAbstandNaegel" editable="true" />
                                     <Label text="Abstand X (mm)">
                                        <font>
                                           <Font name="System Bold" size="12.0" />
                                        </font>
                                     </Label>
-                                    <Spinner fx:id="spinnerAbstandX" />
+                                    <Spinner fx:id="spinnerAbstandX" editable="true" />
                                     <Label text="Abstand Y (mm)">
                                        <font>
                                           <Font name="System Bold" size="12.0" />
                                        </font>
                                     </Label>
-                                    <Spinner fx:id="spinnerAbstandY" />
+                                    <Spinner fx:id="spinnerAbstandY" editable="true" />
                                  </children>
                                  <padding>
                                     <Insets bottom="20.0" left="15.0" right="15.0" top="5.0" />
@@ -283,7 +283,7 @@
                               </AnchorPane>
                            </items>
                         </SplitPane>
-                        <Button layoutX="734.0" layoutY="591.0" mnemonicParsing="false" text="Speichern" />
+                        <Button layoutX="734.0" layoutY="591.0" mnemonicParsing="false" onAction="#generateGcode" text="Speichern" />
                      </children></AnchorPane>
                </content></Tab>
         </tabs>

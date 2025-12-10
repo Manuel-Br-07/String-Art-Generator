@@ -57,9 +57,8 @@ public class Data
     private int speedCircle;
     private int speedTravel;
     private int acceleration;
-    private int radiusNails;
-    private int distanceX;
-    private int distanceY;
+    private int distanceX = 5;
+    private int distanceY = 5;
 
     //rückgabewerte
     private String textOutputStrings;
@@ -304,14 +303,6 @@ public class Data
 
     public void setAcceleration(int acceleration) {
         this.acceleration = acceleration;
-    }
-
-    public int getRadiusNails() {
-        return radiusNails;
-    }
-
-    public void setRadiusNails(int radiusNails) {
-        this.radiusNails = radiusNails;
     }
 
     public int getDistanceX() {

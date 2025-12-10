@@ -42,6 +42,16 @@ public class GcodeGenerator
     double[][] absoluteNailPositions;
     double gapsize;
 
+    //printerControlls
+    private String gCodeName;
+    private int zHop;
+    private int speedCircle;
+    private int speedTravel;
+    private int acceleration;
+    private int radiusNails;
+    private int distanceX;
+    private int distanceY;
+
     /**
      * Konstruktor für Objekte der Klasse GcodeGenerator
      */
@@ -78,10 +88,17 @@ public class GcodeGenerator
         absoluteNailPositions = data.getAbsoluteNailPositions();
         gapsize = data.getGapsize();
 
+        //printerControlls
+        gCodeName  = data.getGCodeName();
+        zHop = data.getZHop();
+        speedCircle = data.getSpeedCircle();
+        speedTravel = data.getSpeedTravel();
+        acceleration = data.getAcceleration();
+        distanceX = data.getDistanceX();
+        distanceY = data.getDistanceY();
+
         // ------------------ BEARBEITUNG ------------------
-
         GCodeControll(filename);
-
         // ------------------ SET ------------------
         // data.setBildArray(bildArray); // falls bearbeitet
         // data.setNails(nails);
@@ -104,26 +121,32 @@ public class GcodeGenerator
         double borderX = absoluteNailPositions[0][2];
         double borderY = absoluteNailPositions[0][3];
 
+
         fileGen(filename);
 
         //G-Code initialize:
 
-        writeLine("G1 F8000");
-        writeLine("G1 X" + borderX + "Y " + borderY);
-        // writeLine(calculateG2(nailX, nailY, borderX, borderY, true));
-        writeLine(calculateG2(nailX, nailY, borderX, borderY, false));
+        writeLine("SET_VELOCITY_LIMIT ACCEL=" + acceleration);
+        // writeLine("G1 X" + borderX + "Y " + borderY + " F" + speedTravel);
+        // // writeLine(calculateG2(nailX, nailY, borderX, borderY, true));
+        // writeLine(calculateG2(nailX, nailY, borderX, borderY, false));
 
-        for(int i = 1; i < absoluteNailPositions.length; i++)
+        for(int i = 0; i < absoluteNailPositions.length; i++)
         {
             nailX = absoluteNailPositions[i][0];
             nailY = absoluteNailPositions[i][1];
             borderX = absoluteNailPositions[i][2];
             borderY = absoluteNailPositions[i][3];
+            
+            if(i % 100 == 0)
+            {
+                double z =  (zHop / (absoluteNailPositions.length / 100.0)) * (i / 100.0);
+                writeLine("G1 Z" + z);
+            }
 
             //G-Code write:
-
-            writeLine("G1 X" + borderX + "Y " + borderY);
-            // writeLine(calculateG2(nailX, nailY, borderX, borderY, true));
+            
+            writeLine("G1 X" + borderX + " Y" + borderY + " F" + (speedTravel * 60));
             writeLine(calculateG2(nailX, nailY, borderX, borderY, false));
         }
 
@@ -132,19 +155,32 @@ public class GcodeGenerator
 
     public void calculateCoordinates()
     {
-        absoluteNailPositions = new double[data.getCurrentIteration()][4];
+        absoluteNailPositions = new double[data.getCurrentIteration() + nails][4];
 
-        for(int i = 0; i < absoluteNailPositions.length; i++)
+        for(int i = 0; i < nails; i++)
+        {
+            double dx = nailCoords[i][0] - centerX;
+            double dy = nailCoords[i][1] - centerY;
+            double length = Math.sqrt(dx * dx + dy * dy);
+            double factor = (length - gapsize) / length;
+
+            absoluteNailPositions[i][0] = ((nailCoords[i][0]) * mmProPixel) + distanceX;
+            absoluteNailPositions[i][1] = ((nailCoords[i][1]) * mmProPixel) + distanceY;
+            absoluteNailPositions[i][2] = ((centerX + dx * factor) * mmProPixel) + distanceX;
+            absoluteNailPositions[i][3] = ((centerY + dy * factor) * mmProPixel) + distanceY;
+        }
+        
+        for(int i = nails; i < absoluteNailPositions.length; i++)
         {
             double dx = nailCoords[lineOrderArray[i][1]][0] - centerX;
             double dy = nailCoords[lineOrderArray[i][1]][1] - centerY;
             double length = Math.sqrt(dx * dx + dy * dy);
             double factor = (length - gapsize) / length;
 
-            absoluteNailPositions[i][0] = ((nailCoords[lineOrderArray[i][1]][0]) * mmProPixel) + 5;
-            absoluteNailPositions[i][1] = ((nailCoords[lineOrderArray[i][1]][1]) * mmProPixel) + 5;
-            absoluteNailPositions[i][2] = ((centerX + dx * factor) * mmProPixel) + 5;
-            absoluteNailPositions[i][3] = ((centerY + dy * factor) * mmProPixel) + 5;
+            absoluteNailPositions[i][0] = ((nailCoords[lineOrderArray[i][1]][0]) * mmProPixel) + distanceX;
+            absoluteNailPositions[i][1] = ((nailCoords[lineOrderArray[i][1]][1]) * mmProPixel) + distanceY;
+            absoluteNailPositions[i][2] = ((centerX + dx * factor) * mmProPixel) + distanceX;
+            absoluteNailPositions[i][3] = ((centerY + dy * factor) * mmProPixel) + distanceY;
             // System.out.println("x " + absoluteNailPositions[i][0] + " y " + absoluteNailPositions[i][1] + " x1 " + absoluteNailPositions[i][2] + " y1 " + absoluteNailPositions[i][3]);
         }
 
@@ -158,9 +194,9 @@ public class GcodeGenerator
         double y = 2 * nailY - borderY;
         if(half == true)
         {
-            return "G2 X" + x + " Y" + y + " I" + i + " J" + j;
+            return "G2 X" + x + " Y" + y + " I" + i + " J" + j + " F" + (speedCircle * 60);
         }
-        return "G2 X" + borderX + " Y" + borderY + " I" + i + " J" + j;
+        return "G2 X" + borderX + " Y" + borderY + " I" + i + " J" + j + " F" + (speedCircle * 60);
 
     }
 

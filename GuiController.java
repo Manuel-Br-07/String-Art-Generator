@@ -265,44 +265,42 @@ public class GuiController extends Application
                     drawLines();
             });
 
-            
         //---------- 3. Seite ----------
-        
         //setlineWidth
         spinnerZHop.valueProperty().addListener((obs, oldVal, newVal) ->
                 data.setZHop((int)newVal)
         );
-        
+
         //setlineWidth
         spinnerGeschwKurve.valueProperty().addListener((obs, oldVal, newVal) ->
                 data.setSpeedCircle((int)newVal)
         );
-        
+
         //setlineWidth
         spinnerGeschwTravel.valueProperty().addListener((obs, oldVal, newVal) ->
                 data.setSpeedTravel((int)newVal)
         );
-        
+
         //setlineWidth
         spinnerBeschleunigung.valueProperty().addListener((obs, oldVal, newVal) ->
                 data.setAcceleration((int)newVal)
         );
-        
+
         //setlineWidth
         spinnerAbstandNaegel.valueProperty().addListener((obs, oldVal, newVal) ->
-                data.setRadiusNails((int)newVal)
+                data.setGapsize((int)newVal)
         );
-        
+
         //setlineWidth
         spinnerAbstandX.valueProperty().addListener((obs, oldVal, newVal) ->
                 data.setDistanceX((int)newVal)
         );
-        
+
         //setlineWidth
         spinnerAbstandY.valueProperty().addListener((obs, oldVal, newVal) ->
                 data.setDistanceY((int)newVal)
         );
-        
+
     }
 
     @FXML
@@ -435,4 +433,10 @@ public class GuiController extends Application
     }
 
     //---------- 3. Seite ----------
+
+    public void generateGcode()
+    {
+        gcodeGen.main("StringArtGcode.gcode");
+        textAreaVorschau.setText("G-code erfolgreich generiert.");
+    }
 }
