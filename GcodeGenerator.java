@@ -89,7 +89,7 @@ public class GcodeGenerator
         gapsize = data.getGapsize();
 
         //printerControlls
-        gCodeName  = data.getGCodeName();
+        gCodeName  = data.getGCodeFile();
         zHop = data.getZHop();
         speedCircle = data.getSpeedCircle();
         speedTravel = data.getSpeedTravel();
@@ -127,6 +127,7 @@ public class GcodeGenerator
         //G-Code initialize:
 
         writeLine("SET_VELOCITY_LIMIT ACCEL=" + acceleration);
+        writeLine("G92 Z0");
         // writeLine("G1 X" + borderX + "Y " + borderY + " F" + speedTravel);
         // // writeLine(calculateG2(nailX, nailY, borderX, borderY, true));
         // writeLine(calculateG2(nailX, nailY, borderX, borderY, false));

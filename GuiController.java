@@ -102,8 +102,6 @@ public class GuiController extends Application
 
     //---------- 3. Seite ----------
     @FXML
-    private TextField textFieldDateiname;
-    @FXML
     private Spinner spinnerZHop;
     @FXML
     private Spinner spinnerGeschwKurve;
@@ -436,7 +434,40 @@ public class GuiController extends Application
 
     public void generateGcode()
     {
-        gcodeGen.main("StringArtGcode.gcode");
-        textAreaVorschau.setText("G-code erfolgreich generiert.");
+        saveFile();
+        if(data.getGCodeFile() != null)
+        {
+            gcodeGen.main(data.getGCodeFile());
+            textAreaVorschau.setText("G-Code erfolgreich generiert.");
+        }
+        else
+        {
+            textAreaVorschau.setText("Kein Dateiname Gefunden");
+        }
+    }
+
+    @FXML
+    public void saveFile()
+    {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Datei speichern");
+
+        // Optional: Standard-Dateiname
+        fileChooser.setInitialFileName("StringArtGcode.gcode");
+
+        // Optional: Filter für Dateitypen
+        fileChooser.getExtensionFilters().add(
+            new FileChooser.ExtensionFilter("G-Code", "*.gcode")
+        );
+
+        File file = fileChooser.showSaveDialog(null);
+
+        if (file != null) {
+            System.out.println("Gewählter Speicherort: " + file.getAbsolutePath());
+            textAreaVorschau.setText("Gewählter Speicherort: " + file.getAbsolutePath());
+
+            // Pfad+Name speichern
+            data.setGCodeFile(file.getAbsolutePath());
+        }
     }
 }

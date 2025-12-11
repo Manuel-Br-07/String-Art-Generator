@@ -53,17 +53,6 @@ public class Main {
             double angle = 2 * Math.PI * i / nails;
             nailCoords[i][0] = centerX + radius * Math.cos(angle);
             nailCoords[i][1] = centerY + radius * Math.sin(angle);
-
-            System.out.println("" + i + " W " + angle);
-            System.out.println("" + i + "X" + nailCoords[i][0]);
-            System.out.println("" + i + "Y" + nailCoords[i][1]);
-
-            if (i >= 1) {
-                StringArtPlotter.addLine(nailCoords[i - 1][0], nailCoords[i - 1][1], nailCoords[i][0],
-                    nailCoords[i][1]);
-                System.out.println("xmin " + nailCoords[i - 1][0] + " ymin " + nailCoords[i - 1][1] + " xmax "
-                    + nailCoords[i][0] + " ymax " + nailCoords[i][1]);
-            }
         }
 
         data.setNailCoords(nailCoords);

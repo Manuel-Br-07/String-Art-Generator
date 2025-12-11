@@ -49,10 +49,8 @@
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TextArea?>
-<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.shape.Rectangle?>
@@ -186,22 +184,12 @@
                      </children></AnchorPane>
             </content>
           </Tab>
-            <Tab fx:id="gcodeTab" text="3. G-Code Generator">
+            <Tab fx:id="gcodeTab" disable="true" text="3. G-Code Generator">
                <content>
                   <AnchorPane prefHeight="200.0" prefWidth="200.0">
                      <children>
-                        <HBox layoutX="33.0" layoutY="22.0" prefHeight="25.0" prefWidth="270.0">
-                           <children>
-                              <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="106.0" text="Ordnerauswahl" />
-                              <TextField fx:id="textFieldDateiname" promptText="Dateiname">
-                                 <HBox.margin>
-                                    <Insets left="15.0" />
-                                 </HBox.margin>
-                              </TextField>
-                           </children>
-                        </HBox>
                         <Label layoutX="104.0" layoutY="332.0" text="Speichern" />
-                        <SplitPane dividerPositions="0.33333333333333, 0.6666666666666666" prefHeight="160.0" prefWidth="200.0" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="60.0">
+                        <SplitPane dividerPositions="0.33333333333333, 0.6666666666666666" layoutY="42.0" prefHeight="535.0" prefWidth="860.0" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="40.0">
                            <items>
                               <VBox prefHeight="200.0" prefWidth="100.0" spacing="5.0">
                                  <children>

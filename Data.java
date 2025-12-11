@@ -52,7 +52,7 @@ public class Data
     private Color lineColor;
 
     //printerControlls
-    private String gCodeName;
+    private String gCodeFile;
     private int zHop;
     private int speedCircle;
     private int speedTravel;
@@ -265,12 +265,12 @@ public class Data
         this.lineColor = lineColor;
     }
 
-    public String getGCodeName() {
-        return gCodeName;
+    public String getGCodeFile() {
+        return gCodeFile;
     }
 
-    public void setGCodeName(String gCodeName) {
-        this.gCodeName = gCodeName;
+    public void setGCodeFile(String gCodeFile) {
+        this.gCodeFile = gCodeFile;
     }
 
     public int getZHop() {
