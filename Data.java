@@ -29,7 +29,7 @@ public class Data
     private double[][] nailCoords;
 
     //setScale
-    private double diameter;
+    private double diameter = 250;
     private double mmProPixel;
 
     //calculateStringLength
@@ -43,22 +43,22 @@ public class Data
     private double gapsize = 3;
 
     //GuiControllerSettings  
-    private int maxIterations;
-    private int currentIteration;
-    private double lineStrength = 0.6;
-    private double lineWidthDisplay;
-    private double nailDistance;
+    private int maxIterations = 6000;
+    private int currentIteration = 1234;
+    private double lineStrength = 0.8;
+    private double lineWidthDisplay = 0.2;
+    private double nailDistance = 4;
     private Color backgroundColor;
     private Color lineColor;
 
     //printerControlls
     private String gCodeFile;
-    private int zHop;
-    private int speedCircle;
-    private int speedTravel;
-    private int acceleration;
-    private int distanceX = 5;
-    private int distanceY = 5;
+    private int zHop = 3;
+    private int speedCircle = 50;
+    private int speedTravel = 80;
+    private int acceleration = 3000;
+    private double distanceX = 5;
+    private double distanceY = 5;
 
     //rückgabewerte
     private String textOutputStrings;
@@ -305,19 +305,19 @@ public class Data
         this.acceleration = acceleration;
     }
 
-    public int getDistanceX() {
+    public double getDistanceX() {
         return distanceX;
     }
 
-    public void setDistanceX(int distanceX) {
+    public void setDistanceX(double distanceX) {
         this.distanceX = distanceX;
     }
 
-    public int getDistanceY() {
+    public double getDistanceY() {
         return distanceY;
     }
 
-    public void setDistanceY(int distanceY) {
+    public void setDistanceY(double distanceY) {
         this.distanceY = distanceY;
     }
 

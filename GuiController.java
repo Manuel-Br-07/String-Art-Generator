@@ -155,22 +155,15 @@ public class GuiController extends Application
 
         initIntegerSpinner(spinnerBeschleunigung, 0, 100000, 0);
 
-        initIntegerSpinner(spinnerAbstandNaegel, 0, 10, 0);
+        initDoubleSpinner(spinnerAbstandNaegel, 0, 10, 0);
 
-        initIntegerSpinner(spinnerAbstandX, 0, 100, 0);
+        initDoubleSpinner(spinnerAbstandX, 0, 100, 0);
 
-        initIntegerSpinner(spinnerAbstandY, 0, 100, 0);
+        initDoubleSpinner(spinnerAbstandY, 0, 100, 0);
 
         eventListeners();
         bindings();
         stringartProgress();
-    }
-
-    private void initIntegerSpinner(Spinner<Integer> spinner, int min, int max, int startwert) {
-
-        SpinnerValueFactory<Integer> factory =
-            new SpinnerValueFactory.IntegerSpinnerValueFactory(min, max, startwert);
-        spinner.setValueFactory(factory);
     }
 
     @FXML
@@ -286,17 +279,17 @@ public class GuiController extends Application
 
         //setlineWidth
         spinnerAbstandNaegel.valueProperty().addListener((obs, oldVal, newVal) ->
-                data.setGapsize((int)newVal)
+                data.setGapsize((double)newVal)
         );
 
         //setlineWidth
         spinnerAbstandX.valueProperty().addListener((obs, oldVal, newVal) ->
-                data.setDistanceX((int)newVal)
+                data.setDistanceX((double)newVal)
         );
 
         //setlineWidth
         spinnerAbstandY.valueProperty().addListener((obs, oldVal, newVal) ->
-                data.setDistanceY((int)newVal)
+                data.setDistanceY((double)newVal)
         );
 
     }
@@ -308,6 +301,119 @@ public class GuiController extends Application
         bindSliderToLabel(sliderLinienbreite, labelLinienbreite, "Linienbreite: %.3f");
         bindSliderToLabel(sliderLinienstaerke, labelLinienstaerke, "Linienstärke: %.3f");
         bindSliderToLabel(sliderLinienbreiteAnzeige, labelLinienbreiteAnzeige, "Linienbreite: %.3f");
+    }
+
+    @FXML
+    public void setUIValues()
+    {
+        //---------- 1. Seite ----------
+        //---------- 2. Seite ----------
+        
+        setIntSpinner(spinnerMaxIterations, data.getMaxIterations());
+        
+        
+        setSlider(sliderCurrentIteration, data.getCurrentIteration());
+        
+        setLabel(labelCurrentIteration, data.getCurrentIteration() + "");
+        
+        
+        setIntSpinner(spinnerAnzahlNaegel, data.getNails());
+        
+        
+        setLabel(labelNagelabstand, "Nagelabstand: " + data.getNailDistance());
+        
+         
+        setIntSpinner(spinnerDurchmesser, (int)data.getDiameter());
+        
+        
+        setLabel(labelLinienbreite, "Linienbreite: " + data.getLineWidth());
+        
+        setSlider(sliderLinienbreite, data.getLineWidth());
+        
+        
+        setLabel(labelLinienstaerke, "Linienstärke: " + data.getLineStrength());
+        
+        setSlider(sliderLinienstaerke, data.getLineStrength());
+        
+        
+        setLabel(labelLinienbreiteAnzeige, "Linienbreite: " + data.getLineWidthDisplay());
+        
+        setSlider(sliderLinienbreiteAnzeige, data.getLineWidthDisplay());
+        
+        
+        setColor(colorPickerHintergrund, data.getBackgroundColor());
+        
+        
+        setColor(colorPickerLinie, data.getLineColor());
+        
+
+        //---------- 3. Seite ----------
+        
+        setIntSpinner(spinnerZHop, data.getZHop());
+        
+        setIntSpinner(spinnerGeschwKurve, data.getSpeedCircle());
+        
+        setIntSpinner(spinnerGeschwTravel, data.getSpeedTravel());
+        
+        setIntSpinner(spinnerBeschleunigung, data.getAcceleration());
+        
+        
+        setDoubleSpinner(spinnerAbstandNaegel, data.getGapsize());
+        
+        setDoubleSpinner(spinnerAbstandX, data.getDistanceX());
+        
+        setDoubleSpinner(spinnerAbstandY, data.getDistanceY());
+    }
+
+    //---------- Hilfsmethoden ----------
+
+    private void initIntegerSpinner(Spinner<Integer> spinner, int min, int max, int startwert) {
+
+        SpinnerValueFactory<Integer> factory =
+            new SpinnerValueFactory.IntegerSpinnerValueFactory(min, max, startwert);
+        spinner.setValueFactory(factory);
+    }
+
+    private void initDoubleSpinner(Spinner<Double> spinner, int min, int max, int startwert) {
+
+        SpinnerValueFactory<Double> factory =
+            new SpinnerValueFactory.DoubleSpinnerValueFactory(min, max, startwert);
+        spinner.setValueFactory(factory);
+    }
+
+    @FXML
+    private void setIntSpinner(Spinner<Integer> spinner, int value) {
+        System.out.println("spinnerint" + spinner + value);
+        if(spinner == null || spinner.getValueFactory() == null) return;
+        spinner.getValueFactory().setValue(value);
+    }
+    
+    @FXML
+    private void setDoubleSpinner(Spinner<Double> spinner, double value) {
+        System.out.println("spinnerdouble" + spinner + value);
+        if(spinner == null || spinner.getValueFactory() == null) return;
+        spinner.getValueFactory().setValue(value);
+    }
+
+    @FXML
+    private void setSlider(Slider slider, double value) {
+        System.out.println("slider" + slider + value);
+        if (slider == null) return;
+        slider.setValue(value);
+    }
+
+    @FXML
+    private void setLabel(Label label, String text) {
+        System.out.println("label" + label + text);
+        if (label == null) return;
+        label.setText(text);
+    }
+
+    @FXML
+    private void setColor(ColorPicker picker, Color color) {
+        System.out.println("color" + picker + color);
+        if (picker == null || color == null) return;
+        picker.setValue(color);
     }
 
     //---------- 1. Seite ----------

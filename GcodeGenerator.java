@@ -49,8 +49,8 @@ public class GcodeGenerator
     private int speedTravel;
     private int acceleration;
     private int radiusNails;
-    private int distanceX;
-    private int distanceY;
+    private double distanceX;
+    private double distanceY;
 
     /**
      * Konstruktor für Objekte der Klasse GcodeGenerator
