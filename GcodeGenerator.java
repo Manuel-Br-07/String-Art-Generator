@@ -127,7 +127,10 @@ public class GcodeGenerator
         //G-Code initialize:
 
         writeLine("SET_VELOCITY_LIMIT ACCEL=" + acceleration);
-        writeLine("G92 Z0");
+        writeLine("G92 X" + nailX + " Y" + nailY + " Z0");
+        writeLine("G1 X" + nailX / 2 + " Y" + nailY + " F" + speedCircle / 2);
+        writeLine("Base_Pause");
+        
         // writeLine("G1 X" + borderX + "Y " + borderY + " F" + speedTravel);
         // // writeLine(calculateG2(nailX, nailY, borderX, borderY, true));
         // writeLine(calculateG2(nailX, nailY, borderX, borderY, false));
@@ -147,9 +150,10 @@ public class GcodeGenerator
 
             //G-Code write:
             
-            writeLine("G1 X" + borderX + " Y" + borderY + " F" + (speedTravel * 60));
+            writeLine("G1 X" + borderX + " Y" + borderY + " F" + (speedTravel));
             writeLine(calculateG2(nailX, nailY, borderX, borderY, false));
         }
+        writeLine("");
 
         schliessen();
     }
@@ -195,9 +199,9 @@ public class GcodeGenerator
         double y = 2 * nailY - borderY;
         if(half == true)
         {
-            return "G2 X" + x + " Y" + y + " I" + i + " J" + j + " F" + (speedCircle * 60);
+            return "G2 X" + x + " Y" + y + " I" + i + " J" + j + " F" + (speedCircle);
         }
-        return "G2 X" + borderX + " Y" + borderY + " I" + i + " J" + j + " F" + (speedCircle * 60);
+        return "G2 X" + borderX + " Y" + borderY + " I" + i + " J" + j + " F" + (speedCircle);
 
     }
 

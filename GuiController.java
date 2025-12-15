@@ -44,6 +44,7 @@ public class GuiController extends Application
     private GcodeGenerator gcodeGen = new GcodeGenerator(data, lineOrder, stringArtPlotter);
     private Main main = new Main(data, lineOrder, stringArtPlotter, imageToArray, stringartGen, gcodeGen);
     private HeatmapGen heatmapGen = new HeatmapGen();
+    private JsonGenerator jsonGen = new JsonGenerator();
     private GraphicsContext gc;
 
     //---------- 1. Seite ----------
@@ -164,6 +165,7 @@ public class GuiController extends Application
         eventListeners();
         bindings();
         stringartProgress();
+        setUIValues();
     }
 
     @FXML
@@ -264,12 +266,12 @@ public class GuiController extends Application
 
         //setlineWidth
         spinnerGeschwKurve.valueProperty().addListener((obs, oldVal, newVal) ->
-                data.setSpeedCircle((int)newVal)
+                data.setSpeedCircle((int)newVal * 60)
         );
 
         //setlineWidth
         spinnerGeschwTravel.valueProperty().addListener((obs, oldVal, newVal) ->
-                data.setSpeedTravel((int)newVal)
+                data.setSpeedTravel((int)newVal * 60)
         );
 
         //setlineWidth
@@ -308,60 +310,44 @@ public class GuiController extends Application
     {
         //---------- 1. Seite ----------
         //---------- 2. Seite ----------
-        
+
         setIntSpinner(spinnerMaxIterations, data.getMaxIterations());
-        
-        
+
         setSlider(sliderCurrentIteration, data.getCurrentIteration());
-        
         setLabel(labelCurrentIteration, data.getCurrentIteration() + "");
-        
-        
+
         setIntSpinner(spinnerAnzahlNaegel, data.getNails());
-        
-        
+
         setLabel(labelNagelabstand, "Nagelabstand: " + data.getNailDistance());
-        
-         
+
         setIntSpinner(spinnerDurchmesser, (int)data.getDiameter());
-        
-        
+
         setLabel(labelLinienbreite, "Linienbreite: " + data.getLineWidth());
-        
         setSlider(sliderLinienbreite, data.getLineWidth());
-        
-        
+
         setLabel(labelLinienstaerke, "Linienstärke: " + data.getLineStrength());
-        
+
         setSlider(sliderLinienstaerke, data.getLineStrength());
-        
-        
+
         setLabel(labelLinienbreiteAnzeige, "Linienbreite: " + data.getLineWidthDisplay());
-        
         setSlider(sliderLinienbreiteAnzeige, data.getLineWidthDisplay());
-        
-        
+
         setColor(colorPickerHintergrund, data.getBackgroundColor());
-        
-        
+
         setColor(colorPickerLinie, data.getLineColor());
-        
 
         //---------- 3. Seite ----------
-        
+
         setIntSpinner(spinnerZHop, data.getZHop());
-        
+
         setIntSpinner(spinnerGeschwKurve, data.getSpeedCircle());
-        
+
         setIntSpinner(spinnerGeschwTravel, data.getSpeedTravel());
-        
+
         setIntSpinner(spinnerBeschleunigung, data.getAcceleration());
-        
-        
+
         setDoubleSpinner(spinnerAbstandNaegel, data.getGapsize());
-        
         setDoubleSpinner(spinnerAbstandX, data.getDistanceX());
-        
         setDoubleSpinner(spinnerAbstandY, data.getDistanceY());
     }
 
@@ -387,7 +373,7 @@ public class GuiController extends Application
         if(spinner == null || spinner.getValueFactory() == null) return;
         spinner.getValueFactory().setValue(value);
     }
-    
+
     @FXML
     private void setDoubleSpinner(Spinner<Double> spinner, double value) {
         System.out.println("spinnerdouble" + spinner + value);
@@ -481,6 +467,7 @@ public class GuiController extends Application
         drawLines();
         generateArt.setDisable(false);
         // progressbarStringGenerator.setProgress(0);
+
     }
 
     @FXML
@@ -544,7 +531,9 @@ public class GuiController extends Application
         if(data.getGCodeFile() != null)
         {
             gcodeGen.main(data.getGCodeFile());
-            textAreaVorschau.setText("G-Code erfolgreich generiert.");
+            textAreaVorschau.setText("G-Code erfolgreich generiert." + "\n" + 
+            "Gewählter Speicherort: " + data.getGCodeFile() + "\n" + 
+            "Resume mit BASE_RESUME");
         }
         else
         {
@@ -570,7 +559,6 @@ public class GuiController extends Application
 
         if (file != null) {
             System.out.println("Gewählter Speicherort: " + file.getAbsolutePath());
-            textAreaVorschau.setText("Gewählter Speicherort: " + file.getAbsolutePath());
 
             // Pfad+Name speichern
             data.setGCodeFile(file.getAbsolutePath());

@@ -25,7 +25,7 @@ public class Data
     private int[][] lineOrderArray;
 
     //nailPositions
-    private int nails = 0;
+    private int nails = 150;
     private double[][] nailCoords;
 
     //setScale
@@ -36,18 +36,18 @@ public class Data
     private double stringLength;
 
     //StringArtGenerator
-    private double lineWidth = 2;
+    private double lineWidth = 3;
 
     //calculateCoordinates
     private double[][] absoluteNailPositions;
     private double gapsize = 3;
 
     //GuiControllerSettings  
-    private int maxIterations = 6000;
-    private int currentIteration = 1234;
+    private int maxIterations = 5000;
+    private int currentIteration = 3000;
     private double lineStrength = 0.8;
     private double lineWidthDisplay = 0.2;
-    private double nailDistance = 4;
+    private double nailDistance;
     private Color backgroundColor;
     private Color lineColor;
 
@@ -56,7 +56,7 @@ public class Data
     private int zHop = 3;
     private int speedCircle = 50;
     private int speedTravel = 80;
-    private int acceleration = 3000;
+    private int acceleration = 1000;
     private double distanceX = 5;
     private double distanceY = 5;
 
