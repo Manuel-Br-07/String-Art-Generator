@@ -533,7 +533,8 @@ public class GuiController extends Application
             gcodeGen.main(data.getGCodeFile());
             textAreaVorschau.setText("G-Code erfolgreich generiert." + "\n" + 
             "Gewählter Speicherort: " + data.getGCodeFile() + "\n" + 
-            "Resume mit BASE_RESUME");
+            "Resume mit BASE_RESUME" + "\n" + 
+            "Home mit SET_KINEMATIC_POSITION Z=10");
         }
         else
         {

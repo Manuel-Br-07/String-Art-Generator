@@ -22,7 +22,7 @@ public class Data
     private double radius;
 
     //listToArray
-    private int[][] lineOrderArray;
+    private int[][] lineOrderArray; // [][0] -> Startnagel      [][1] -> Endnagel
 
     //nailPositions
     private int nails = 150;
@@ -40,11 +40,11 @@ public class Data
 
     //calculateCoordinates
     private double[][] absoluteNailPositions;
-    private double gapsize = 3;
+    private double gapsize = 2.5;
 
     //GuiControllerSettings  
-    private int maxIterations = 5000;
-    private int currentIteration = 3000;
+    private int maxIterations = 100;
+    private int currentIteration = 2;
     private double lineStrength = 0.8;
     private double lineWidthDisplay = 0.2;
     private double nailDistance;
@@ -54,8 +54,8 @@ public class Data
     //printerControlls
     private String gCodeFile;
     private int zHop = 3;
-    private int speedCircle = 50;
-    private int speedTravel = 80;
+    private int speedCircle = 20;
+    private int speedTravel = 40;
     private int acceleration = 1000;
     private double distanceX = 5;
     private double distanceY = 5;
