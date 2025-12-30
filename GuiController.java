@@ -113,9 +113,15 @@ public class GuiController extends Application
     @FXML
     private Spinner spinnerAbstandNaegel;
     @FXML
-    private Spinner spinnerAbstandX;
+    private Spinner spinnerHoeheStartnagel;
     @FXML
-    private Spinner spinnerAbstandY;
+    private Spinner spinnerXRechts;
+    @FXML
+    private Spinner spinnerYRechts;
+    @FXML
+    private Spinner spinnerXLinks;
+    @FXML
+    private Spinner spinnerYLinks;
     @FXML
     private TextArea textAreaVorschau;
 
@@ -158,9 +164,15 @@ public class GuiController extends Application
 
         initDoubleSpinner(spinnerAbstandNaegel, 0, 10, 0);
 
-        initDoubleSpinner(spinnerAbstandX, 0, 100, 0);
+        initDoubleSpinner(spinnerHoeheStartnagel, 0, 10, 0);
+        
+        initDoubleSpinner(spinnerXRechts, 0, 1000, 0);
 
-        initDoubleSpinner(spinnerAbstandY, 0, 100, 0);
+        initDoubleSpinner(spinnerYRechts, 0, 1000, 0);
+        
+        initDoubleSpinner(spinnerXLinks, 0, 1000, 0);
+
+        initDoubleSpinner(spinnerYLinks, 0, 1000, 0);
 
         eventListeners();
         bindings();
@@ -259,39 +271,54 @@ public class GuiController extends Application
             });
 
         //---------- 3. Seite ----------
-        //setlineWidth
+        //setZHop
         spinnerZHop.valueProperty().addListener((obs, oldVal, newVal) ->
                 data.setZHop((int)newVal)
         );
 
-        //setlineWidth
+        //setSpeedCircle
         spinnerGeschwKurve.valueProperty().addListener((obs, oldVal, newVal) ->
                 data.setSpeedCircle((int)newVal * 60)
         );
 
-        //setlineWidth
+        //setSpeedTravel
         spinnerGeschwTravel.valueProperty().addListener((obs, oldVal, newVal) ->
                 data.setSpeedTravel((int)newVal * 60)
         );
 
-        //setlineWidth
+        //Acceleration
         spinnerBeschleunigung.valueProperty().addListener((obs, oldVal, newVal) ->
                 data.setAcceleration((int)newVal)
         );
 
-        //setlineWidth
+        //setGapsize
         spinnerAbstandNaegel.valueProperty().addListener((obs, oldVal, newVal) ->
                 data.setGapsize((double)newVal)
         );
-
-        //setlineWidth
-        spinnerAbstandX.valueProperty().addListener((obs, oldVal, newVal) ->
-                data.setDistanceX((double)newVal)
+        
+        //setGapsize
+        spinnerHoeheStartnagel.valueProperty().addListener((obs, oldVal, newVal) ->
+                data.setHeightStartingnail((double)newVal)
         );
 
-        //setlineWidth
-        spinnerAbstandY.valueProperty().addListener((obs, oldVal, newVal) ->
-                data.setDistanceY((double)newVal)
+        //setCoordinateXRight
+        spinnerXRechts.valueProperty().addListener((obs, oldVal, newVal) ->
+                data.setCoordinateXRight((double)newVal)
+        );
+
+        //setCoordinateYRight
+        spinnerYRechts.valueProperty().addListener((obs, oldVal, newVal) ->
+                data.setCoordinateYRight((double)newVal)
+        );
+        
+        //setCoordinateXLeft
+        spinnerXLinks.valueProperty().addListener((obs, oldVal, newVal) ->
+                data.setCoordinateXLeft((double)newVal)
+        );
+
+        //setCoordinateYLeft
+        spinnerYLinks.valueProperty().addListener((obs, oldVal, newVal) ->
+                data.setCoordinateYLeft((double)newVal)
         );
 
     }
@@ -347,8 +374,10 @@ public class GuiController extends Application
         setIntSpinner(spinnerBeschleunigung, data.getAcceleration());
 
         setDoubleSpinner(spinnerAbstandNaegel, data.getGapsize());
-        setDoubleSpinner(spinnerAbstandX, data.getDistanceX());
-        setDoubleSpinner(spinnerAbstandY, data.getDistanceY());
+        setDoubleSpinner(spinnerXRechts, data.getCoordinateXRight());
+        setDoubleSpinner(spinnerYRechts, data.getCoordinateYRight());
+        setDoubleSpinner(spinnerXLinks, data.getCoordinateXLeft());
+        setDoubleSpinner(spinnerYLinks, data.getCoordinateYLeft());
     }
 
     //---------- Hilfsmethoden ----------
@@ -534,7 +563,9 @@ public class GuiController extends Application
             textAreaVorschau.setText("G-Code erfolgreich generiert." + "\n" + 
             "Gewählter Speicherort: " + data.getGCodeFile() + "\n" + 
             "Resume mit BASE_RESUME" + "\n" + 
-            "Home mit SET_KINEMATIC_POSITION Z=10");
+            "Home mit SET_KINEMATIC_POSITION Z=10" + "\n" + "\n" +
+            "Winkel: " + Math.toDegrees(data.getCompensationAngle()) + "°" + "\n" + 
+            "Durchmesser: " + data.getAbsoluteDistance() + " mm");
         }
         else
         {
@@ -546,7 +577,7 @@ public class GuiController extends Application
     public void saveFile()
     {
         FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Datei speichern");
+        fileChooser.setTitle("G-Code speichern");
 
         // Optional: Standard-Dateiname
         fileChooser.setInitialFileName("StringArtGcode.gcode");

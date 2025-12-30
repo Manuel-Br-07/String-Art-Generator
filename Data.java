@@ -12,7 +12,7 @@ public class Data
     //immageToArray
     private int width;
     private int height;
-    private double[][] bildArray;
+    private double[][] bildArray; // [X][Y]
     private String dateiName;
     private String ordnerName;
 
@@ -26,7 +26,7 @@ public class Data
 
     //nailPositions
     private int nails = 150;
-    private double[][] nailCoords;
+    private double[][] nailCoords; // [][0] -> X      [][1] -> Y
 
     //setScale
     private double diameter = 250;
@@ -40,7 +40,7 @@ public class Data
 
     //calculateCoordinates
     private double[][] absoluteNailPositions;
-    private double gapsize = 2.5;
+    private double gapsize = 2;
 
     //GuiControllerSettings  
     private int maxIterations = 100;
@@ -57,8 +57,14 @@ public class Data
     private int speedCircle = 20;
     private int speedTravel = 40;
     private int acceleration = 1000;
-    private double distanceX = 5;
-    private double distanceY = 5;
+    private double heightStartingnail = 10;
+    private double coordinateXRight = 0;
+    private double coordinateYRight = 0;
+    private double coordinateXLeft = 0;
+    private double coordinateYLeft = 0;
+    
+    private double compensationAngle;
+    private double absoluteDistance;
 
     //rückgabewerte
     private String textOutputStrings;
@@ -304,21 +310,61 @@ public class Data
     public void setAcceleration(int acceleration) {
         this.acceleration = acceleration;
     }
-
-    public double getDistanceX() {
-        return distanceX;
+    
+    public double getHeightStartingnail() {
+        return heightStartingnail;
     }
 
-    public void setDistanceX(double distanceX) {
-        this.distanceX = distanceX;
+    public void setHeightStartingnail(double heightStartingnail) {
+        this.heightStartingnail = heightStartingnail;
+    }
+    
+    public double getCoordinateXRight() {
+        return coordinateXRight;
     }
 
-    public double getDistanceY() {
-        return distanceY;
+    public void setCoordinateXRight(double coordinateXRight) {
+        this.coordinateXRight = coordinateXRight;
     }
 
-    public void setDistanceY(double distanceY) {
-        this.distanceY = distanceY;
+    public double getCoordinateYRight() {
+        return coordinateYRight;
+    }
+
+    public void setCoordinateYRight(double coordinateYRight) {
+        this.coordinateYRight = coordinateYRight;
+    }
+    
+    public double getCoordinateXLeft() {
+        return coordinateXLeft;
+    }
+
+    public void setCoordinateXLeft(double coordinateXLeft) {
+        this.coordinateXLeft = coordinateXLeft;
+    }
+
+    public double getCoordinateYLeft() {
+        return coordinateYLeft;
+    }
+
+    public void setCoordinateYLeft(double coordinateYLeft) {
+        this.coordinateYLeft = coordinateYLeft;
+    }
+
+    public double getCompensationAngle() {
+        return compensationAngle;
+    }
+
+    public void setCompensationAngle(double compensationAngle) {
+        this.compensationAngle = compensationAngle;
+    }
+    
+    public double getAbsoluteDistance() {
+        return absoluteDistance;
+    }
+
+    public void setAbsoluteDistance(double absoluteDistance) {
+        this.absoluteDistance = absoluteDistance;
     }
 
     public String getTextOutputStrings() {

@@ -7,26 +7,7 @@ public class Main {
     private ImageToArray imageToArray;
     private StringartGenerator stringartGen;
     private GcodeGenerator gcodeGen;
-
-    // //immageToArray
-    // private int width;
-    // private int height;
-    // private double[][] bildArray;
-    // private String  dateiName;
-
-    // //circularMask
-    // private double centerX;
-    // private double centerY;
-    // private double radius;
-
-    // //nailPositions
-    // private int nails;
-    // private double[][] nailCoords;  
-
-    // private double diameter;
-    // private double mmProPixel;
-
-    // double lineWidth;
+    
     public Main(Data pData, Queue<int[]> pLineOrder, StringArtPlotter pStringArtPlotter, ImageToArray pImageToArray, StringartGenerator pStringartGen, GcodeGenerator pGcodeGen)
     {
         data = pData;
