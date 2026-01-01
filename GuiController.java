@@ -374,6 +374,9 @@ public class GuiController extends Application
         setIntSpinner(spinnerBeschleunigung, data.getAcceleration());
 
         setDoubleSpinner(spinnerAbstandNaegel, data.getGapsize());
+        
+        setDoubleSpinner(spinnerHoeheStartnagel, data.getHeightStartingnail());
+        
         setDoubleSpinner(spinnerXRechts, data.getCoordinateXRight());
         setDoubleSpinner(spinnerYRechts, data.getCoordinateYRight());
         setDoubleSpinner(spinnerXLinks, data.getCoordinateXLeft());

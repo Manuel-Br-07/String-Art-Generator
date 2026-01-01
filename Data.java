@@ -25,11 +25,11 @@ public class Data
     private int[][] lineOrderArray; // [][0] -> Startnagel      [][1] -> Endnagel
 
     //nailPositions
-    private int nails = 150;
+    private int nails = 60;
     private double[][] nailCoords; // [][0] -> X      [][1] -> Y
 
     //setScale
-    private double diameter = 250;
+    private double diameter = 100;
     private double mmProPixel;
 
     //calculateStringLength
@@ -40,24 +40,24 @@ public class Data
 
     //calculateCoordinates
     private double[][] absoluteNailPositions;
-    private double gapsize = 2;
+    private double gapsize = 2.6;
 
     //GuiControllerSettings  
-    private int maxIterations = 100;
-    private int currentIteration = 2;
-    private double lineStrength = 0.8;
-    private double lineWidthDisplay = 0.2;
+    private int maxIterations = 481;
+    private int currentIteration = 481;
+    private double lineStrength = 0.796;
+    private double lineWidthDisplay = 0.448;
     private double nailDistance;
     private Color backgroundColor;
     private Color lineColor;
 
     //printerControlls
     private String gCodeFile;
-    private int zHop = 3;
+    private int zHop = 5;
     private int speedCircle = 20;
     private int speedTravel = 40;
     private int acceleration = 1000;
-    private double heightStartingnail = 10;
+    private double heightStartingnail = 7;
     private double coordinateXRight = 0;
     private double coordinateYRight = 0;
     private double coordinateXLeft = 0;
