@@ -20,6 +20,9 @@ public class Data
     private double centerX;
     private double centerY;
     private double radius;
+    
+    // imageProcessing
+    private boolean colorsInverted;
 
     //listToArray
     private int[][] lineOrderArray; // [][0] -> Startnagel      [][1] -> Endnagel
@@ -141,6 +144,14 @@ public class Data
 
     public void setRadius(double radius) {
         this.radius = radius;
+    }
+    
+    public boolean getColorsInverted() {
+        return colorsInverted;
+    }
+
+    public void setColorsInverted(boolean colorsInverted) {
+        this.colorsInverted = colorsInverted;
     }
 
     public int[][] getlineOrderArray() {

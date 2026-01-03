@@ -14,6 +14,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Button;
 import javafx.scene.control.Tab;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.Label;
@@ -54,6 +55,8 @@ public class GuiController extends Application
     private ImageView convertedImage;
     @FXML
     private ScrollPane scrollPane;
+    @FXML
+    private CheckBox checkBoxInvertColors;
     @FXML
     private Button refresh;
     @FXML
@@ -165,11 +168,11 @@ public class GuiController extends Application
         initDoubleSpinner(spinnerAbstandNaegel, 0, 10, 0);
 
         initDoubleSpinner(spinnerHoeheStartnagel, 0, 10, 0);
-        
+
         initDoubleSpinner(spinnerXRechts, 0, 1000, 0);
 
         initDoubleSpinner(spinnerYRechts, 0, 1000, 0);
-        
+
         initDoubleSpinner(spinnerXLinks, 0, 1000, 0);
 
         initDoubleSpinner(spinnerYLinks, 0, 1000, 0);
@@ -183,6 +186,10 @@ public class GuiController extends Application
     @FXML
     public void eventListeners()
     {   
+        //---------- 1. Seite ----------
+
+        //setColorsInverted
+
         //---------- 2. Seite ----------
 
         //setMaxIterations
@@ -210,6 +217,7 @@ public class GuiController extends Application
         spinnerAnzahlNaegel.valueProperty().addListener((obs, oldValue, newValue) -> {
 
                     main.nailPositions(newValue);
+                    main.setScale(data.getDiameter());
                     double abstand = main.setAbstand();
                     labelNagelabstand.setText("Nagelabstand: " + abstand + " mm");
                     if(abstand <= 4.0 || abstand >= 1000000)
@@ -295,7 +303,7 @@ public class GuiController extends Application
         spinnerAbstandNaegel.valueProperty().addListener((obs, oldVal, newVal) ->
                 data.setGapsize((double)newVal)
         );
-        
+
         //setGapsize
         spinnerHoeheStartnagel.valueProperty().addListener((obs, oldVal, newVal) ->
                 data.setHeightStartingnail((double)newVal)
@@ -310,7 +318,7 @@ public class GuiController extends Application
         spinnerYRechts.valueProperty().addListener((obs, oldVal, newVal) ->
                 data.setCoordinateYRight((double)newVal)
         );
-        
+
         //setCoordinateXLeft
         spinnerXLinks.valueProperty().addListener((obs, oldVal, newVal) ->
                 data.setCoordinateXLeft((double)newVal)
@@ -374,9 +382,9 @@ public class GuiController extends Application
         setIntSpinner(spinnerBeschleunigung, data.getAcceleration());
 
         setDoubleSpinner(spinnerAbstandNaegel, data.getGapsize());
-        
+
         setDoubleSpinner(spinnerHoeheStartnagel, data.getHeightStartingnail());
-        
+
         setDoubleSpinner(spinnerXRechts, data.getCoordinateXRight());
         setDoubleSpinner(spinnerYRechts, data.getCoordinateYRight());
         setDoubleSpinner(spinnerXLinks, data.getCoordinateXLeft());
@@ -477,8 +485,16 @@ public class GuiController extends Application
     @FXML
     public void generateHeatmap()
     {
+        imageToArray.imageProcessing();
         WritableImage heatmap = heatmapGen.createHeatmap(data.getBildArray());
         convertedImage.setImage(heatmap);
+    }
+
+    @FXML
+    public void eventListenerCheckBoxInvertColors()
+    {
+        data.setColorsInverted(checkBoxInvertColors.isSelected());
+        System.out.println(checkBoxInvertColors.isSelected());
     }
 
     //---------- 2. Seite ----------
@@ -564,11 +580,11 @@ public class GuiController extends Application
         {
             gcodeGen.main(data.getGCodeFile());
             textAreaVorschau.setText("G-Code erfolgreich generiert." + "\n" + 
-            "Gewählter Speicherort: " + data.getGCodeFile() + "\n" + 
-            "Resume mit BASE_RESUME" + "\n" + 
-            "Home mit SET_KINEMATIC_POSITION Z=10" + "\n" + "\n" +
-            "Winkel: " + Math.toDegrees(data.getCompensationAngle()) + "°" + "\n" + 
-            "Durchmesser: " + data.getAbsoluteDistance() + " mm");
+                "Gewählter Speicherort: " + data.getGCodeFile() + "\n" + 
+                "Resume mit BASE_RESUME" + "\n" + 
+                "Home mit SET_KINEMATIC_POSITION Z=10" + "\n" + "\n" +
+                "Winkel: " + Math.toDegrees(data.getCompensationAngle()) + "°" + "\n" + 
+                "Durchmesser: " + data.getAbsoluteDistance() + " mm");
         }
         else
         {

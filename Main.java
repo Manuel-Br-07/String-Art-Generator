@@ -58,9 +58,9 @@ public class Main {
         return length;
     }
 
-    public void setScale(int pDiameter) {
+    public void setScale(double pDiameter) {
         data.setDiameter(pDiameter);
-        data.setMmProPixel((double) pDiameter / data.getWidth());
+        data.setMmProPixel(pDiameter / data.getWidth());
     }
     
     public double setAbstand()

@@ -177,4 +177,9 @@ public class ImageToArray
         // StringArtPlotter.init(width, height);
 
     }
+    
+    public void imageProcessing()
+    {
+        
+    }
 }

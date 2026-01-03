@@ -194,7 +194,6 @@ public class GcodeGenerator
         
         for(int i = 0; i < lineOrderArray.length; i++)
         {
-            System.out.println(i);
             double dx = compensatedNailCoords[lineOrderArray[i][1]][0] - centerX;  
             double dy = compensatedNailCoords[lineOrderArray[i][1]][1] - centerY;
             double length = Math.sqrt(dx * dx + dy * dy);
