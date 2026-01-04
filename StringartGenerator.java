@@ -91,17 +91,22 @@ public class StringartGenerator
             // while (averageColour() <= endpoint && iterations < 50000) {
             double bestScore = 0;
             int bestEndNail = -1;
+            int prev = (startNail - 1 + nails) % nails;
+            int next = (startNail + 1) % nails;
+
             for (int endNail = 0; endNail < nails; endNail++) {
-                if (endNail != startNail)// gleiche Nagel überspringen
-                {
-                    // Berechne Score für Linie von startNail zu endNail
-                    double score = calculateLineScore(startNail, endNail);
-                    // System.out.println("Scores " + score + " " + bestScore);
-                    if (score > bestScore) {
-                        bestScore = score;
-                        bestEndNail = endNail;
-                    }
+                if (endNail == startNail || endNail == prev || endNail == next) {
+                    continue;
                 }
+
+                // Berechne Score für Linie von startNail zu endNail
+                double score = calculateLineScore(startNail, endNail);
+                // System.out.println("Scores " + score + " " + bestScore);
+                if (score > bestScore) {
+                    bestScore = score;
+                    bestEndNail = endNail;
+                }
+
             }
 
             // System.out.println("xmin " + nailCoords[startNail][0] + " ymin " + nailCoords[startNail][1] + " xmax " + nailCoords[bestEndNail][0] + " ymax " + nailCoords[bestEndNail][1]);
