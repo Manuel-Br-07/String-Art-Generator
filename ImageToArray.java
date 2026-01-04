@@ -20,6 +20,11 @@ public class ImageToArray
     private double[][] bildArray;
     private String  dateiName;
 
+    // imageProcessing
+    private boolean colorsInverted;
+    private double clippingMinValue;
+    private double clippingMaxValue;
+
     //circularMask
     private double centerX;
     private double centerY;
@@ -42,6 +47,10 @@ public class ImageToArray
         // height = data.getHeight();
         // bildArray = data.getBildArray();
         dateiName = data.getDateiName();
+
+        colorsInverted = data.getColorsInverted();
+        clippingMinValue = data.getClippingMinValue();
+        clippingMaxValue = data.getClippingMaxValue();
 
         centerX = data.getCenterX();
         centerY = data.getCenterY();
@@ -145,41 +154,61 @@ public class ImageToArray
                 }
             }
         }
-        
+
         // Console Print
         // for (int y = 0; y < height; y++)
         // {
-            // for (int x = 0; x < width; x++)
-            // {
-                // if (bildArray[y][x] >= 0)
-                // {
-                    // if (bildArray[y][x] > 0.5)
-                    // {
-                        // System.out.print(" ");
-                    // }
-                    // else
-                    // {
-                        // System.out.print("█");
-                    // }
-                // }
-                // else
-                // {
-                    // System.out.print("X");
-                    // if (bildArray[y][x] >= 0)
-                    // {
-                        // System.out.print("T");
-                    // }
-                // }
-            // }
-            // System.out.println();
+        // for (int x = 0; x < width; x++)
+        // {
+        // if (bildArray[y][x] >= 0)
+        // {
+        // if (bildArray[y][x] > 0.5)
+        // {
+        // System.out.print(" ");
+        // }
+        // else
+        // {
+        // System.out.print("█");
+        // }
+        // }
+        // else
+        // {
+        // System.out.print("X");
+        // if (bildArray[y][x] >= 0)
+        // {
+        // System.out.print("T");
+        // }
+        // }
+        // }
+        // System.out.println();
         // }
 
         // StringArtPlotter.init(width, height);
 
     }
-    
+
     public void imageProcessing()
     {
-        
+        System.out.println(colorsInverted);
+        for (int y = 0; y < height; y++)
+        {
+            for (int x = 0; x < width; x++)
+            {
+                if(bildArray[y][x] >= 0)
+                {
+                    
+                    if(colorsInverted)
+                    {
+                        bildArray[y][x] = 1 - bildArray[y][x];
+                    }
+                    
+                    if(clippingMinValue > bildArray[y][x])
+                    bildArray[y][x] = clippingMinValue;
+                    
+                    if(clippingMaxValue < bildArray[y][x])
+                    bildArray[y][x] = clippingMaxValue;
+                }
+            }
+        }
     }
 }

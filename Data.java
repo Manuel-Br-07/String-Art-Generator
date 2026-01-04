@@ -23,6 +23,8 @@ public class Data
     
     // imageProcessing
     private boolean colorsInverted;
+    private double clippingMinValue = 0;
+    private double clippingMaxValue = 1;
 
     //listToArray
     private int[][] lineOrderArray; // [][0] -> Startnagel      [][1] -> Endnagel
@@ -152,6 +154,22 @@ public class Data
 
     public void setColorsInverted(boolean colorsInverted) {
         this.colorsInverted = colorsInverted;
+    }
+    
+    public double getClippingMinValue() {
+        return clippingMinValue;
+    }
+
+    public void setClippingMinValue(double clippingMinValue) {
+        this.clippingMinValue = clippingMinValue;
+    }
+    
+    public double getClippingMaxValue() {
+        return clippingMaxValue;
+    }
+
+    public void setClippingMaxValue(double clippingMaxValue) {
+        this.clippingMaxValue = clippingMaxValue;
     }
 
     public int[][] getlineOrderArray() {

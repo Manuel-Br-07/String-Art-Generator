@@ -58,6 +58,10 @@ public class GuiController extends Application
     @FXML
     private CheckBox checkBoxInvertColors;
     @FXML
+    private Slider sliderClippingMin;
+    @FXML
+    private Slider sliderClippingMax;
+    @FXML
     private Button refresh;
     @FXML
     private Tab stringartTab;
@@ -189,6 +193,21 @@ public class GuiController extends Application
         //---------- 1. Seite ----------
 
         //setColorsInverted
+        // setClippingMaxValue
+        sliderClippingMin.valueProperty().addListener((obs, oldVal, newVal) -> {
+                    data.setClippingMinValue(sliderClippingMin.getValue());
+                    
+                    if(data.getClippingMaxValue() <  sliderClippingMin.getValue())
+                        sliderClippingMax.setValue(sliderClippingMin.getValue());
+            });
+            
+        // setClippingMaxValue
+        sliderClippingMax.valueProperty().addListener((obs, oldVal, newVal) -> {
+                    data.setClippingMaxValue(sliderClippingMax.getValue());
+                    
+                    if(data.getClippingMinValue() > sliderClippingMax.getValue())
+                        sliderClippingMin.setValue(sliderClippingMax.getValue());
+            });
 
         //---------- 2. Seite ----------
 
@@ -205,9 +224,8 @@ public class GuiController extends Application
                     }
             });
 
-        // setCurrentIteration nur bei loslassen!!
+        // setCurrentIteration
         sliderCurrentIteration.valueProperty().addListener((obs, oldVal, newVal) -> {
-                    // Benutzer hat den Slider losgelassen
                     data.setCurrentIteration((int) sliderCurrentIteration.getValue());
                     drawLines();
 
@@ -485,7 +503,6 @@ public class GuiController extends Application
     @FXML
     public void generateHeatmap()
     {
-        imageToArray.imageProcessing();
         WritableImage heatmap = heatmapGen.createHeatmap(data.getBildArray());
         convertedImage.setImage(heatmap);
     }
@@ -494,7 +511,14 @@ public class GuiController extends Application
     public void eventListenerCheckBoxInvertColors()
     {
         data.setColorsInverted(checkBoxInvertColors.isSelected());
-        System.out.println(checkBoxInvertColors.isSelected());
+    }
+    
+    @FXML
+    public void refresh()
+    {
+        imageToArray.main();
+        imageToArray.imageProcessing();
+        generateHeatmap();
     }
 
     //---------- 2. Seite ----------

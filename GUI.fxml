@@ -87,15 +87,30 @@
                               <Font name="System Bold" size="15.0" />
                            </font>
                         </Label>
-                        <ScrollPane fx:id="scrollPane" disable="true" layoutX="25.0" layoutY="312.0" prefHeight="300.0" prefWidth="266.0" AnchorPane.bottomAnchor="25.0" AnchorPane.leftAnchor="25.0" AnchorPane.topAnchor="312.0">
+                        <ScrollPane fx:id="scrollPane" layoutX="25.0" layoutY="312.0" prefHeight="300.0" prefWidth="266.0" AnchorPane.bottomAnchor="25.0" AnchorPane.leftAnchor="25.0" AnchorPane.topAnchor="312.0">
                            <content>
-                              <CheckBox fx:id="checkBoxInvertColors" mnemonicParsing="false" onAction="#eventListenerCheckBoxInvertColors" prefHeight="26.0" prefWidth="118.0" text="Invert Colors" />
+                              <VBox prefHeight="280.0" prefWidth="262.0" spacing="5.0">
+                                 <children>
+                                    <CheckBox fx:id="checkBoxInvertColors" mnemonicParsing="false" onAction="#eventListenerCheckBoxInvertColors" prefHeight="26.0" prefWidth="118.0" text="Invert Colors" />
+                                    <Separator prefHeight="0.0" prefWidth="232.0" />
+                                    <Label prefHeight="17.0" prefWidth="108.0" text="Clipping">
+                                       <font>
+                                          <Font name="System Bold" size="12.0" />
+                                       </font>
+                                    </Label>
+                                    <Slider fx:id="sliderClippingMin" blockIncrement="0.1" majorTickUnit="0.2" max="1.0" minorTickCount="5" showTickLabels="true" showTickMarks="true" />
+                                    <Slider fx:id="sliderClippingMax" blockIncrement="0.1" majorTickUnit="0.2" max="1.0" minorTickCount="5" showTickLabels="true" showTickMarks="true" value="1.0" />
+                                 </children>
+                                 <padding>
+                                    <Insets bottom="20.0" left="15.0" right="15.0" top="15.0" />
+                                 </padding>
+                              </VBox>
                            </content></ScrollPane>
-                        <Button fx:id="refresh" disable="true" layoutX="150.0" layoutY="245.0" mnemonicParsing="false" onAction="#generateHeatmap" prefHeight="25.0" prefWidth="75.0" text="Refresh" AnchorPane.leftAnchor="150.0" AnchorPane.topAnchor="245.0" />
+                        <Button fx:id="refresh" disable="true" layoutX="150.0" layoutY="245.0" mnemonicParsing="false" onAction="#refresh" prefHeight="25.0" prefWidth="75.0" text="Refresh" AnchorPane.leftAnchor="150.0" AnchorPane.topAnchor="245.0" />
                      </children></AnchorPane>
             </content>
           </Tab>
-          <Tab fx:id="stringartTab" disable="true" text="2. Stringart Generator">
+          <Tab fx:id="stringartTab" text="2. Stringart Generator">
             <content>
               <AnchorPane disable="true" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
