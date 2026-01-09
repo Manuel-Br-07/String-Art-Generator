@@ -38,6 +38,28 @@ public class Main {
 
         data.setNailCoords(nailCoords);
         data.setNails(nails);
+        avoidColisions();
+    }
+    
+    public void avoidColisions()
+    {
+        double nailWidth = data.getNailWidth();
+        double pinWidth = data.getPinWidth();
+        double[][] nailCoords = data.getNailCoords();
+        int[][] possibleNails = data.getPossibleNails();
+        
+        for(int i = 0; i < nailCoords.length; i++)
+        {
+            for(int j = 0; j < nailCoords.length; j++)
+            {
+                if(i == j)
+                {
+                
+                }
+            }
+        }
+
+        data.setPossibleNails(possibleNails);
     }
 
     public double calculateStringLength()

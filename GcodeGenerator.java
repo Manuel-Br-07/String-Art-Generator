@@ -46,6 +46,9 @@ public class GcodeGenerator
     //calculateCoordinates
     double[][] absoluteNailPositions;
     double gapsize;
+    
+    //GuiControllerSettings 
+    private double nailDistance;
 
     //printerControlls
     private String gCodeName;
@@ -95,10 +98,10 @@ public class GcodeGenerator
         mmProPixel = data.getMmProPixel();
         stringLength = data.getStringLength();
 
-        // lineWidth = data.getLineWidth();
-
         absoluteNailPositions = data.getAbsoluteNailPositions();
         gapsize = data.getGapsize();
+        
+        nailDistance = data.getNailDistance();
 
         //printerControlls
         gCodeName  = data.getGCodeFile();
@@ -178,18 +181,19 @@ public class GcodeGenerator
     public void calculateCoordinates()
     {
         absoluteNailPositions = new double[data.getCurrentIteration() + nails][4];
+        double distance = nailDistance / 2;
 
         for(int i = 0; i < nails; i++)
         {
             double dx = compensatedNailCoords[i][0] - centerX;
             double dy = compensatedNailCoords[i][1] - centerY;
             double length = Math.sqrt(dx * dx + dy * dy);
-            double factor = (length - (gapsize / mmProPixel)) / length;
+            double factor = (length - (distance / mmProPixel)) / length;
 
-            absoluteNailPositions[i][0] = ((compensatedNailCoords[i][0]) * mmProPixel) + gapsize;
-            absoluteNailPositions[i][1] = ((compensatedNailCoords[i][1]) * mmProPixel) + gapsize;
-            absoluteNailPositions[i][2] = ((centerX + dx * factor) * mmProPixel) + gapsize;
-            absoluteNailPositions[i][3] = ((centerY + dy * factor) * mmProPixel) + gapsize;
+            absoluteNailPositions[i][0] = ((compensatedNailCoords[i][0]) * mmProPixel) + distance;
+            absoluteNailPositions[i][1] = ((compensatedNailCoords[i][1]) * mmProPixel) + distance;
+            absoluteNailPositions[i][2] = ((centerX + dx * factor) * mmProPixel) + distance;
+            absoluteNailPositions[i][3] = ((centerY + dy * factor) * mmProPixel) + distance;
         }
         
         for(int i = 0; i < lineOrderArray.length; i++)
@@ -197,12 +201,12 @@ public class GcodeGenerator
             double dx = compensatedNailCoords[lineOrderArray[i][1]][0] - centerX;  
             double dy = compensatedNailCoords[lineOrderArray[i][1]][1] - centerY;
             double length = Math.sqrt(dx * dx + dy * dy);
-            double factor = (length - (gapsize / mmProPixel)) / length;
+            double factor = (length - (distance / mmProPixel)) / length;
 
-            absoluteNailPositions[i + nails][0] = ((compensatedNailCoords[lineOrderArray[i][1]][0]) * mmProPixel) + gapsize;
-            absoluteNailPositions[i + nails][1] = ((compensatedNailCoords[lineOrderArray[i][1]][1]) * mmProPixel) + gapsize;
-            absoluteNailPositions[i + nails][2] = ((centerX + dx * factor) * mmProPixel) + gapsize;
-            absoluteNailPositions[i + nails][3] = ((centerY + dy * factor) * mmProPixel) + gapsize;
+            absoluteNailPositions[i + nails][0] = ((compensatedNailCoords[lineOrderArray[i][1]][0]) * mmProPixel) + distance;
+            absoluteNailPositions[i + nails][1] = ((compensatedNailCoords[lineOrderArray[i][1]][1]) * mmProPixel) + distance;
+            absoluteNailPositions[i + nails][2] = ((centerX + dx * factor) * mmProPixel) + distance;
+            absoluteNailPositions[i + nails][3] = ((centerY + dy * factor) * mmProPixel) + distance;
             // System.out.println("x " + absoluteNailPositions[i][0] + " y " + absoluteNailPositions[i][1] + " x1 " + absoluteNailPositions[i][2] + " y1 " + absoluteNailPositions[i][3]);
         }
 

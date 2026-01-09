@@ -238,9 +238,9 @@ public class GuiController extends Application
                     main.setScale(data.getDiameter());
                     double abstand = main.setAbstand();
                     labelNagelabstand.setText("Nagelabstand: " + abstand + " mm");
-                    if(abstand <= 4.0 || abstand >= 1000000)
+                    if(abstand <= data.getNailWidth() + data.getPinWidth() + 0.5 || abstand >= 1000000)
                     {
-                        textAreaAusgabe.setText("Fehler: \n Nagelabstand darf 4mm nicht unterschreiten!");
+                        textAreaAusgabe.setText("Fehler: \n Nagelabstand darf " + (data.getNailWidth() + data.getPinWidth() + 0.5) + " mm nicht unterschreiten!");
                         generateArt.setDisable(true);
                     }
                     else
@@ -256,9 +256,9 @@ public class GuiController extends Application
                     main.setScale(newValue);
                     double abstand = main.setAbstand();
                     labelNagelabstand.setText("Nagelabstand: " + abstand + " mm");
-                    if(abstand <= 4.0 || abstand >= 1000000)
+                    if(abstand <= data.getNailWidth() + data.getPinWidth() + 0.5 || abstand >= 1000000)
                     {
-                        textAreaAusgabe.setText("Fehler: \n Nagelabstand darf 4mm nicht unterschreiten!");
+                        textAreaAusgabe.setText("Fehler: \n Nagelabstand darf " + (data.getNailWidth() + data.getPinWidth() + 0.5) + " mm nicht unterschreiten!");
                         generateArt.setDisable(true);
                     }
                     else

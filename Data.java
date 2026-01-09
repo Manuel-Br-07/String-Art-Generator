@@ -1,4 +1,5 @@
 import javafx.scene.paint.Color;
+
 /**
  * Beschreiben Sie hier die Klasse Data.
  * 
@@ -20,7 +21,7 @@ public class Data
     private double centerX;
     private double centerY;
     private double radius;
-    
+
     // imageProcessing
     private boolean colorsInverted;
     private double clippingMinValue = 0;
@@ -32,6 +33,9 @@ public class Data
     //nailPositions
     private int nails = 60;
     private double[][] nailCoords; // [][0] -> X      [][1] -> Y
+    private int[][] possibleNails;
+    private double nailWidth = 1.9;
+    private double pinWidth = 2.0;
 
     //setScale
     private double diameter = 100;
@@ -67,7 +71,7 @@ public class Data
     private double coordinateYRight = 0;
     private double coordinateXLeft = 0;
     private double coordinateYLeft = 0;
-    
+
     private double compensationAngle;
     private double absoluteDistance;
 
@@ -147,7 +151,7 @@ public class Data
     public void setRadius(double radius) {
         this.radius = radius;
     }
-    
+
     public boolean getColorsInverted() {
         return colorsInverted;
     }
@@ -155,7 +159,7 @@ public class Data
     public void setColorsInverted(boolean colorsInverted) {
         this.colorsInverted = colorsInverted;
     }
-    
+
     public double getClippingMinValue() {
         return clippingMinValue;
     }
@@ -163,7 +167,7 @@ public class Data
     public void setClippingMinValue(double clippingMinValue) {
         this.clippingMinValue = clippingMinValue;
     }
-    
+
     public double getClippingMaxValue() {
         return clippingMaxValue;
     }
@@ -218,6 +222,30 @@ public class Data
 
     public void setNailCoords(double[][] nailCoords) {
         this.nailCoords = nailCoords;
+    }
+
+    public int[][] getPossibleNails() {
+        return possibleNails;
+    }
+
+    public void setPossibleNails(int[][] possibleNails) {
+        this.possibleNails = possibleNails;
+    }
+
+    public double getNailWidth() {
+        return nailWidth;
+    }
+
+    public void setNailWidth(double nailWidth) {
+        this.nailWidth = nailWidth;
+    }
+    
+    public double getPinWidth() {
+        return pinWidth;
+    }
+
+    public void setPinWidth(double pinWidth) {
+        this.pinWidth = pinWidth;
     }
 
     public double getLineWidth() {
@@ -339,7 +367,7 @@ public class Data
     public void setAcceleration(int acceleration) {
         this.acceleration = acceleration;
     }
-    
+
     public double getHeightStartingnail() {
         return heightStartingnail;
     }
@@ -347,7 +375,7 @@ public class Data
     public void setHeightStartingnail(double heightStartingnail) {
         this.heightStartingnail = heightStartingnail;
     }
-    
+
     public double getCoordinateXRight() {
         return coordinateXRight;
     }
@@ -363,7 +391,7 @@ public class Data
     public void setCoordinateYRight(double coordinateYRight) {
         this.coordinateYRight = coordinateYRight;
     }
-    
+
     public double getCoordinateXLeft() {
         return coordinateXLeft;
     }
@@ -387,7 +415,7 @@ public class Data
     public void setCompensationAngle(double compensationAngle) {
         this.compensationAngle = compensationAngle;
     }
-    
+
     public double getAbsoluteDistance() {
         return absoluteDistance;
     }
