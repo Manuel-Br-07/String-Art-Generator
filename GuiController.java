@@ -43,7 +43,7 @@ public class GuiController extends Application
     private ImageToArray imageToArray = new ImageToArray(data, lineOrder, stringArtPlotter);
     private StringartGenerator stringartGen = new StringartGenerator(data, lineOrder, stringArtPlotter);
     private GcodeGenerator gcodeGen = new GcodeGenerator(data, lineOrder, stringArtPlotter);
-    private Main main = new Main(data, lineOrder, stringArtPlotter, imageToArray, stringartGen, gcodeGen);
+    private Main main = new Main(data, stringArtPlotter, imageToArray, stringartGen, gcodeGen);
     private HeatmapGen heatmapGen = new HeatmapGen();
     private JsonGenerator jsonGen = new JsonGenerator();
     private GraphicsContext gc;
@@ -486,7 +486,7 @@ public class GuiController extends Application
         if(data.getBildArray() != null)
         {
             generateHeatmap();
-            main.nailPositions(data.getNails());
+            // main.nailPositions(data.getNails());
 
             refresh.setDisable(false);
             scrollPane.setDisable(false);

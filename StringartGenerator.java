@@ -23,6 +23,7 @@ public class StringartGenerator
     //nailPositions
     private int nails;
     private double[][] nailCoords;
+    private int[][] possibleNails;
 
     //setScale
     private double diameter;
@@ -59,6 +60,7 @@ public class StringartGenerator
 
         nails = data.getNails();
         nailCoords = data.getNailCoords();
+        possibleNails = data.getPossibleNails();
 
         diameter = data.getDiameter();
         mmProPixel = data.getMmProPixel();
@@ -86,18 +88,14 @@ public class StringartGenerator
         double endpoint = averageColour() + (1 - averageColour()) / 10 * 8.5;
         System.out.println("Endpoint " + endpoint);
 
-        for(int i=0; i < maxIterations; i++)
+        for(int i = 0; i < maxIterations; i++)
         {
             // while (averageColour() <= endpoint && iterations < 50000) {
             double bestScore = 0;
             int bestEndNail = -1;
-            int prev = (startNail - 1 + nails) % nails;
-            int next = (startNail + 1) % nails;
 
-            for (int endNail = 0; endNail < nails; endNail++) {
-                if (endNail == startNail || endNail == prev || endNail == next) {
-                    continue;
-                }
+            for (int j = 0; j < possibleNails[startNail].length; j++) {
+                int endNail = possibleNails[startNail][j];
 
                 // Berechne Score für Linie von startNail zu endNail
                 double score = calculateLineScore(startNail, endNail);
