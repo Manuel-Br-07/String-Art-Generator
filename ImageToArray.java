@@ -12,7 +12,6 @@ public class ImageToArray
 {
     private Data data;
     private Queue<int[]> lineOrder;
-    private StringArtPlotter stringArtPlotter;
 
     //immageToArray
     private int width;
@@ -33,11 +32,10 @@ public class ImageToArray
     /**
      * Konstruktor für Objekte der Klasse ImageToArray
      */
-    public ImageToArray(Data pData, Queue<int[]> pLineOrder, StringArtPlotter pStringArtPlotter)
+    public ImageToArray(Data pData, Queue<int[]> pLineOrder)
     {
         data = pData;
         lineOrder = pLineOrder;
-        stringArtPlotter = pStringArtPlotter;
     }
 
     public void main()

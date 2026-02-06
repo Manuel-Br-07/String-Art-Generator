@@ -44,6 +44,7 @@
 <?import javafx.scene.control.ProgressBar?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.SeparatorMenuItem?>
 <?import javafx.scene.control.Slider?>
 <?import javafx.scene.control.Spinner?>
 <?import javafx.scene.control.SplitPane?>
@@ -67,6 +68,8 @@
               <MenuItem mnemonicParsing="false" text="Save config" />
                   <MenuItem mnemonicParsing="false" text="Save load config" />
                   <MenuItem mnemonicParsing="false" text="Overwrite default config" />
+                  <SeparatorMenuItem mnemonicParsing="false" />
+                  <MenuItem mnemonicParsing="false" onAction="#openSettings" text="Einstellungen" />
             </items>
           </Menu>
         </menus>

@@ -10,7 +10,6 @@ public class StringartGenerator
 {
     private Data data;
     private Queue<int[]> lineOrder;
-    private StringArtPlotter stringArtPlotter;
 
     //immageToArray
     private int width;
@@ -44,11 +43,10 @@ public class StringartGenerator
     /**
      * Konstruktor für Objekte der Klasse StringartGenerator
      */
-    public StringartGenerator(Data pData, Queue<int[]> pLineOrder, StringArtPlotter pStringArtPlotter)
+    public StringartGenerator(Data pData, Queue<int[]> pLineOrder)
     {
         data = pData;
         lineOrder = pLineOrder;
-        stringArtPlotter = pStringArtPlotter;
     }
 
     public void main()
@@ -110,8 +108,6 @@ public class StringartGenerator
             // System.out.println("xmin " + nailCoords[startNail][0] + " ymin " + nailCoords[startNail][1] + " xmax " + nailCoords[bestEndNail][0] + " ymax " + nailCoords[bestEndNail][1]);
             // System.out.println("Start " + startNail + " Ende " + bestEndNail);
             if (bestEndNail != -1) {
-                StringArtPlotter.addLine(nailCoords[startNail][0], nailCoords[startNail][1], nailCoords[bestEndNail][0], nailCoords[bestEndNail][1]);
-                // StringArtPlotter.show();
 
                 linePos = new int[]{startNail, bestEndNail};
                 lineOrder.enqueue(linePos);

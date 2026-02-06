@@ -1,3 +1,5 @@
+import java.io.IOException;
+
 import javafx.application.Platform;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -27,6 +29,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.ProgressBar;
+import javafx.stage.Modality;
 
 import javafx.scene.image.WritableImage;
 /**
@@ -39,11 +42,10 @@ public class GuiController extends Application
 {
     private Data data = new Data();
     private Queue<int[]> lineOrder = new Queue();
-    private StringArtPlotter stringArtPlotter = new StringArtPlotter();
-    private ImageToArray imageToArray = new ImageToArray(data, lineOrder, stringArtPlotter);
-    private StringartGenerator stringartGen = new StringartGenerator(data, lineOrder, stringArtPlotter);
-    private GcodeGenerator gcodeGen = new GcodeGenerator(data, lineOrder, stringArtPlotter);
-    private Main main = new Main(data, stringArtPlotter, imageToArray, stringartGen, gcodeGen);
+    private ImageToArray imageToArray = new ImageToArray(data, lineOrder);
+    private StringartGenerator stringartGen = new StringartGenerator(data, lineOrder);
+    private GcodeGenerator gcodeGen = new GcodeGenerator(data, lineOrder);
+    private Main main = new Main(data, imageToArray, stringartGen, gcodeGen);
     private HeatmapGen heatmapGen = new HeatmapGen();
     private JsonGenerator jsonGen = new JsonGenerator();
     private GraphicsContext gc;
@@ -138,6 +140,7 @@ public class GuiController extends Application
         Parent root = FXMLLoader.load(getClass().getResource("/FXML/GUI.fxml")); 
         primaryStage.setTitle("StringArt Generator");
         primaryStage.setScene(new Scene(root));
+        primaryStage.setResizable(false);
         primaryStage.show();
     }
 
@@ -196,15 +199,15 @@ public class GuiController extends Application
         // setClippingMaxValue
         sliderClippingMin.valueProperty().addListener((obs, oldVal, newVal) -> {
                     data.setClippingMinValue(sliderClippingMin.getValue());
-                    
+
                     if(data.getClippingMaxValue() <  sliderClippingMin.getValue())
                         sliderClippingMax.setValue(sliderClippingMin.getValue());
             });
-            
+
         // setClippingMaxValue
         sliderClippingMax.valueProperty().addListener((obs, oldVal, newVal) -> {
                     data.setClippingMaxValue(sliderClippingMax.getValue());
-                    
+
                     if(data.getClippingMinValue() > sliderClippingMax.getValue())
                         sliderClippingMin.setValue(sliderClippingMax.getValue());
             });
@@ -512,7 +515,7 @@ public class GuiController extends Application
     {
         data.setColorsInverted(checkBoxInvertColors.isSelected());
     }
-    
+
     @FXML
     public void refresh()
     {
@@ -639,4 +642,28 @@ public class GuiController extends Application
             data.setGCodeFile(file.getAbsolutePath());
         }
     }
+
+    //---------- Menü ----------
+
+    @FXML
+    private void openSettings() throws IOException {
+
+        FXMLLoader loader = new FXMLLoader(
+                getClass().getResource("/FXML/settings.fxml")
+            );
+
+        SettingsController controller = new SettingsController(data);
+        loader.setController(controller);
+
+        Parent root = loader.load();
+
+        Stage settingsStage = new Stage();
+        settingsStage.setTitle("Einstellungen");
+        settingsStage.setScene(new Scene(root));
+        settingsStage.initModality(Modality.APPLICATION_MODAL);
+        settingsStage.setResizable(false);
+        settingsStage.showAndWait();
+
+    }
+
 }

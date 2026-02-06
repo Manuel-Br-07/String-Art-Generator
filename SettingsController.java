@@ -1,3 +1,10 @@
+import javafx.application.Platform;
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
+import javafx.fxml.FXML;
 
 /**
  * Beschreiben Sie hier die Klasse SettingsController.
@@ -7,27 +14,15 @@
  */
 public class SettingsController
 {
-    // Instanzvariablen - ersetzen Sie das folgende Beispiel mit Ihren Variablen
-    private int x;
+    private Data data;
 
     /**
      * Konstruktor für Objekte der Klasse SettingsController
      */
-    public SettingsController()
+    public SettingsController(Data pData)
     {
-        // Instanzvariable initialisieren
-        x = 0;
+        data = pData;
     }
-
-    /**
-     * Ein Beispiel einer Methode - ersetzen Sie diesen Kommentar mit Ihrem eigenen
-     * 
-     * @param  y    ein Beispielparameter für eine Methode
-     * @return        die Summe aus x und y
-     */
-    public int beispielMethode(int y)
-    {
-        // tragen Sie hier den Code ein
-        return x + y;
-    }
+    
+    
 }

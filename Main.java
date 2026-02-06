@@ -3,16 +3,14 @@ import java.util.LinkedList;
 
 public class Main {
     private Data data;
-    private StringArtPlotter stringArtPlotter;
 
     private ImageToArray imageToArray;
     private StringartGenerator stringartGen;
     private GcodeGenerator gcodeGen;
 
-    public Main(Data pData, StringArtPlotter pStringArtPlotter, ImageToArray pImageToArray, StringartGenerator pStringartGen, GcodeGenerator pGcodeGen)
+    public Main(Data pData, ImageToArray pImageToArray, StringartGenerator pStringartGen, GcodeGenerator pGcodeGen)
     {
         data = pData;
-        stringArtPlotter = pStringArtPlotter;
         imageToArray = pImageToArray;
         stringartGen = pStringartGen;
         gcodeGen = pGcodeGen;

@@ -17,7 +17,6 @@ public class GcodeGenerator
 {
     private Data data;
     private Queue<int[]> lineOrder;
-    private StringArtPlotter stringArtPlotter;
     private BufferedWriter writer;
 
     //immageToArray
@@ -73,11 +72,10 @@ public class GcodeGenerator
     /**
      * Konstruktor für Objekte der Klasse GcodeGenerator
      */
-    public GcodeGenerator(Data pData, Queue<int[]> pLineOrder, StringArtPlotter pStringArtPlotter)
+    public GcodeGenerator(Data pData, Queue<int[]> pLineOrder)
     {
         data = pData;
         lineOrder = pLineOrder;
-        stringArtPlotter = pStringArtPlotter;
     }
 
     public void main(String filename)
