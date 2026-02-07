@@ -143,10 +143,4 @@ public class Main {
         data.setDiameter(pDiameter);
         data.setMmProPixel(pDiameter / data.getWidth());
     }
-
-    public double setAbstand()
-    {
-        data.setNailDistance((Math.PI * data.getDiameter()) / data.getNails());
-        return (Math.PI * data.getDiameter()) / data.getNails();
-    }
 }

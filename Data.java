@@ -26,12 +26,14 @@ public class Data
     private boolean colorsInverted;
     private double clippingMinValue = 0;
     private double clippingMaxValue = 1;
+    private int colorMode = 1;  // 1. Schwarz, 2. Schwarzweiß, 3. CMYK
 
     //listToArray
     private int[][] lineOrderArray; // [][0] -> Startnagel      [][1] -> Endnagel
 
     //nailPositions
     private int nails = 60;
+    private double nailDistance;
     private double[][] nailCoords; // [][0] -> X      [][1] -> Y
     private int[][] possibleNails;
     private double nailWidth = 1.9;
@@ -56,7 +58,7 @@ public class Data
     private int currentIteration = 481;
     private double lineStrength = 0.796;
     private double lineWidthDisplay = 0.448;
-    private double nailDistance;
+    private double distanceToNail;
     private Color backgroundColor;
     private Color lineColor;
 
@@ -175,6 +177,14 @@ public class Data
     public void setClippingMaxValue(double clippingMaxValue) {
         this.clippingMaxValue = clippingMaxValue;
     }
+    
+    public int getColorMode() {
+        return colorMode;
+    }
+
+    public void setColorMode(int colorMode) {
+        this.colorMode = colorMode;
+    }
 
     public int[][] getlineOrderArray() {
         return lineOrderArray;
@@ -190,6 +200,14 @@ public class Data
 
     public void setNails(int nails) {
         this.nails = nails;
+    }
+    
+    public double getNailDistance() {
+        return nailDistance;
+    }
+
+    public void setNailDistance(double nailDistance) {
+        this.nailDistance = nailDistance;
     }
 
     public double getDiameter() {
@@ -304,12 +322,12 @@ public class Data
         this.lineWidthDisplay = lineWidthDisplay;
     }
 
-    public double getNailDistance() {
-        return nailDistance;
+    public double getDistanceToNail() {
+        return distanceToNail;
     }
 
-    public void setNailDistance(double nailDistance) {
-        this.nailDistance = nailDistance;
+    public void setDistanceToNail(double distanceToNail) {
+        this.distanceToNail = distanceToNail;
     }
 
     public Color getBackgroundColor() {

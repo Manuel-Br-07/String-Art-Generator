@@ -2,11 +2,16 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.Spinner?>
+<?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.ToolBar?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="408.0" prefWidth="606.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1">
    <children>
@@ -18,16 +23,82 @@
             <Insets bottom="15.0" left="15.0" right="15.0" />
          </padding>
          <items>
-            <Button mnemonicParsing="false" text="Fertig" />
-            <Button cancelButton="true" mnemonicParsing="false" text="Abbruch" />
+            <Button fx:id="buttonFertig" disable="true" mnemonicParsing="false" onAction="#save" text="Fertig" />
+            <Button fx:id="buttonAbbruch" cancelButton="true" mnemonicParsing="false" onAction="#cancel" text="Abbruch" />
          </items>
       </ToolBar>
       <Separator layoutX="3.0" layoutY="354.0" prefHeight="0.0" prefWidth="606.0" />
-      <Label layoutX="114.0" layoutY="127.0" text="Anzahl Nägel" />
-      <Label layoutX="150.0" layoutY="187.0" text="Durchmesser" />
-      <Label layoutX="122.0" layoutY="271.0" text="Durchmesser Nagel" />
-      <Label layoutX="226.0" layoutY="233.0" text="Durchmesser Spitze" />
-      <Label layoutX="331.0" layoutY="96.0" text="Modus" />
-      <TextArea editable="false" layoutX="289.0" layoutY="527.0" prefHeight="81.0" prefWidth="274.0" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="15.0" />
+      <SplitPane dividerPositions="0.333333333333333, 0.666666666666666" layoutX="13.0" layoutY="12.0" prefHeight="262.0" prefWidth="354.0" AnchorPane.bottomAnchor="55.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="15.0">
+         <items>
+            <VBox prefHeight="200.0" prefWidth="100.0" spacing="5.0">
+               <children>
+                  <Label text="Ring">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                  </Label>
+                  <Separator prefWidth="200.0" />
+                  <Label text="Anzahl Nägel">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Label>
+                  <Spinner fx:id="spinnerAnzahlNaegel" editable="true" />
+                  <Separator prefWidth="200.0" />
+                  <Label text="Abstand zwischen Nägel">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font></Label>
+                  <Spinner fx:id="spinnerAbstand" editable="true" />
+                  <Separator prefWidth="200.0" />
+                  <Label text="Durchmesser">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font></Label>
+                  <Spinner fx:id="spinnerDurchmesser" editable="true" />
+                  <Separator prefWidth="200.0" />
+                  <Label text="Form" />
+                  <ComboBox fx:id="comboBoxForm" prefWidth="150.0" />
+               </children>
+               <padding>
+                  <Insets bottom="20.0" left="15.0" right="15.0" top="5.0" />
+               </padding>
+            </VBox>
+            <VBox prefHeight="200.0" prefWidth="100.0" spacing="5.0">
+               <children>
+                  <Label text="Maße">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                  </Label>
+                  <Separator prefWidth="200.0" />
+                  <Label text="Durchmesser Spitze" />
+                  <Spinner fx:id="spinnerDurchmesserSpitze" editable="true" />
+                  <Separator prefWidth="200.0" />
+                  <Label text="Durchmesser Nagel" />
+                  <Spinner fx:id="spinnerDurchmesserNagel" editable="true" />
+               </children>
+               <padding>
+                  <Insets bottom="20.0" left="15.0" right="15.0" top="5.0" />
+               </padding>
+            </VBox>
+            <VBox prefHeight="200.0" prefWidth="100.0" spacing="5.0">
+               <children>
+                  <Label text="Modes">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                  </Label>
+                  <Separator prefWidth="200.0" />
+                  <Label text="Modus" />
+                  <ComboBox fx:id="comboBoxModus" prefWidth="150.0" />
+               </children>
+               <padding>
+                  <Insets bottom="20.0" left="15.0" right="15.0" top="5.0" />
+               </padding>
+            </VBox>
+         </items>
+      </SplitPane>
+      <TextArea fx:id="TextAreaInfo" editable="false" layoutX="289.0" layoutY="527.0" prefHeight="81.0" prefWidth="274.0" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="15.0" />
    </children>
 </AnchorPane>

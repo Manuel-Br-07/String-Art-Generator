@@ -239,7 +239,7 @@ public class GuiController extends Application
 
                     main.nailPositions(newValue);
                     main.setScale(data.getDiameter());
-                    double abstand = main.setAbstand();
+                    double abstand = data.getNailDistance();
                     labelNagelabstand.setText("Nagelabstand: " + abstand + " mm");
                     if(abstand <= data.getNailWidth() + data.getPinWidth() + 0.5 || abstand >= 1000000)
                     {
@@ -257,7 +257,7 @@ public class GuiController extends Application
         spinnerDurchmesser.valueProperty().addListener((obs, oldValue, newValue) -> {
 
                     main.setScale(newValue);
-                    double abstand = main.setAbstand();
+                    double abstand = data.getNailDistance();
                     labelNagelabstand.setText("Nagelabstand: " + abstand + " mm");
                     if(abstand <= data.getNailWidth() + data.getPinWidth() + 0.5 || abstand >= 1000000)
                     {
@@ -374,9 +374,7 @@ public class GuiController extends Application
 
         setIntSpinner(spinnerAnzahlNaegel, data.getNails());
 
-        setLabel(labelNagelabstand, "Nagelabstand: " + data.getNailDistance());
-
-        setIntSpinner(spinnerDurchmesser, (int)data.getDiameter());
+        setLabel(labelNagelabstand, "Nagelabstand: " + data.getDistanceToNail());
 
         setLabel(labelLinienbreite, "Linienbreite: " + data.getLineWidth());
         setSlider(sliderLinienbreite, data.getLineWidth());
@@ -421,7 +419,7 @@ public class GuiController extends Application
         spinner.setValueFactory(factory);
     }
 
-    private void initDoubleSpinner(Spinner<Double> spinner, int min, int max, int startwert) {
+    private void initDoubleSpinner(Spinner<Double> spinner, double min, double max, double startwert) {
 
         SpinnerValueFactory<Double> factory =
             new SpinnerValueFactory.DoubleSpinnerValueFactory(min, max, startwert);
@@ -606,10 +604,10 @@ public class GuiController extends Application
         if(data.getGCodeFile() != null)
         {
             gcodeGen.main(data.getGCodeFile());
-            textAreaVorschau.setText("G-Code erfolgreich generiert." + "\n" + 
+            textAreaVorschau.setText("G-Code erfolgreich generiert. \n" + 
                 "Gewählter Speicherort: " + data.getGCodeFile() + "\n" + 
                 "Resume mit BASE_RESUME" + "\n" + 
-                "Home mit SET_KINEMATIC_POSITION Z=10" + "\n" + "\n" +
+                "Home mit SET_KINEMATIC_POSITION Z=10 \n \n" +
                 "Winkel: " + Math.toDegrees(data.getCompensationAngle()) + "°" + "\n" + 
                 "Durchmesser: " + data.getAbsoluteDistance() + " mm");
         }

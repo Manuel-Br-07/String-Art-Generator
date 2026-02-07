@@ -47,7 +47,7 @@ public class GcodeGenerator
     double gapsize;
     
     //GuiControllerSettings 
-    private double nailDistance;
+    private double distanceToNail;
 
     //printerControlls
     private String gCodeName;
@@ -99,7 +99,7 @@ public class GcodeGenerator
         absoluteNailPositions = data.getAbsoluteNailPositions();
         gapsize = data.getGapsize();
         
-        nailDistance = data.getNailDistance();
+        distanceToNail = data.getDistanceToNail();
 
         //printerControlls
         gCodeName  = data.getGCodeFile();
@@ -179,7 +179,7 @@ public class GcodeGenerator
     public void calculateCoordinates()
     {
         absoluteNailPositions = new double[data.getCurrentIteration() + nails][4];
-        double distance = nailDistance / 2;
+        double distance = distanceToNail / 2;
 
         for(int i = 0; i < nails; i++)
         {
