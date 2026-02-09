@@ -428,35 +428,35 @@ public class GuiController extends Application
 
     @FXML
     private void setIntSpinner(Spinner<Integer> spinner, int value) {
-        System.out.println("spinnerint" + spinner + value);
+        // System.out.println("spinnerint" + spinner + value);
         if(spinner == null || spinner.getValueFactory() == null) return;
         spinner.getValueFactory().setValue(value);
     }
 
     @FXML
     private void setDoubleSpinner(Spinner<Double> spinner, double value) {
-        System.out.println("spinnerdouble" + spinner + value);
+        // System.out.println("spinnerdouble" + spinner + value);
         if(spinner == null || spinner.getValueFactory() == null) return;
         spinner.getValueFactory().setValue(value);
     }
 
     @FXML
     private void setSlider(Slider slider, double value) {
-        System.out.println("slider" + slider + value);
+        // System.out.println("slider" + slider + value);
         if (slider == null) return;
         slider.setValue(value);
     }
 
     @FXML
     private void setLabel(Label label, String text) {
-        System.out.println("label" + label + text);
+        // System.out.println("label" + label + text);
         if (label == null) return;
         label.setText(text);
     }
 
     @FXML
     private void setColor(ColorPicker picker, Color color) {
-        System.out.println("color" + picker + color);
+        // System.out.println("color" + picker + color);
         if (picker == null || color == null) return;
         picker.setValue(color);
     }

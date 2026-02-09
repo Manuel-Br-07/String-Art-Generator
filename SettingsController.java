@@ -23,6 +23,14 @@ public class SettingsController
     private Data data;
     private Stage stage;
 
+    private int anzahlNaegel;
+    private double abstand;
+    private int durchmesser;
+    private double durchmesserSpitze;
+    private double durchmesserNagel;
+
+    @FXML
+    private TextArea textAreaInfo;
     @FXML
     private Spinner<Integer> spinnerAnzahlNaegel;
     @FXML
@@ -62,7 +70,7 @@ public class SettingsController
         initDoubleSpinner(spinnerDurchmesserSpitze, 0.1, 5, 0.5);
 
         initDoubleSpinner(spinnerDurchmesserNagel, 0.1, 5, 0.5);
-        
+
         comboBoxModus.getItems().addAll("Schwarz", "Schwarzweiß", "CMYK");
 
         eventListeners();
@@ -72,22 +80,68 @@ public class SettingsController
     @FXML
     public void eventListeners()
     {
+        spinnerAnzahlNaegel.valueProperty().addListener((obs, oldValue, newValue) -> {
+                    anzahlNaegel = newValue;
+                    setDoubleSpinner(spinnerAbstand, (Math.PI * durchmesser) / anzahlNaegel);
+                    if(true)
+                    {
 
+                    }
+
+            });
+
+        spinnerAbstand.valueProperty().addListener((obs, oldValue, newValue) -> {
+                    abstand = newValue;
+                    // setIntSpinner(spinnerAnzahlNaegel, (int)(Math.PI * durchmesser) * abstand);
+                    if(true)
+                    {
+
+                    }
+
+            });
+
+        spinnerDurchmesser.valueProperty().addListener((obs, oldValue, newValue) -> {
+                    durchmesser = newValue;
+                    setDoubleSpinner(spinnerAbstand, (Math.PI * durchmesser) / anzahlNaegel);
+                    if(true)
+                    {
+
+                    }
+
+            });
+
+        spinnerDurchmesserSpitze.valueProperty().addListener((obs, oldValue, newValue) -> {
+                    durchmesserSpitze = newValue;
+                    if(true)
+                    {
+
+                    }
+
+            });
+
+        spinnerDurchmesserNagel.valueProperty().addListener((obs, oldValue, newValue) -> {
+                    durchmesserNagel = newValue;
+                    if(true)
+                    {
+
+                    }
+
+            });
     }
 
     @FXML
     public void setUIValues()
     {
         setIntSpinner(spinnerAnzahlNaegel, data.getNails());
-        
+
         setDoubleSpinner(spinnerAbstand, data.getNailDistance());
-        
+
         setIntSpinner(spinnerDurchmesser, (int)data.getDiameter());
-        
+
         setDoubleSpinner(spinnerDurchmesserSpitze, data.getPinWidth());
-        
+
         setDoubleSpinner(spinnerDurchmesserNagel, data.getNailWidth());
-        
+
         comboBoxModus.getSelectionModel().select(data.getColorMode());
     }
 
@@ -109,24 +163,24 @@ public class SettingsController
 
     @FXML
     private void setIntSpinner(Spinner<Integer> spinner, int value) {
-        System.out.println("spinnerint" + spinner + value);
+        // System.out.println("spinnerint" + spinner + value);
         if(spinner == null || spinner.getValueFactory() == null) return;
         spinner.getValueFactory().setValue(value);
     }
 
     @FXML
     private void setDoubleSpinner(Spinner<Double> spinner, double value) {
-        System.out.println("spinnerdouble" + spinner + value);
+        // System.out.println("spinnerdouble" + spinner + value);
         if(spinner == null || spinner.getValueFactory() == null) return;
         spinner.getValueFactory().setValue(value);
     }
 
     //---------- Logik ----------
-    
-    // public double setAbstand()
+
+    // public double Abstand()
     // {
-        // data.setDistanceToNail((Math.PI * data.getDiameter()) / data.getNails());
-        // return (Math.PI * data.getDiameter()) / data.getNails();
+    // data.setDistanceToNail((Math.PI * data.getDiameter()) / data.getNails());
+    // return (Math.PI * data.getDiameter()) / data.getNails();
     // }
 
     public void overwriteData()
@@ -138,7 +192,7 @@ public class SettingsController
         data.setNailWidth(spinnerDurchmesserNagel.getValue());
         data.setColorMode(comboBoxModus.getItems().indexOf(comboBoxModus.getValue()));
     }
-    
+
     public void cancel()
     {
         stage = (Stage) spinnerAnzahlNaegel.getScene().getWindow();
@@ -148,7 +202,7 @@ public class SettingsController
     public void save()
     {
         overwriteData();
-        
+
         stage = (Stage) spinnerAnzahlNaegel.getScene().getWindow();
         stage.close();
     }

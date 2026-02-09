@@ -26,7 +26,7 @@ public class Data
     private boolean colorsInverted;
     private double clippingMinValue = 0;
     private double clippingMaxValue = 1;
-    private int colorMode = 1;  // 1. Schwarz, 2. Schwarzweiß, 3. CMYK
+    private int colorMode = 0;  // 0. Schwarz, 1. Schwarzweiß, 2. CMYK
 
     //listToArray
     private int[][] lineOrderArray; // [][0] -> Startnagel      [][1] -> Endnagel

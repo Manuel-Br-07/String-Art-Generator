@@ -27,7 +27,7 @@
             <Button fx:id="buttonAbbruch" cancelButton="true" mnemonicParsing="false" onAction="#cancel" text="Abbruch" />
          </items>
       </ToolBar>
-      <Separator layoutX="3.0" layoutY="354.0" prefHeight="0.0" prefWidth="606.0" />
+      <Separator layoutX="3.0" layoutY="354.0" prefHeight="0.0" prefWidth="606.0" AnchorPane.bottomAnchor="51.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
       <SplitPane dividerPositions="0.333333333333333, 0.666666666666666" layoutX="13.0" layoutY="12.0" prefHeight="262.0" prefWidth="354.0" AnchorPane.bottomAnchor="55.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="15.0">
          <items>
             <VBox prefHeight="200.0" prefWidth="100.0" spacing="5.0">
@@ -57,7 +57,10 @@
                      </font></Label>
                   <Spinner fx:id="spinnerDurchmesser" editable="true" />
                   <Separator prefWidth="200.0" />
-                  <Label text="Form" />
+                  <Label text="Form">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font></Label>
                   <ComboBox fx:id="comboBoxForm" prefWidth="150.0" />
                </children>
                <padding>
@@ -99,6 +102,6 @@
             </VBox>
          </items>
       </SplitPane>
-      <TextArea fx:id="TextAreaInfo" editable="false" layoutX="289.0" layoutY="527.0" prefHeight="81.0" prefWidth="274.0" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="15.0" />
+      <TextArea fx:id="textAreaInfo" editable="false" layoutX="289.0" layoutY="527.0" prefHeight="81.0" prefWidth="274.0" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="15.0" />
    </children>
 </AnchorPane>
