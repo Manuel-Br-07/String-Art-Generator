@@ -21,6 +21,7 @@ import javafx.scene.control.ComboBox;
 public class SettingsController
 {
     private Data data;
+    private Main main;
     private Stage stage;
 
     private int anzahlNaegel;
@@ -54,15 +55,16 @@ public class SettingsController
     /**
      * Konstruktor für Objekte der Klasse SettingsController
      */
-    public SettingsController(Data pData)
+    public SettingsController(Data pData, Main pMain)
     {
         data = pData;
+        main = pMain;
     }
 
     public void initialize()
     {
 
-        initIntegerSpinner(spinnerAnzahlNaegel, 2, 1000, 150);
+        initIntegerSpinner(spinnerAnzahlNaegel, 4, 1000, 150);
 
         initDoubleSpinner(spinnerAbstand, 0, 1000, 1);
 
@@ -91,27 +93,22 @@ public class SettingsController
                     setDoubleSpinner(spinnerAbstand, (Math.PI * durchmesser) / anzahlNaegel);
                     update = false;
 
-                    if(true)
-                    {
-
-                    }
+                    buttonFertig.setDisable(check());
 
             });
 
         spinnerAbstand.valueProperty().addListener((obs, oldValue, newValue) -> {
 
                     abstand = newValue;
-                    
+
                     if(update) return;
                     update = true;
                     int anzahl = (int) Math.round((Math.PI * durchmesser) / abstand);
                     setIntSpinner(spinnerAnzahlNaegel, anzahl);
                     setDoubleSpinner(spinnerAbstand, (Math.PI * durchmesser) / anzahl);
                     update = false;
-                    if(true)
-                    {
 
-                    }
+                    buttonFertig.setDisable(check());
 
             });
 
@@ -119,30 +116,24 @@ public class SettingsController
 
                     durchmesser = newValue;
                     setDoubleSpinner(spinnerAbstand, (Math.PI * durchmesser) / anzahlNaegel);
-                    if(true)
-                    {
 
-                    }
+                    buttonFertig.setDisable(check());
 
             });
 
         spinnerDurchmesserSpitze.valueProperty().addListener((obs, oldValue, newValue) -> {
 
                     durchmesserSpitze = newValue;
-                    if(true)
-                    {
 
-                    }
+                    buttonFertig.setDisable(check());
 
             });
 
         spinnerDurchmesserNagel.valueProperty().addListener((obs, oldValue, newValue) -> {
 
                     durchmesserNagel = newValue;
-                    if(true)
-                    {
 
-                    }
+                    buttonFertig.setDisable(check());
 
             });
 
@@ -152,8 +143,6 @@ public class SettingsController
     public void setUIValues()
     {
         setIntSpinner(spinnerAnzahlNaegel, data.getNails());
-
-        setDoubleSpinner(spinnerAbstand, data.getNailDistance());
 
         setIntSpinner(spinnerDurchmesser, (int)data.getDiameter());
 
@@ -194,6 +183,18 @@ public class SettingsController
         spinner.getValueFactory().setValue(value);
     }
 
+    @FXML
+    private boolean check()
+    {
+        boolean distanceCorrect = (abstand <= durchmesserNagel + durchmesserSpitze + 0.5 || abstand >= 1000000);
+        if(distanceCorrect)
+            textAreaInfo.setText("Fehler: \n Nagelabstand darf " + (durchmesserNagel + durchmesserSpitze + 0.5) + " mm nicht unterschreiten!");
+        else
+            textAreaInfo.setText("");
+
+        return distanceCorrect;
+    }
+
     //---------- Logik ----------
 
     // public double Abstand()
@@ -207,9 +208,11 @@ public class SettingsController
         data.setNails(spinnerAnzahlNaegel.getValue());
         data.setNailDistance(spinnerAbstand.getValue());
         data.setDiameter(spinnerDurchmesser.getValue());
+        data.setMmProPixel(spinnerDurchmesser.getValue() / data.getWidth());
         data.setPinWidth(spinnerDurchmesserSpitze.getValue());
         data.setNailWidth(spinnerDurchmesserNagel.getValue());
         data.setColorMode(comboBoxModus.getItems().indexOf(comboBoxModus.getValue()));
+        main.nailPositions(data.getNails());
     }
 
     public void cancel()

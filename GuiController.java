@@ -77,12 +77,12 @@ public class GuiController extends Application
     private Slider sliderCurrentIteration;
     @FXML
     private Label labelCurrentIteration;
-    @FXML
-    private Spinner<Integer> spinnerAnzahlNaegel;
-    @FXML
-    private Label labelNagelabstand;
-    @FXML 
-    private Spinner<Integer> spinnerDurchmesser;
+    // @FXML
+    // private Spinner<Integer> spinnerAnzahlNaegel;
+    // @FXML
+    // private Label labelNagelabstand;
+    // @FXML 
+    // private Spinner<Integer> spinnerDurchmesser;
     @FXML
     private Label labelLinienbreite;
     @FXML
@@ -159,9 +159,9 @@ public class GuiController extends Application
         spinnerMaxIterations.setValueFactory(maxIterationsFactory);
         sliderCurrentIteration.setMax(spinnerMaxIterations.getValue());
 
-        initIntegerSpinner(spinnerAnzahlNaegel, 2, 1000, 150);
+        // initIntegerSpinner(spinnerAnzahlNaegel, 2, 1000, 150);
 
-        initIntegerSpinner(spinnerDurchmesser, 0, 1000, 0);
+        // initIntegerSpinner(spinnerDurchmesser, 0, 1000, 0);
 
         //---------- 3. Seite ----------
         initIntegerSpinner(spinnerZHop, 0, 1000, 0);
@@ -234,42 +234,42 @@ public class GuiController extends Application
 
             });
 
-        //setNails
-        spinnerAnzahlNaegel.valueProperty().addListener((obs, oldValue, newValue) -> {
+        // //setNails
+        // spinnerAnzahlNaegel.valueProperty().addListener((obs, oldValue, newValue) -> {
 
-                    main.nailPositions(newValue);
-                    main.setScale(data.getDiameter());
-                    double abstand = data.getNailDistance();
-                    labelNagelabstand.setText("Nagelabstand: " + abstand + " mm");
-                    if(abstand <= data.getNailWidth() + data.getPinWidth() + 0.5 || abstand >= 1000000)
-                    {
-                        textAreaAusgabe.setText("Fehler: \n Nagelabstand darf " + (data.getNailWidth() + data.getPinWidth() + 0.5) + " mm nicht unterschreiten!");
-                        generateArt.setDisable(true);
-                    }
-                    else
-                    {
-                        generateArt.setDisable(false);
-                        textAreaAusgabe.setText("");
-                    }
-            });
+                    // main.nailPositions(newValue);
+                    // main.setScale(data.getDiameter());
+                    // double abstand = data.getNailDistance();
+                    // labelNagelabstand.setText("Nagelabstand: " + abstand + " mm");
+                    // if(abstand <= data.getNailWidth() + data.getPinWidth() + 0.5 || abstand >= 1000000)
+                    // {
+                        // textAreaAusgabe.setText("Fehler: \n Nagelabstand darf " + (data.getNailWidth() + data.getPinWidth() + 0.5) + " mm nicht unterschreiten!");
+                        // generateArt.setDisable(true);
+                    // }
+                    // else
+                    // {
+                        // generateArt.setDisable(false);
+                        // textAreaAusgabe.setText("");
+                    // }
+            // });
 
-        //setScale
-        spinnerDurchmesser.valueProperty().addListener((obs, oldValue, newValue) -> {
+        // //setScale
+        // spinnerDurchmesser.valueProperty().addListener((obs, oldValue, newValue) -> {
 
-                    main.setScale(newValue);
-                    double abstand = data.getNailDistance();
-                    labelNagelabstand.setText("Nagelabstand: " + abstand + " mm");
-                    if(abstand <= data.getNailWidth() + data.getPinWidth() + 0.5 || abstand >= 1000000)
-                    {
-                        textAreaAusgabe.setText("Fehler: \n Nagelabstand darf " + (data.getNailWidth() + data.getPinWidth() + 0.5) + " mm nicht unterschreiten!");
-                        generateArt.setDisable(true);
-                    }
-                    else
-                    {
-                        generateArt.setDisable(false);
-                        textAreaAusgabe.setText("");
-                    }
-            });
+                    // main.setScale(newValue);
+                    // double abstand = data.getNailDistance();
+                    // labelNagelabstand.setText("Nagelabstand: " + abstand + " mm");
+                    // if(abstand <= data.getNailWidth() + data.getPinWidth() + 0.5 || abstand >= 1000000)
+                    // {
+                        // textAreaAusgabe.setText("Fehler: \n Nagelabstand darf " + (data.getNailWidth() + data.getPinWidth() + 0.5) + " mm nicht unterschreiten!");
+                        // generateArt.setDisable(true);
+                    // }
+                    // else
+                    // {
+                        // generateArt.setDisable(false);
+                        // textAreaAusgabe.setText("");
+                    // }
+            // });
 
         //setlineWidth
         sliderLinienbreite.valueProperty().addListener((obs, oldVal, newVal) ->
@@ -372,9 +372,9 @@ public class GuiController extends Application
         setSlider(sliderCurrentIteration, data.getCurrentIteration());
         setLabel(labelCurrentIteration, data.getCurrentIteration() + "");
 
-        setIntSpinner(spinnerAnzahlNaegel, data.getNails());
+        // setIntSpinner(spinnerAnzahlNaegel, data.getNails());
 
-        setLabel(labelNagelabstand, "Nagelabstand: " + data.getDistanceToNail());
+        // setLabel(labelNagelabstand, "Nagelabstand: " + data.getDistanceToNail());
 
         setLabel(labelLinienbreite, "Linienbreite: " + data.getLineWidth());
         setSlider(sliderLinienbreite, data.getLineWidth());
@@ -487,7 +487,7 @@ public class GuiController extends Application
         if(data.getBildArray() != null)
         {
             generateHeatmap();
-            // main.nailPositions(data.getNails());
+            main.nailPositions(data.getNails());
 
             refresh.setDisable(false);
             scrollPane.setDisable(false);
@@ -650,7 +650,7 @@ public class GuiController extends Application
                 getClass().getResource("/FXML/settings.fxml")
             );
 
-        SettingsController controller = new SettingsController(data);
+        SettingsController controller = new SettingsController(data, main);
         loader.setController(controller);
 
         Parent root = loader.load();
