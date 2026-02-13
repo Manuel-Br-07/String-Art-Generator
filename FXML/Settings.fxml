@@ -75,7 +75,10 @@
                      </font>
                   </Label>
                   <Separator prefWidth="200.0" />
-                  <Label text="Durchmesser Spitze" />
+                  <Label text="Durchmesser Spitze">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font></Label>
                   <Spinner fx:id="spinnerDurchmesserSpitze" editable="true" />
                   <Separator prefWidth="200.0" />
                   <Label text="Durchmesser Nagel" />
@@ -93,8 +96,11 @@
                      </font>
                   </Label>
                   <Separator prefWidth="200.0" />
-                  <Label text="Modus" />
+                  <Label text="Farbomdus" />
                   <ComboBox fx:id="comboBoxModus" prefWidth="150.0" />
+                  <Separator layoutX="25.0" layoutY="41.0" prefWidth="200.0" />
+                  <Label layoutX="25.0" layoutY="49.0" text="Slicingmodus" />
+                  <ComboBox fx:id="comboBoxModus1" layoutX="25.0" layoutY="71.0" prefWidth="150.0" />
                </children>
                <padding>
                   <Insets bottom="20.0" left="15.0" right="15.0" top="5.0" />

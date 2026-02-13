@@ -25,9 +25,10 @@ public class SettingsController
 
     private int anzahlNaegel;
     private double abstand;
-    private int durchmesser;
+    private double durchmesser;
     private double durchmesserSpitze;
     private double durchmesserNagel;
+    private boolean update = false;
 
     @FXML
     private TextArea textAreaInfo;
@@ -63,9 +64,9 @@ public class SettingsController
 
         initIntegerSpinner(spinnerAnzahlNaegel, 2, 1000, 150);
 
-        initDoubleSpinner(spinnerAbstand, 2, 1000, 0);
+        initDoubleSpinner(spinnerAbstand, 0, 1000, 1);
 
-        initIntegerSpinner(spinnerDurchmesser, 1, 1000, 0);
+        initIntegerSpinner(spinnerDurchmesser, 1, 1000, 1);
 
         initDoubleSpinner(spinnerDurchmesserSpitze, 0.1, 5, 0.5);
 
@@ -80,9 +81,16 @@ public class SettingsController
     @FXML
     public void eventListeners()
     {
+
         spinnerAnzahlNaegel.valueProperty().addListener((obs, oldValue, newValue) -> {
+
                     anzahlNaegel = newValue;
+
+                    if(update) return;
+                    update = true;
                     setDoubleSpinner(spinnerAbstand, (Math.PI * durchmesser) / anzahlNaegel);
+                    update = false;
+
                     if(true)
                     {
 
@@ -91,8 +99,15 @@ public class SettingsController
             });
 
         spinnerAbstand.valueProperty().addListener((obs, oldValue, newValue) -> {
+
                     abstand = newValue;
-                    // setIntSpinner(spinnerAnzahlNaegel, (int)(Math.PI * durchmesser) * abstand);
+                    
+                    if(update) return;
+                    update = true;
+                    int anzahl = (int) Math.round((Math.PI * durchmesser) / abstand);
+                    setIntSpinner(spinnerAnzahlNaegel, anzahl);
+                    setDoubleSpinner(spinnerAbstand, (Math.PI * durchmesser) / anzahl);
+                    update = false;
                     if(true)
                     {
 
@@ -101,6 +116,7 @@ public class SettingsController
             });
 
         spinnerDurchmesser.valueProperty().addListener((obs, oldValue, newValue) -> {
+
                     durchmesser = newValue;
                     setDoubleSpinner(spinnerAbstand, (Math.PI * durchmesser) / anzahlNaegel);
                     if(true)
@@ -111,6 +127,7 @@ public class SettingsController
             });
 
         spinnerDurchmesserSpitze.valueProperty().addListener((obs, oldValue, newValue) -> {
+
                     durchmesserSpitze = newValue;
                     if(true)
                     {
@@ -120,6 +137,7 @@ public class SettingsController
             });
 
         spinnerDurchmesserNagel.valueProperty().addListener((obs, oldValue, newValue) -> {
+
                     durchmesserNagel = newValue;
                     if(true)
                     {
@@ -127,6 +145,7 @@ public class SettingsController
                     }
 
             });
+
     }
 
     @FXML
