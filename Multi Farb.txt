@@ -1,0 +1,19 @@
+Multi Farb
+Timeline
+
+1. Bildbearbeitung:
+	- Bild Array zu 3Achs Array (x,y, channel)
+	- Algorythmen für Farbtrennung
+	- Farbanpassung?
+
+2. Generator:
+	- Kanalauswahl (für Parameter)
+	- Kanalauswahl (Anzeige)
+	- Kanalsortierung
+	- Parameter zu Array machen (jeder Kanal 1 Wert)
+	- Linien Farbauswahl (pro Kanal)
+
+3. G-Code Generator:
+	- Arrays Koordinaten pro Kanal berechnen
+	- Kanäle nach Reihenfolge (2.) schreiben -> zwischen jedem Kanal Pause über Startnagel
+	- Farbreihenfolge in Vorschau anzeigen

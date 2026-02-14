@@ -128,21 +128,6 @@
                            <content>
                               <VBox prefWidth="303.0" spacing="5.0">
                                  <children>
-                                    <Label text="Anzahl Nägel">
-                                       <font>
-                                          <Font name="System Bold" size="12.0" />
-                                       </font>
-                                    </Label>
-                                    <Spinner fx:id="spinnerAnzahlNaegel" editable="true" />
-                                    <Label fx:id="labelNagelabstand" prefHeight="17.0" prefWidth="138.0" text="Nagelabstand; n mm" />
-                                    <Separator prefHeight="12.0" prefWidth="273.0" />
-                                    <Label text="Durchmesser">
-                                       <font>
-                                          <Font name="System Bold" size="12.0" />
-                                       </font>
-                                    </Label>
-                                    <Spinner fx:id="spinnerDurchmesser" editable="true" />
-                                    <Separator layoutX="25.0" layoutY="99.0" prefHeight="12.0" prefWidth="285.0" />
                                     <Label layoutX="25.0" layoutY="116.0" prefHeight="17.0" prefWidth="108.0" text="Linienbreite">
                                        <font>
                                           <Font name="System Bold" size="12.0" />
