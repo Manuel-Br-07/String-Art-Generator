@@ -237,39 +237,39 @@ public class GuiController extends Application
         // //setNails
         // spinnerAnzahlNaegel.valueProperty().addListener((obs, oldValue, newValue) -> {
 
-                    // main.nailPositions(newValue);
-                    // main.setScale(data.getDiameter());
-                    // double abstand = data.getNailDistance();
-                    // labelNagelabstand.setText("Nagelabstand: " + abstand + " mm");
-                    // if(abstand <= data.getNailWidth() + data.getPinWidth() + 0.5 || abstand >= 1000000)
-                    // {
-                        // textAreaAusgabe.setText("Fehler: \n Nagelabstand darf " + (data.getNailWidth() + data.getPinWidth() + 0.5) + " mm nicht unterschreiten!");
-                        // generateArt.setDisable(true);
-                    // }
-                    // else
-                    // {
-                        // generateArt.setDisable(false);
-                        // textAreaAusgabe.setText("");
-                    // }
-            // });
+        // main.nailPositions(newValue);
+        // main.setScale(data.getDiameter());
+        // double abstand = data.getNailDistance();
+        // labelNagelabstand.setText("Nagelabstand: " + abstand + " mm");
+        // if(abstand <= data.getNailWidth() + data.getPinWidth() + 0.5 || abstand >= 1000000)
+        // {
+        // textAreaAusgabe.setText("Fehler: \n Nagelabstand darf " + (data.getNailWidth() + data.getPinWidth() + 0.5) + " mm nicht unterschreiten!");
+        // generateArt.setDisable(true);
+        // }
+        // else
+        // {
+        // generateArt.setDisable(false);
+        // textAreaAusgabe.setText("");
+        // }
+        // });
 
         // //setScale
         // spinnerDurchmesser.valueProperty().addListener((obs, oldValue, newValue) -> {
 
-                    // main.setScale(newValue);
-                    // double abstand = data.getNailDistance();
-                    // labelNagelabstand.setText("Nagelabstand: " + abstand + " mm");
-                    // if(abstand <= data.getNailWidth() + data.getPinWidth() + 0.5 || abstand >= 1000000)
-                    // {
-                        // textAreaAusgabe.setText("Fehler: \n Nagelabstand darf " + (data.getNailWidth() + data.getPinWidth() + 0.5) + " mm nicht unterschreiten!");
-                        // generateArt.setDisable(true);
-                    // }
-                    // else
-                    // {
-                        // generateArt.setDisable(false);
-                        // textAreaAusgabe.setText("");
-                    // }
-            // });
+        // main.setScale(newValue);
+        // double abstand = data.getNailDistance();
+        // labelNagelabstand.setText("Nagelabstand: " + abstand + " mm");
+        // if(abstand <= data.getNailWidth() + data.getPinWidth() + 0.5 || abstand >= 1000000)
+        // {
+        // textAreaAusgabe.setText("Fehler: \n Nagelabstand darf " + (data.getNailWidth() + data.getPinWidth() + 0.5) + " mm nicht unterschreiten!");
+        // generateArt.setDisable(true);
+        // }
+        // else
+        // {
+        // generateArt.setDisable(false);
+        // textAreaAusgabe.setText("");
+        // }
+        // });
 
         //setlineWidth
         sliderLinienbreite.valueProperty().addListener((obs, oldVal, newVal) ->
@@ -504,7 +504,7 @@ public class GuiController extends Application
     @FXML
     public void generateHeatmap()
     {
-        WritableImage heatmap = heatmapGen.createHeatmap(data.getBildArray());
+        WritableImage heatmap = heatmapGen.createHeatmap(recalculateImage(data.getBildArray()));
         convertedImage.setImage(heatmap);
     }
 
@@ -520,6 +520,32 @@ public class GuiController extends Application
         imageToArray.main();
         imageToArray.imageProcessing();
         generateHeatmap();
+    }
+
+    public double[][] recalculateImage(double[][][] array)
+    {
+        double[][] bildArray = new double[array.length][array[0].length];
+        int colorMode = data.getColorMode();
+        for(int x = 0; x < bildArray.length; x ++)
+        {
+            for(int y = 0; y < bildArray.length; y ++)
+            {
+                if(colorMode == 0)
+                {
+                    bildArray[x][y] = array[x][y][0];
+                }
+                else if(colorMode == 1)
+                {
+                    bildArray[x][y] = array[x][y][0];
+                }
+                else if(colorMode == 2)
+                {
+
+                }
+            }
+        }
+
+        return bildArray;
     }
 
     //---------- 2. Seite ----------
@@ -582,6 +608,7 @@ public class GuiController extends Application
         }
 
         textAreaAusgabe.setText("Faldenlänge: " + (Math.round(main.calculateStringLength() / 10.0)/100.0) + " m");
+
     }
 
     public void stringartProgress()

@@ -104,7 +104,7 @@ public class Main {
         }
 
         data.setPossibleNails(possibleNails);
-        print();
+        // print();
     }
     
     public void print()

@@ -13,7 +13,7 @@ public class Data
     //immageToArray
     private int width;
     private int height;
-    private double[][] bildArray; // [X][Y]
+    private double[][][] bildArray; // [X][Y][farbkanal]
     private String dateiName;
     private String ordnerName;
 
@@ -54,10 +54,10 @@ public class Data
     private double gapsize = 2.6;
 
     //GuiControllerSettings  
-    private int maxIterations = 481;
-    private int currentIteration = 481;
-    private double lineStrength = 0.796;
-    private double lineWidthDisplay = 0.448;
+    private int[] maxIterations = 481;
+    private int[] currentIteration = 481;
+    private double[] lineStrength = 0.796;
+    private double[] lineWidthDisplay = 0.448;
     private double distanceToNail;
     private Color backgroundColor;
     private Color lineColor;
@@ -106,11 +106,11 @@ public class Data
         this.height = height;
     }
 
-    public double[][] getBildArray() {
+    public double[][][] getBildArray() {
         return bildArray;
     }
 
-    public void setBildArray(double[][] bildArray) {
+    public void setBildArray(double[][][] bildArray) {
         this.bildArray = bildArray;
     }
 
