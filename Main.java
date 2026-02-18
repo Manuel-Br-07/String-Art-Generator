@@ -121,23 +121,23 @@ public class Main {
         }
     }
 
-    public double calculateStringLength()
-    {
-        double length = 0;
-        double[][] nailCoords = data.getNailCoords();
-        double mmProPixel = data.getMmProPixel();
-        int[][] lineOrderArray = data.getlineOrderArray();
-        int currentIteration = data.getCurrentIteration();
+    // public double calculateStringLength()
+    // {
+        // double length = 0;
+        // double[][] nailCoords = data.getNailCoords();
+        // double mmProPixel = data.getMmProPixel();
+        // int[][] lineOrderArray = data.getlineOrderArray();
+        // int currentIteration = data.getCurrentIteration();
 
-        if(lineOrderArray != null)
-            for(int i = 0; i < lineOrderArray.length && i < currentIteration; i++)
-            {
-                length = length + Math.sqrt(Math.pow(nailCoords[lineOrderArray[i][01]][0] - nailCoords[lineOrderArray[i][0]][0], 2) + Math.pow(nailCoords[lineOrderArray[i][1]][1] - nailCoords[lineOrderArray[i][1]][1], 2)) * mmProPixel;
-            }
+        // if(lineOrderArray != null)
+            // for(int i = 0; i < lineOrderArray.length && i < currentIteration; i++)
+            // {
+                // length = length + Math.sqrt(Math.pow(nailCoords[lineOrderArray[i][01]][0] - nailCoords[lineOrderArray[i][0]][0], 2) + Math.pow(nailCoords[lineOrderArray[i][1]][1] - nailCoords[lineOrderArray[i][1]][1], 2)) * mmProPixel;
+            // }
 
-        data.setStringLength(length);
-        return length;
-    }
+        // data.setStringLength(length);
+        // return length;
+    // }
 
     public void setScale(double pDiameter) {
         data.setDiameter(pDiameter);

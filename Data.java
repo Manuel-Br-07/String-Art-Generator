@@ -54,13 +54,13 @@ public class Data
     private double gapsize = 2.6;
 
     //GuiControllerSettings  
-    private int[] maxIterations = 481;
-    private int[] currentIteration = 481;
-    private double[] lineStrength = 0.796;
-    private double[] lineWidthDisplay = 0.448;
+    private int[] maxIterations = {481, 481, 481, 481,481};
+    private int[] currentIteration = {481, 481, 481, 481, 481};
+    private double[] lineStrength = {0.796, 0.796, 0.796, 0.796, 0.796};
+    private double[] lineWidthDisplay = {0.448, 0.448, 0.448, 0.448, 0.448};
     private double distanceToNail;
     private Color backgroundColor;
-    private Color lineColor;
+    private Color[] lineColor;
 
     //printerControlls
     private String gCodeFile;
@@ -290,35 +290,35 @@ public class Data
         this.gapsize = gapsize;
     }
 
-    public int getMaxIterations() {
+    public int[] getMaxIterations() {
         return maxIterations;
     }
 
-    public void setMaxIterations(int maxIterations) {
+    public void setMaxIterations(int[] maxIterations) {
         this.maxIterations = maxIterations;
     }
 
-    public int getCurrentIteration() {
+    public int[] getCurrentIteration() {
         return currentIteration;
     }
 
-    public void setCurrentIteration(int currentIteration) {
+    public void setCurrentIteration(int[] currentIteration) {
         this.currentIteration = currentIteration;
     }
 
-    public double getLineStrength() {
+    public double[] getLineStrength() {
         return lineStrength;
     }
 
-    public void setLineStrength(double lineStrength) {
+    public void setLineStrength(double[] lineStrength) {
         this.lineStrength = lineStrength;
     }
 
-    public double getLineWidthDisplay() {
+    public double[] getLineWidthDisplay() {
         return lineWidthDisplay;
     }
 
-    public void setLineWidthDisplay(double lineWidthDisplay) {
+    public void setLineWidthDisplay(double[] lineWidthDisplay) {
         this.lineWidthDisplay = lineWidthDisplay;
     }
 
@@ -338,11 +338,11 @@ public class Data
         this.backgroundColor = backgroundColor;
     }
 
-    public Color getLineColor() {
+    public Color[] getLineColor() {
         return lineColor;
     }
 
-    public void setLineColor(Color lineColor) {
+    public void setLineColor(Color[] lineColor) {
         this.lineColor = lineColor;
     }
 
