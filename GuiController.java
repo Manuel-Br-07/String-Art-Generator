@@ -29,6 +29,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.ProgressBar;
+import javafx.scene.control.ComboBox;
 import javafx.stage.Modality;
 
 import javafx.scene.image.WritableImage;
@@ -72,17 +73,13 @@ public class GuiController extends Application
 
     //---------- 2. Seite ----------
     @FXML
+    private ComboBox comboBoxKanal;
+    @FXML
     private Spinner<Integer> spinnerMaxIterations;
     @FXML
     private Slider sliderCurrentIteration;
     @FXML
     private Label labelCurrentIteration;
-    // @FXML
-    // private Spinner<Integer> spinnerAnzahlNaegel;
-    // @FXML
-    // private Label labelNagelabstand;
-    // @FXML 
-    // private Spinner<Integer> spinnerDurchmesser;
     @FXML
     private Label labelLinienbreite;
     @FXML
@@ -607,8 +604,13 @@ public class GuiController extends Application
             gcodeTab.setDisable(true);
         }
 
-        textAreaAusgabe.setText("Faldenlänge: " + (Math.round(main.calculateStringLength() / 10.0)/100.0) + " m");
+        // textAreaAusgabe.setText("Faldenlänge: " + (Math.round(main.calculateStringLength() / 10.0)/100.0) + " m");
 
+    }
+    
+    public void changeColorChannel()
+    {
+        data.setColorChannel(comboBoxModus.getItems().indexOf(comboBoxModus.getValue())));
     }
 
     public void stringartProgress()

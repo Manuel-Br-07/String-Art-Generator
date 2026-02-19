@@ -27,6 +27,7 @@ public class Data
     private double clippingMinValue = 0;
     private double clippingMaxValue = 1;
     private int colorMode = 0;  // 0. Schwarz, 1. Schwarzweiß, 2. CMYK
+    private int colorChannel = 0; // 0. Schwarz, 1. Weiß, 2. Cyan, 3. Magenta, 4. Gelb
 
     //listToArray
     private int[][] lineOrderArray; // [][0] -> Startnagel      [][1] -> Endnagel
@@ -184,6 +185,14 @@ public class Data
 
     public void setColorMode(int colorMode) {
         this.colorMode = colorMode;
+    }
+    
+    public int getColorChannel() {
+        return colorChannel;
+    }
+
+    public void setColorChannel(int colorChannel) {
+        this.colorChannel = colorChannel;
     }
 
     public int[][] getlineOrderArray() {
