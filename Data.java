@@ -28,9 +28,10 @@ public class Data
     private double clippingMaxValue = 1;
     private int colorMode = 0;  // 0. Schwarz, 1. Schwarzweiß, 2. CMYK
     private int colorChannel = 0; // 0. Schwarz, 1. Weiß, 2. Cyan, 3. Magenta, 4. Gelb
+    private int[][] colorMapping = {{0}, {0, 1}, {0, 2, 3, 4}}; // mapping der Farbkanäle zu modus
 
     //listToArray
-    private int[][] lineOrderArray; // [][0] -> Startnagel      [][1] -> Endnagel
+    private int[][][] lineOrderArray = new int[5][][]; // [Farbkanal][][0] -> Startnagel      [Farbkanal][][1] -> Endnagel
 
     //nailPositions
     private int nails = 60;
@@ -48,7 +49,7 @@ public class Data
     private double stringLength;
 
     //StringArtGenerator
-    private double lineWidth = 3;
+    private double[] lineWidth = {481, 481, 481, 481,481};
 
     //calculateCoordinates
     private double[][] absoluteNailPositions;
@@ -61,7 +62,7 @@ public class Data
     private double[] lineWidthDisplay = {0.448, 0.448, 0.448, 0.448, 0.448};
     private double distanceToNail;
     private Color backgroundColor;
-    private Color[] lineColor;
+    private Color[] lineColor = {Color.BLACK, Color.WHITE, Color.CYAN, Color.MAGENTA, Color.YELLOW};
 
     //printerControlls
     private String gCodeFile;
@@ -194,12 +195,20 @@ public class Data
     public void setColorChannel(int colorChannel) {
         this.colorChannel = colorChannel;
     }
+    
+    public int[][] getColorMapping() {
+        return colorMapping;
+    }
 
-    public int[][] getlineOrderArray() {
+    // public void setColorChannel(int[][] colorMapping) {
+        // this.colorMapping = colorMapping;
+    // }
+
+    public int[][][] getLineOrderArray() {
         return lineOrderArray;
     }
 
-    public void setlineOrderArray(int[][] lineOrderArray) {
+    public void setLineOrderArray(int[][][] lineOrderArray) {
         this.lineOrderArray = lineOrderArray;
     }
 
@@ -275,12 +284,12 @@ public class Data
         this.pinWidth = pinWidth;
     }
 
-    public double getLineWidth() {
+    public double[] getLineWidth() {
         return lineWidth;
     }
 
-    public void setLineWidth(double lineWidth) {
-        this.lineWidth = lineWidth;
+    public void setLineWidth(double lineWidth, int channel) {
+        this.lineWidth[channel] = lineWidth;
     }
 
     public double[][] getAbsoluteNailPositions() {
@@ -303,32 +312,32 @@ public class Data
         return maxIterations;
     }
 
-    public void setMaxIterations(int[] maxIterations) {
-        this.maxIterations = maxIterations;
+    public void setMaxIterations(int maxIterations, int channel) {
+        this.maxIterations[channel] = maxIterations;
     }
 
     public int[] getCurrentIteration() {
         return currentIteration;
     }
 
-    public void setCurrentIteration(int[] currentIteration) {
-        this.currentIteration = currentIteration;
+    public void setCurrentIteration(int currentIteration, int channel) {
+        this.currentIteration[channel] = currentIteration;
     }
 
     public double[] getLineStrength() {
         return lineStrength;
     }
 
-    public void setLineStrength(double[] lineStrength) {
-        this.lineStrength = lineStrength;
+    public void setLineStrength(double lineStrength, int channel) {
+        this.lineStrength[channel] = lineStrength;
     }
 
     public double[] getLineWidthDisplay() {
         return lineWidthDisplay;
     }
 
-    public void setLineWidthDisplay(double[] lineWidthDisplay) {
-        this.lineWidthDisplay = lineWidthDisplay;
+    public void setLineWidthDisplay(double lineWidthDisplay, int channel) {
+        this.lineWidthDisplay[channel] = lineWidthDisplay;
     }
 
     public double getDistanceToNail() {
@@ -351,8 +360,8 @@ public class Data
         return lineColor;
     }
 
-    public void setLineColor(Color[] lineColor) {
-        this.lineColor = lineColor;
+    public void setLineColor(Color lineColor, int channel) {
+        this.lineColor[channel] = lineColor;
     }
 
     public String getGCodeFile() {
@@ -458,4 +467,5 @@ public class Data
     public void setTextOutputStrings(String textOutputStrings) {
         this.textOutputStrings = textOutputStrings;
     }
+    
 }

@@ -87,7 +87,7 @@ public class ImageToArray
             }
             else if(colorMode == 1)
             {
-                blackWhite(image);
+                blackWhite(image);  
             }
             else if(colorMode == 2)
             {
@@ -107,7 +107,7 @@ public class ImageToArray
     public void black(BufferedImage image)
     {
         // 2. Array für Grauwerte (zwischen 0 und 1)
-        bildArray = new double[height][width][0];
+        bildArray = new double[height][width][4];
 
         // 3. Pixel auslesen
         for (int y = 0; y < height; y++)
@@ -142,7 +142,7 @@ public class ImageToArray
     public void blackWhite(BufferedImage image)
     {
         // 2. Array für Grauwerte (zwischen 0 und 1)
-        bildArray = new double[height][width][1];
+        bildArray = new double[height][width][4];
 
         // 3. Pixel auslesen
         for (int y = 0; y < height; y++)

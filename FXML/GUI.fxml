@@ -114,7 +114,7 @@
                      </children></AnchorPane>
             </content>
           </Tab>
-          <Tab fx:id="stringartTab" text="2. Stringart Generator">
+          <Tab fx:id="stringartTab" disable="true" text="2. Stringart Generator">
             <content>
               <AnchorPane disable="true" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>

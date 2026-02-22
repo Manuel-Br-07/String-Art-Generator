@@ -15,9 +15,6 @@ public class StringartGenerator
     private int height;
     private double[][][] bildArray;
 
-    //listToArray
-    private int[][] lineOrderArray;
-
     //nailPositions
     private int nails;
     private double[][] nailCoords;
@@ -41,7 +38,7 @@ public class StringartGenerator
         lineOrder = pLineOrder;
     }
 
-    public void stringArtGenerator(int colorChannel) {
+    public void artGen(int colorChannel) {
         int startNail = 0;
         int iterations = 0;
         int[] linePos;
@@ -78,8 +75,8 @@ public class StringartGenerator
             }
         }
 
-        System.out.println("iterations " + iterations + " average " + averageColour());
-        listToArray();
+        // System.out.println("iterations " + iterations + " average " + averageColour());
+        listToArray(colorChannel);
     }
 
     public double calculateLineScore(int startNail, int endNail, int colorChannel) {
@@ -200,8 +197,9 @@ public class StringartGenerator
     // }
     // }
 
-    public void listToArray()
+    public void listToArray(int colorChannel)
     {
+        int[][][] lineOrderArray = data.getLineOrderArray();
         int length = 0;
 
         int[] lEndpoint = lineOrder.front();
@@ -216,50 +214,50 @@ public class StringartGenerator
             lLineData = lineOrder.front();
         }
 
-        lineOrderArray = new int[length][2];
+        lineOrderArray[colorChannel] = new int[length][2];
 
-        for(int i = 0; i < lineOrderArray.length; i++)
+        for(int i = 0; i < lineOrderArray[colorChannel].length; i++)
         {
-            lineOrderArray[i][0] = lineOrder.front()[0];
-            lineOrderArray[i][1] = lineOrder.front()[1];
+            lineOrderArray[colorChannel][i][0] = lineOrder.front()[0];
+            lineOrderArray[colorChannel][i][1] = lineOrder.front()[1];
             lineOrder.dequeue();
         }
 
     }
 
-    public double averageColour()
-    {
-        double summ = 0;
-        double ans = 0;
+    // public double averageColour()
+    // {
+        // double summ = 0;
+        // double ans = 0;
 
-        for (int y = 0; y < height; y++)
-        {
-            for (int x = 0; x < width; x++)
-            {
-                if (bildArray[y][x][colorMode] != -1)
-                {
-                    summ = summ + bildArray[y][x];
-                    ans++;
-                }
-            }
-        }
-        return summ / ans;
-    }
+        // for (int y = 0; y < height; y++)
+        // {
+            // for (int x = 0; x < width; x++)
+            // {
+                // if (bildArray[y][x][colorMode] != -1)
+                // {
+                    // summ = summ + bildArray[y][x];
+                    // ans++;
+                // }
+            // }
+        // }
+        // return summ / ans;
+    // }
 
-    private double[][] generateArray(double[][] pArray)
-    {
-        int x = pArray.length;
-        int y = pArray[0].length;
-        double[][] array = new double[x][y];
+    // private double[][] generateArray(double[][] pArray)
+    // {
+        // int x = pArray.length;
+        // int y = pArray[0].length;
+        // double[][] array = new double[x][y];
 
-        for(int i = 0; i < x; i++)
-        {
-            for(int j = 0; j < y; j++)
-            {
-                array[i][j] = pArray[i][j];
-            }
-        }
+        // for(int i = 0; i < x; i++)
+        // {
+            // for(int j = 0; j < y; j++)
+            // {
+                // array[i][j] = pArray[i][j];
+            // }
+        // }
 
-        return array;
-    }
+        // return array;
+    // }
 }

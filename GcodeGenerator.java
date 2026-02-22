@@ -31,7 +31,7 @@ public class GcodeGenerator
     private double radius;
 
     //listToArray
-    private int[][] lineOrderArray;
+    private int[][][] lineOrderArray;
 
     //nailPositions
     private int nails;
@@ -90,7 +90,7 @@ public class GcodeGenerator
         nails = data.getNails();
         nailCoords = data.getNailCoords();
 
-        lineOrderArray = data.getlineOrderArray();
+        lineOrderArray = data.getLineOrderArray();
 
         diameter = data.getDiameter();
         mmProPixel = data.getMmProPixel();

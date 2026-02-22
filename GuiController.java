@@ -216,7 +216,7 @@ public class GuiController extends Application
 
                     // Maximalwert des Sliders setzen
                     sliderCurrentIteration.setMax(newValue);
-                    data.setMaxIterations(newValue);
+                    data.setMaxIterations(newValue, data.getColorChannel());
 
                     // Falls der Slider gerade über dem Limit liegt → heruntersetzen
                     if (sliderCurrentIteration.getValue() > newValue) {
@@ -226,7 +226,7 @@ public class GuiController extends Application
 
         // setCurrentIteration
         sliderCurrentIteration.valueProperty().addListener((obs, oldVal, newVal) -> {
-                    data.setCurrentIteration((int) sliderCurrentIteration.getValue());
+                    data.setCurrentIteration((int) sliderCurrentIteration.getValue(), data.getColorChannel());
                     drawLines();
 
             });
@@ -270,17 +270,17 @@ public class GuiController extends Application
 
         //setlineWidth
         sliderLinienbreite.valueProperty().addListener((obs, oldVal, newVal) ->
-                data.setLineWidth((double)newVal)
+                data.setLineWidth((double)newVal, data.getColorChannel())
         );
 
         //setlineStrength
         sliderLinienstaerke.valueProperty().addListener((obs, oldVal, newVal) ->
-                data.setLineStrength((double)newVal)
+                data.setLineStrength((double)newVal, data.getColorChannel())
         );
 
         //setLineWidthDisplay
         sliderLinienbreiteAnzeige.valueProperty().addListener((obs, oldVal, newVal) ->{
-                    data.setLineWidthDisplay((double)newVal);
+                    data.setLineWidthDisplay((double)newVal, data.getColorChannel());
                     drawLines();
             });
 
@@ -292,7 +292,7 @@ public class GuiController extends Application
 
         //setLineColor
         colorPickerLinie.valueProperty().addListener((obs, oldVal, newVal) ->{
-                    data.setLineColor(newVal);
+                    data.setLineColor(newVal, data.getColorChannel());
                     drawLines();
             });
 
@@ -361,31 +361,33 @@ public class GuiController extends Application
     @FXML
     public void setUIValues()
     {
+        int colorChannel = data.getColorChannel();
+        
         //---------- 1. Seite ----------
         //---------- 2. Seite ----------
 
-        setIntSpinner(spinnerMaxIterations, data.getMaxIterations());
+        setIntSpinner(spinnerMaxIterations, data.getMaxIterations()[colorChannel]);
 
-        setSlider(sliderCurrentIteration, data.getCurrentIteration());
-        setLabel(labelCurrentIteration, data.getCurrentIteration() + "");
+        setSlider(sliderCurrentIteration, data.getCurrentIteration()[colorChannel]);
+        setLabel(labelCurrentIteration, data.getCurrentIteration()[colorChannel] + "");
 
         // setIntSpinner(spinnerAnzahlNaegel, data.getNails());
 
         // setLabel(labelNagelabstand, "Nagelabstand: " + data.getDistanceToNail());
 
-        setLabel(labelLinienbreite, "Linienbreite: " + data.getLineWidth());
-        setSlider(sliderLinienbreite, data.getLineWidth());
+        setLabel(labelLinienbreite, "Linienbreite: " + data.getLineWidth()[colorChannel]);
+        setSlider(sliderLinienbreite, data.getLineWidth()[colorChannel]);
 
-        setLabel(labelLinienstaerke, "Linienstärke: " + data.getLineStrength());
+        setLabel(labelLinienstaerke, "Linienstärke: " + data.getLineStrength()[colorChannel]);
 
-        setSlider(sliderLinienstaerke, data.getLineStrength());
+        setSlider(sliderLinienstaerke, data.getLineStrength()[colorChannel]);
 
-        setLabel(labelLinienbreiteAnzeige, "Linienbreite: " + data.getLineWidthDisplay());
-        setSlider(sliderLinienbreiteAnzeige, data.getLineWidthDisplay());
+        setLabel(labelLinienbreiteAnzeige, "Linienbreite: " + data.getLineWidthDisplay()[colorChannel]);
+        setSlider(sliderLinienbreiteAnzeige, data.getLineWidthDisplay()[colorChannel]);
 
         setColor(colorPickerHintergrund, data.getBackgroundColor());
 
-        setColor(colorPickerLinie, data.getLineColor());
+        setColor(colorPickerLinie, data.getLineColor()[colorChannel]);
 
         //---------- 3. Seite ----------
 
@@ -559,7 +561,7 @@ public class GuiController extends Application
     {
         // progressbarStringGenerator.setProgress(-1);
         generateArt.setDisable(true);
-        stringartGen.main();
+        stringartGen.artGen(); // Überarbeitung mit Button! -> Wie muss logik gestaltet werden?
         drawLines();
         generateArt.setDisable(false);
         // progressbarStringGenerator.setProgress(0);
@@ -568,7 +570,7 @@ public class GuiController extends Application
 
     @FXML
     public void drawLines()
-    { // Sicherung einbauen, dass keine Parameter null sind
+    { 
         int[][] lineOrderArray = data.getlineOrderArray();
         double[][] nailCoords = data.getNailCoords();
         int currentIteration = data.getCurrentIteration();
@@ -610,7 +612,10 @@ public class GuiController extends Application
     
     public void changeColorChannel()
     {
-        data.setColorChannel(comboBoxModus.getItems().indexOf(comboBoxModus.getValue())));
+        int channel = comboBoxKanal.getItems().indexOf(comboBoxKanal.getValue());
+        data.setColorChannel(data.getColorMapping()[data.getColorMode()][channel]);
+        setUIValues();
+        System.out.println("Farbe: " + data.getColorMapping()[data.getColorMode()][channel]);
     }
 
     public void stringartProgress()
