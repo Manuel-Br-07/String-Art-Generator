@@ -52,7 +52,7 @@ public class Data
     private double[] lineWidth = {481, 481, 481, 481,481};
 
     //calculateCoordinates
-    private double[][] absoluteNailPositions;
+    private double[][][] absoluteNailPositions = new double[5][][];
     private double gapsize = 2.6;
 
     //GuiControllerSettings  
@@ -208,8 +208,8 @@ public class Data
         return lineOrderArray;
     }
 
-    public void setLineOrderArray(int[][][] lineOrderArray) {
-        this.lineOrderArray = lineOrderArray;
+    public void setLineOrderArray(int[][] lineOrderArray, int channel) {
+        this.lineOrderArray[channel] = lineOrderArray;
     }
 
     public int getNails() {
@@ -292,11 +292,11 @@ public class Data
         this.lineWidth[channel] = lineWidth;
     }
 
-    public double[][] getAbsoluteNailPositions() {
+    public double[][][] getAbsoluteNailPositions() {
         return absoluteNailPositions;
     }
 
-    public void setAbsoluteNailPositions(double[][] absoluteNailPositions) {
+    public void setAbsoluteNailPositions(double[][][] absoluteNailPositions) {
         this.absoluteNailPositions = absoluteNailPositions;
     }
 

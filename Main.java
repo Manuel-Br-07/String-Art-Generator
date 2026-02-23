@@ -13,7 +13,7 @@ public class Main {
         data = pData;
         imageToArray = pImageToArray;
         stringartGen = pStringartGen;
-        gcodeGen = pGcodeGen;
+        // gcodeGen = pGcodeGen;
 
     }
 

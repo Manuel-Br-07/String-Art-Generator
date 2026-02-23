@@ -11,20 +11,12 @@ public class StringartGenerator
     private Queue<int[]> lineOrder;
 
     //immageToArray
-    private int width;
-    private int height;
     private double[][][] bildArray;
 
     //nailPositions
-    private int nails;
     private double[][] nailCoords;
     private int[][] possibleNails;
 
-    //setScale
-    private double diameter;
-    private double mmProPixel;
-
-    double lineWidth;
     double[] lineStrength;
     int[] maxIterations;
     
@@ -39,6 +31,12 @@ public class StringartGenerator
     }
 
     public void artGen(int colorChannel) {
+        bildArray = data.getBildArray();
+        maxIterations = data.getMaxIterations();
+        possibleNails = data.getPossibleNails();
+        
+        lineStrength = data.getLineStrength();
+        
         int startNail = 0;
         int iterations = 0;
         int[] linePos;
@@ -68,7 +66,7 @@ public class StringartGenerator
                 linePos = new int[]{startNail, bestEndNail};
                 lineOrder.enqueue(linePos);
 
-                lightenLine(startNail, bestEndNail, data.getLineStrength()[colorChannel], colorChannel);
+                lightenLine(startNail, bestEndNail, lineStrength[colorChannel], colorChannel);
                 startNail = bestEndNail;
                 iterations++;
                 
@@ -80,6 +78,9 @@ public class StringartGenerator
     }
 
     public double calculateLineScore(int startNail, int endNail, int colorChannel) {
+        nailCoords = data.getNailCoords();
+        bildArray = data.getBildArray();
+        
         // Reelle Start- und Endkoordinaten
         double startX = nailCoords[startNail][0];
         double startY = nailCoords[startNail][1];
@@ -222,7 +223,7 @@ public class StringartGenerator
             lineOrderArray[colorChannel][i][1] = lineOrder.front()[1];
             lineOrder.dequeue();
         }
-
+        data.setLineOrderArray(lineOrderArray[colorChannel], colorChannel);
     }
 
     // public double averageColour()

@@ -362,7 +362,7 @@ public class GuiController extends Application
     public void setUIValues()
     {
         int colorChannel = data.getColorChannel();
-        
+
         //---------- 1. Seite ----------
         //---------- 2. Seite ----------
 
@@ -561,7 +561,8 @@ public class GuiController extends Application
     {
         // progressbarStringGenerator.setProgress(-1);
         generateArt.setDisable(true);
-        stringartGen.artGen(); // Überarbeitung mit Button! -> Wie muss logik gestaltet werden?
+        stringartGen.artGen(0); // Überarbeitung mit Button! -> Wie muss logik gestaltet werden?
+        stringartGen.artGen(1); 
         drawLines();
         generateArt.setDisable(false);
         // progressbarStringGenerator.setProgress(0);
@@ -571,45 +572,48 @@ public class GuiController extends Application
     @FXML
     public void drawLines()
     { 
-        int[][] lineOrderArray = data.getlineOrderArray();
+        int[][][] lineOrderArray = data.getLineOrderArray();
         double[][] nailCoords = data.getNailCoords();
-        int currentIteration = data.getCurrentIteration();
-        Color lineColor = data.getLineColor();
-        double lineWidthDisplay = data.getLineWidthDisplay();
+        int currentIteration[] = data.getCurrentIteration();
+        Color lineColor[] = data.getLineColor();
+        double lineWidthDisplay[] = data.getLineWidthDisplay();
         gc = canvas.getGraphicsContext2D();
 
         double scaleX = canvas.getWidth() / data.getWidth();
         double scaleY = canvas.getHeight() / data.getHeight();
 
-        if(lineOrderArray != null && nailCoords != null && currentIteration > 0 && lineWidthDisplay > 0.0)
+        for(int mode = 0; mode < lineOrderArray.length; mode ++ )
         {
-            gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
-            for(int i = 0; i < currentIteration && i < lineOrderArray.length; i++)
+            if(lineOrderArray != null && nailCoords != null && currentIteration[mode] > 0 && lineWidthDisplay[mode] > 0.0)
             {
-                double x1 = nailCoords[lineOrderArray[i][0]][0] * scaleX;
-                double x2 = nailCoords[lineOrderArray[i][1]][0] * scaleX;
-                double y1 = nailCoords[lineOrderArray[i][0]][1] * scaleY;
-                double y2 = nailCoords[lineOrderArray[i][1]][1] * scaleY;
+                gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+                for(int i = 0; i < currentIteration[mode] && i < lineOrderArray.length; i++)
+                {
+                    double x1 = nailCoords[lineOrderArray[mode][i][0]][0] * scaleX;
+                    double x2 = nailCoords[lineOrderArray[mode][i][1]][0] * scaleX;
+                    double y1 = nailCoords[lineOrderArray[mode][i][0]][1] * scaleY;
+                    double y2 = nailCoords[lineOrderArray[mode][i][1]][1] * scaleY;
 
-                if (gc != null) {
-                    gc.setStroke(lineColor);
-                    gc.setLineWidth(lineWidthDisplay);
-                    gc.strokeLine(x1, y1, x2, y2); // Zeichnet die neue Linie direkt auf den Canvas
+                    if (gc != null) {
+                        gc.setStroke(lineColor[mode]);
+                        gc.setLineWidth(lineWidthDisplay[mode]);
+                        gc.strokeLine(x1, y1, x2, y2); // Zeichnet die neue Linie direkt auf den Canvas
+                    }
                 }
+
+                gcodeTab.setDisable(false);
+
             }
-
-            gcodeTab.setDisable(false);
-
-        }
-        else
-        {
-            gcodeTab.setDisable(true);
+            else
+            {
+                gcodeTab.setDisable(true);
+            }
         }
 
         // textAreaAusgabe.setText("Faldenlänge: " + (Math.round(main.calculateStringLength() / 10.0)/100.0) + " m");
 
     }
-    
+
     public void changeColorChannel()
     {
         int channel = comboBoxKanal.getItems().indexOf(comboBoxKanal.getValue());
@@ -637,7 +641,7 @@ public class GuiController extends Application
         saveFile();
         if(data.getGCodeFile() != null)
         {
-            gcodeGen.main(data.getGCodeFile());
+            // gcodeGen.main(data.getGCodeFile());
             textAreaVorschau.setText("G-Code erfolgreich generiert. \n" + 
                 "Gewählter Speicherort: " + data.getGCodeFile() + "\n" + 
                 "Resume mit BASE_RESUME" + "\n" + 

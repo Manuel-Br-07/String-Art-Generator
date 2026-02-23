@@ -20,9 +20,7 @@ public class GcodeGenerator
     private BufferedWriter writer;
 
     //immageToArray
-    // private int width;
-    // private int height;
-    // private double[][] bildArray;
+
     private String  dateiName;
 
     //circularMask
@@ -43,9 +41,9 @@ public class GcodeGenerator
     private double stringLength;
 
     //calculateCoordinates
-    double[][] absoluteNailPositions;
+    double[][][] absoluteNailPositions;
     double gapsize;
-    
+
     //GuiControllerSettings 
     private double distanceToNail;
 
@@ -66,7 +64,7 @@ public class GcodeGenerator
 
     private double compensationAngle;
     private double absoluteDistance;
-    
+
     private double zHeight;
 
     /**
@@ -98,7 +96,7 @@ public class GcodeGenerator
 
         absoluteNailPositions = data.getAbsoluteNailPositions();
         gapsize = data.getGapsize();
-        
+
         distanceToNail = data.getDistanceToNail();
 
         //printerControlls
@@ -178,7 +176,9 @@ public class GcodeGenerator
 
     public void calculateCoordinates()
     {
-        absoluteNailPositions = new double[data.getCurrentIteration() + nails][4];
+        int[] currentIteration = data.getCurrentIteration();
+        int allIterations = currentIteration[0] + currentIteration[1] + currentIteration[2] + currentIteration[3] + currentIteration[4];
+        absoluteNailPositions = new double[allIterations + nails][4];
         double distance = distanceToNail / 2;
 
         for(int i = 0; i < nails; i++)
@@ -193,19 +193,22 @@ public class GcodeGenerator
             absoluteNailPositions[i][2] = ((centerX + dx * factor) * mmProPixel) + distance;
             absoluteNailPositions[i][3] = ((centerY + dy * factor) * mmProPixel) + distance;
         }
-        
-        for(int i = 0; i < lineOrderArray.length; i++)
-        {
-            double dx = compensatedNailCoords[lineOrderArray[i][1]][0] - centerX;  
-            double dy = compensatedNailCoords[lineOrderArray[i][1]][1] - centerY;
-            double length = Math.sqrt(dx * dx + dy * dy);
-            double factor = (length - (distance / mmProPixel)) / length;
 
-            absoluteNailPositions[i + nails][0] = ((compensatedNailCoords[lineOrderArray[i][1]][0]) * mmProPixel) + distance;
-            absoluteNailPositions[i + nails][1] = ((compensatedNailCoords[lineOrderArray[i][1]][1]) * mmProPixel) + distance;
-            absoluteNailPositions[i + nails][2] = ((centerX + dx * factor) * mmProPixel) + distance;
-            absoluteNailPositions[i + nails][3] = ((centerY + dy * factor) * mmProPixel) + distance;
-            // System.out.println("x " + absoluteNailPositions[i][0] + " y " + absoluteNailPositions[i][1] + " x1 " + absoluteNailPositions[i][2] + " y1 " + absoluteNailPositions[i][3]);
+        for(int mode = 0; mode < lineOrderArray.length; mode ++ )
+        {
+            for(int i = 0; i < lineOrderArray[mode].length; i++)
+            {
+                double dx = compensatedNailCoords[lineOrderArray[mode][i][1]][0] - centerX;  
+                double dy = compensatedNailCoords[lineOrderArray[mode][i][1]][1] - centerY;
+                double length = Math.sqrt(dx * dx + dy * dy);
+                double factor = (length - (distance / mmProPixel)) / length;
+
+                absoluteNailPositions[mode][i + nails][0] = ((compensatedNailCoords[lineOrderArray[mode][i][1]][0]) * mmProPixel) + distance;
+                absoluteNailPositions[mode][i + nails][1] = ((compensatedNailCoords[lineOrderArray[mode][i][1]][1]) * mmProPixel) + distance;
+                absoluteNailPositions[mode][i + nails][2] = ((centerX + dx * factor) * mmProPixel) + distance;
+                absoluteNailPositions[mode][i + nails][3] = ((centerY + dy * factor) * mmProPixel) + distance;
+                // System.out.println("x " + absoluteNailPositions[i][0] + " y " + absoluteNailPositions[i][1] + " x1 " + absoluteNailPositions[i][2] + " y1 " + absoluteNailPositions[i][3]);
+            }
         }
 
     }
