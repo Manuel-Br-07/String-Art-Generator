@@ -52,7 +52,7 @@ public class Data
     private double[] lineWidth = {481, 481, 481, 481,481};
 
     //calculateCoordinates
-    private double[][][] absoluteNailPositions = new double[5][][];
+    private double[][][] absoluteNailPositions = new double[6][][];
     private double gapsize = 2.6;
 
     //GuiControllerSettings  

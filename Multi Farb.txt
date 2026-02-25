@@ -18,3 +18,13 @@ y    - Bild Array zu 3Achs Array (x,y, channel)
     - Arrays Koordinaten pro Kanal berechnen
     - Kanäle nach Reihenfolge (2.) schreiben -> zwischen jedem Kanal Pause über Startnagel
     - Farbreihenfolge in Vorschau anzeigen
+    
+    
+    - Line Order Array: finales Koordinatendiagramm. 
+         - 0: Anzahl der Nägel
+         - 1: 1. Farbe
+         - 2: 2. Farbe
+         - 3. 3. Farbe
+         - 4. 4. Farbe
+         - 5. 5. Farbe
+         -> Alle Frbkanäle sind +1 verschoben

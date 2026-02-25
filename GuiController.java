@@ -582,8 +582,9 @@ public class GuiController extends Application
         double scaleX = canvas.getWidth() / data.getWidth();
         double scaleY = canvas.getHeight() / data.getHeight();
 
-        for(int mode = 0; mode < lineOrderArray.length; mode ++ )
+        for(int j = 0; j < colorMapping[colorMode].length; j ++)
         {
+            int mode = colorMapping[colorMode][j];
             if(lineOrderArray != null && nailCoords != null && currentIteration[mode] > 0 && lineWidthDisplay[mode] > 0.0)
             {
                 gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());

@@ -28,6 +28,10 @@ public class GcodeGenerator
     private double centerY;
     private double radius;
 
+    // imageProcessing
+    private int colorMode;
+    private int[][] colorMapping;
+
     //listToArray
     private int[][][] lineOrderArray;
 
@@ -93,6 +97,9 @@ public class GcodeGenerator
         diameter = data.getDiameter();
         mmProPixel = data.getMmProPixel();
         stringLength = data.getStringLength();
+
+        colorMode = data.getColorMode();
+        colorMapping = data.getColorMapping();
 
         absoluteNailPositions = data.getAbsoluteNailPositions();
         gapsize = data.getGapsize();
@@ -188,14 +195,15 @@ public class GcodeGenerator
             double length = Math.sqrt(dx * dx + dy * dy);
             double factor = (length - (distance / mmProPixel)) / length;
 
-            absoluteNailPositions[i][0] = ((compensatedNailCoords[i][0]) * mmProPixel) + distance;
-            absoluteNailPositions[i][1] = ((compensatedNailCoords[i][1]) * mmProPixel) + distance;
-            absoluteNailPositions[i][2] = ((centerX + dx * factor) * mmProPixel) + distance;
-            absoluteNailPositions[i][3] = ((centerY + dy * factor) * mmProPixel) + distance;
+            absoluteNailPositions[][i][0] = ((compensatedNailCoords[i][0]) * mmProPixel) + distance;
+            absoluteNailPositions[][i][1] = ((compensatedNailCoords[i][1]) * mmProPixel) + distance;
+            absoluteNailPositions[][i][2] = ((centerX + dx * factor) * mmProPixel) + distance;
+            absoluteNailPositions[][i][3] = ((centerY + dy * factor) * mmProPixel) + distance;
         }
 
-        for(int mode = 0; mode < lineOrderArray.length; mode ++ )
+        for(int j = 0; j < colorMapping[colorMode].length; j ++)
         {
+            int mode = colorMapping[colorMode][j];
             for(int i = 0; i < lineOrderArray[mode].length; i++)
             {
                 double dx = compensatedNailCoords[lineOrderArray[mode][i][1]][0] - centerX;  
