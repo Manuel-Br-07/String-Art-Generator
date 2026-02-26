@@ -19,7 +19,9 @@ y    - Bild Array zu 3Achs Array (x,y, channel)
     - Kanäle nach Reihenfolge (2.) schreiben -> zwischen jedem Kanal Pause über Startnagel
     - Farbreihenfolge in Vorschau anzeigen
     
+ 
     
+    Fertig:
     - Line Order Array: finales Koordinatendiagramm. 
          - 0: Anzahl der Nägel
          - 1: 1. Farbe

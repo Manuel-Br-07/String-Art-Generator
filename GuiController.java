@@ -183,7 +183,7 @@ public class GuiController extends Application
 
         eventListeners();
         bindings();
-        stringartProgress();
+        // stringartProgress();
         setUIValues();
     }
 
@@ -366,14 +366,12 @@ public class GuiController extends Application
         //---------- 1. Seite ----------
         //---------- 2. Seite ----------
 
+        setChannelPicker(data.getColorMode(), comboBoxKanal);
+        
         setIntSpinner(spinnerMaxIterations, data.getMaxIterations()[colorChannel]);
 
         setSlider(sliderCurrentIteration, data.getCurrentIteration()[colorChannel]);
         setLabel(labelCurrentIteration, data.getCurrentIteration()[colorChannel] + "");
-
-        // setIntSpinner(spinnerAnzahlNaegel, data.getNails());
-
-        // setLabel(labelNagelabstand, "Nagelabstand: " + data.getDistanceToNail());
 
         setLabel(labelLinienbreite, "Linienbreite: " + data.getLineWidth()[colorChannel]);
         setSlider(sliderLinienbreite, data.getLineWidth()[colorChannel]);
@@ -390,7 +388,7 @@ public class GuiController extends Application
         setColor(colorPickerLinie, data.getLineColor()[colorChannel]);
 
         //---------- 3. Seite ----------
-
+        
         setIntSpinner(spinnerZHop, data.getZHop());
 
         setIntSpinner(spinnerGeschwKurve, data.getSpeedCircle());
@@ -458,6 +456,23 @@ public class GuiController extends Application
         // System.out.println("color" + picker + color);
         if (picker == null || color == null) return;
         picker.setValue(color);
+    }
+
+    @FXML
+    private void setChannelPicker(int colorMode, ComboBox comboBox)
+    {
+        if(colorMode == 0)
+        {
+            comboBox.getItems().setAll("Schwarz");
+        }
+        else if(colorMode == 1)
+        {
+            comboBox.getItems().setAll("Schwarz", "Weiß");
+        }
+        else if(colorMode == 2)
+        {
+            comboBox.getItems().setAll("Schwarz", "Cyan", "Magenta", "Gelb");
+        }    
     }
 
     //---------- 1. Seite ----------
@@ -582,10 +597,10 @@ public class GuiController extends Application
         double scaleX = canvas.getWidth() / data.getWidth();
         double scaleY = canvas.getHeight() / data.getHeight();
 
-        for(int j = 0; j < colorMapping[colorMode].length; j ++)
+        for(int j = 0; j < data.getColorMapping()[data.getColorMode()].length; j ++)
         {
-            int mode = colorMapping[colorMode][j];
-            if(lineOrderArray != null && nailCoords != null && currentIteration[mode] > 0 && lineWidthDisplay[mode] > 0.0)
+            int mode = data.getColorMapping()[data.getColorMode()][j];
+            if(lineOrderArray[mode] != null && nailCoords != null && currentIteration[mode] > 0 && lineWidthDisplay[mode] > 0.0)
             {
                 gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
                 for(int i = 0; i < currentIteration[mode] && i < lineOrderArray.length; i++)
@@ -619,20 +634,34 @@ public class GuiController extends Application
     {
         int channel = comboBoxKanal.getItems().indexOf(comboBoxKanal.getValue());
         data.setColorChannel(data.getColorMapping()[data.getColorMode()][channel]);
-        setUIValues();
+        changeColorParams();
         System.out.println("Farbe: " + data.getColorMapping()[data.getColorMode()][channel]);
     }
 
-    public void stringartProgress()
+    public void changeColorParams()
     {
-        // stringartGen.setProgressListener(progress -> {
-        // progressbarStringGenerator.setProgress(progress);
-        // System.out.println("update" + progress);
-        // if(progress == 1)
-        // {
-        // progressbarStringGenerator.setProgress(0);
-        // }
-        // });
+        int colorChannel = data.getColorChannel();
+        
+        // Setzt die Parameter auf den Wert des Farbkanales.
+        
+        setIntSpinner(spinnerMaxIterations, data.getMaxIterations()[colorChannel]);
+        
+        setSlider(sliderCurrentIteration, data.getCurrentIteration()[colorChannel]);
+        setLabel(labelCurrentIteration, data.getCurrentIteration()[colorChannel] + "");
+
+        setLabel(labelLinienbreite, "Linienbreite: " + data.getLineWidth()[colorChannel]);
+        setSlider(sliderLinienbreite, data.getLineWidth()[colorChannel]);
+
+        setLabel(labelLinienstaerke, "Linienstärke: " + data.getLineStrength()[colorChannel]);
+
+        setSlider(sliderLinienstaerke, data.getLineStrength()[colorChannel]);
+
+        setLabel(labelLinienbreiteAnzeige, "Linienbreite: " + data.getLineWidthDisplay()[colorChannel]);
+        setSlider(sliderLinienbreiteAnzeige, data.getLineWidthDisplay()[colorChannel]);
+
+        setColor(colorPickerHintergrund, data.getBackgroundColor());
+
+        setColor(colorPickerLinie, data.getLineColor()[colorChannel]);
     }
 
     //---------- 3. Seite ----------
@@ -700,6 +729,13 @@ public class GuiController extends Application
         settingsStage.initModality(Modality.APPLICATION_MODAL);
         settingsStage.setResizable(false);
         settingsStage.showAndWait();
+
+        if(controller.isSaved())
+        {
+            stringartTab.setDisable(true);
+            gcodeTab.setDisable(true);
+            setChannelPicker(data.getColorMode(), comboBoxKanal);
+        }
 
     }
 

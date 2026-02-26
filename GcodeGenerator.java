@@ -137,10 +137,10 @@ public class GcodeGenerator
     {
         calculateCompensationAngles();
         calculateCoordinates();
-        double nailX = absoluteNailPositions[0][0];
-        double nailY = absoluteNailPositions[0][1];
-        double borderX = absoluteNailPositions[0][2];
-        double borderY = absoluteNailPositions[0][3];
+        double nailX = absoluteNailPositions[0][0][0];
+        double nailY = absoluteNailPositions[0][0][1];
+        double borderX = absoluteNailPositions[0][0][2];
+        double borderY = absoluteNailPositions[0][0][3];
 
         fileGen(filename);
         //G-Code initialize:
@@ -152,27 +152,51 @@ public class GcodeGenerator
         // writeLine("G1 X" + borderX + "Y " + borderY + " F" + speedTravel);
         // // writeLine(calculateG2(nailX, nailY, borderX, borderY, true));
         // writeLine(calculateG2(nailX, nailY, borderX, borderY, false));
-
-        for(int i = 0; i < absoluteNailPositions.length; i++)
+        for(int j = 0; j < colorMapping[colorMode].length; j ++)
         {
-            nailX = absoluteNailPositions[i][0];
-            nailY = absoluteNailPositions[i][1];
-            borderX = absoluteNailPositions[i][2];
-            borderY = absoluteNailPositions[i][3];
+            int mode;
+            if(j == 0)
+                mode = 0;
+            else
+                mode = colorMapping[colorMode][j] + 1;
 
-            if(i % 10 == 0)
+            for(int i = 0; i < absoluteNailPositions.length; i++)
             {
-                zHeight =  (zHop / (absoluteNailPositions.length / 10.0)) * (i / 10.0);
-                writeLine("G1 Z" + toDecimal(zHeight));
+                nailX = absoluteNailPositions[mode][i][0];
+                nailY = absoluteNailPositions[mode][i][1];
+                borderX = absoluteNailPositions[mode][i][2];
+                borderY = absoluteNailPositions[mode][i][3];
+
+                if(i % 10 == 0)
+                {
+                    zHeight =  (zHop / (absoluteNailPositions.length / 10.0)) * (i / 10.0);
+                    writeLine("G1 Z" + toDecimal(zHeight));
+                }
+
+                //G-Code write:
+
+                writeLine("G1 Z" + toDecimal(zHeight + 1) + " F" + (speedTravel));
+                writeLine("G1 X" + toDecimal(borderX) + " Y" + toDecimal(borderY) + " F" + (speedTravel));
+                writeLine("G1 Z" + toDecimal(zHeight) + " F" + (speedTravel));
+                writeLine(calculateG2(nailX, nailY, borderX, borderY, true)); 
+                writeLine(calculateG2(nailX, nailY, borderX, borderY, false));  
             }
-
-            //G-Code write:
-
-            writeLine("G1 Z" + toDecimal(zHeight + 1) + " F" + (speedTravel));
-            writeLine("G1 X" + toDecimal(borderX) + " Y" + toDecimal(borderY) + " F" + (speedTravel));
-            writeLine("G1 Z" + toDecimal(zHeight) + " F" + (speedTravel));
-            writeLine(calculateG2(nailX, nailY, borderX, borderY, true)); 
-            writeLine(calculateG2(nailX, nailY, borderX, borderY, false));  
+            
+            if(mode != 0)
+            {
+                // if(mode ==1)
+                // writeLine("RESPOND MSG=\"\"");
+                // else if(mode ==2)
+                // writeLine("RESPOND MSG=\"\"");
+                // else if(mode ==3)
+                // writeLine("RESPOND MSG=\"\"");
+                // else if(mode ==4)
+                // writeLine("RESPOND MSG=\"\"");
+                // else if(mode ==5)
+                // writeLine("RESPOND MSG=\"\"");
+                
+                writeLine("Base_Pause");
+            }
         }
 
         writeLine("G1 X" + (centerX * mmProPixel) + " Y" + (centerY * mmProPixel) + " Z" + (zHop + (heightStartingnail * 2)) + " F" + (speedTravel / 2));
@@ -185,7 +209,7 @@ public class GcodeGenerator
     {
         int[] currentIteration = data.getCurrentIteration();
         int allIterations = currentIteration[0] + currentIteration[1] + currentIteration[2] + currentIteration[3] + currentIteration[4];
-        absoluteNailPositions = new double[allIterations + nails][4];
+        absoluteNailPositions[0] = new double[allIterations + nails][4];
         double distance = distanceToNail / 2;
 
         for(int i = 0; i < nails; i++)
@@ -195,15 +219,15 @@ public class GcodeGenerator
             double length = Math.sqrt(dx * dx + dy * dy);
             double factor = (length - (distance / mmProPixel)) / length;
 
-            absoluteNailPositions[][i][0] = ((compensatedNailCoords[i][0]) * mmProPixel) + distance;
-            absoluteNailPositions[][i][1] = ((compensatedNailCoords[i][1]) * mmProPixel) + distance;
-            absoluteNailPositions[][i][2] = ((centerX + dx * factor) * mmProPixel) + distance;
-            absoluteNailPositions[][i][3] = ((centerY + dy * factor) * mmProPixel) + distance;
+            absoluteNailPositions[0][i][0] = ((compensatedNailCoords[i][0]) * mmProPixel) + distance;
+            absoluteNailPositions[0][i][1] = ((compensatedNailCoords[i][1]) * mmProPixel) + distance;
+            absoluteNailPositions[0][i][2] = ((centerX + dx * factor) * mmProPixel) + distance;
+            absoluteNailPositions[0][i][3] = ((centerY + dy * factor) * mmProPixel) + distance;
         }
 
         for(int j = 0; j < colorMapping[colorMode].length; j ++)
         {
-            int mode = colorMapping[colorMode][j];
+            int mode = colorMapping[colorMode][j] + 1;
             for(int i = 0; i < lineOrderArray[mode].length; i++)
             {
                 double dx = compensatedNailCoords[lineOrderArray[mode][i][1]][0] - centerX;  

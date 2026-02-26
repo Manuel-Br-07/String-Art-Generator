@@ -30,6 +30,7 @@ public class SettingsController
     private double durchmesserSpitze;
     private double durchmesserNagel;
     private boolean update = false;
+    private boolean saved = false;
 
     @FXML
     private TextArea textAreaInfo;
@@ -74,7 +75,7 @@ public class SettingsController
 
         initDoubleSpinner(spinnerDurchmesserNagel, 0.1, 5, 0.5);
 
-        comboBoxModus.getItems().addAll("Schwarz", "Schwarzweiß", "CMYK");
+        comboBoxModus.getItems().setAll("Schwarz", "Schwarzweiß", "CMYK");
 
         eventListeners();
         setUIValues();
@@ -153,6 +154,11 @@ public class SettingsController
         comboBoxModus.getSelectionModel().select(data.getColorMode());
     }
 
+    public boolean isSaved()
+    {
+        return saved;
+    }
+
     //---------- Hilfsmethoden ----------
 
     private void initIntegerSpinner(Spinner<Integer> spinner, int min, int max, int startwert) {
@@ -197,18 +203,15 @@ public class SettingsController
 
     //---------- Logik ----------
 
-    // public double Abstand()
-    // {
-    // data.setDistanceToNail((Math.PI * data.getDiameter()) / data.getNails());
-    // return (Math.PI * data.getDiameter()) / data.getNails();
-    // }
-
     public void overwriteData()
     {
         data.setNails(spinnerAnzahlNaegel.getValue());
         data.setNailDistance(spinnerAbstand.getValue());
         data.setDiameter(spinnerDurchmesser.getValue());
+        
+        if(data.getWidth() != 0)
         data.setMmProPixel(spinnerDurchmesser.getValue() / data.getWidth());
+        
         data.setPinWidth(spinnerDurchmesserSpitze.getValue());
         data.setNailWidth(spinnerDurchmesserNagel.getValue());
         data.setColorMode(comboBoxModus.getItems().indexOf(comboBoxModus.getValue()));
@@ -217,6 +220,7 @@ public class SettingsController
 
     public void cancel()
     {
+        saved = false;
         stage = (Stage) spinnerAnzahlNaegel.getScene().getWindow();
         stage.close();
     }
@@ -225,6 +229,7 @@ public class SettingsController
     {
         overwriteData();
 
+        saved = true;
         stage = (Stage) spinnerAnzahlNaegel.getScene().getWindow();
         stage.close();
     }

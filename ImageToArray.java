@@ -96,6 +96,7 @@ public class ImageToArray
 
             System.out.println("Breite: " + width + ", Höhe: " + height);
             System.out.println("Pixelwert (0,0): " + bildArray[0][0]);
+            data.setMmProPixel(data.getDiameter() / width);
 
         } catch (Exception e)
         {
@@ -134,7 +135,7 @@ public class ImageToArray
                 }
 
                 // 6. in Array schreiben
-                bildArray[y][x][0] = gray / 255;
+                bildArray[y][x][0] = gray;
             }
         }
     }

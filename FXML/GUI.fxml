@@ -300,7 +300,7 @@
                               </AnchorPane>
                            </items>
                         </SplitPane>
-                        <Button layoutX="734.0" layoutY="591.0" mnemonicParsing="false" onAction="#generateGcode" text="Speichern" />
+                        <Button layoutX="745.0" layoutY="611.0" mnemonicParsing="false" onAction="#generateGcode" text="Speichern" AnchorPane.bottomAnchor="23.0" AnchorPane.leftAnchor="745.0" AnchorPane.rightAnchor="46.0" />
                      </children></AnchorPane>
                </content></Tab>
         </tabs>
