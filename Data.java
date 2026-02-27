@@ -26,7 +26,7 @@ public class Data
     private boolean colorsInverted;
     private double clippingMinValue = 0;
     private double clippingMaxValue = 1;
-    private int colorMode = 0;  // 0. Schwarz, 1. Schwarzweiß, 2. CMYK
+    private int colorMode = 1;  // 0. Schwarz, 1. Schwarzweiß, 2. CMYK
     private int colorChannel = 0; // 0. Schwarz, 1. Weiß, 2. Cyan, 3. Magenta, 4. Gelb
     private int[][] colorMapping = {{0}, {0, 1}, {0, 2, 3, 4}}; // mapping der Farbkanäle zu modus
 

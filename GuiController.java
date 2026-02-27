@@ -533,7 +533,14 @@ public class GuiController extends Application
     {
         imageToArray.main();
         imageToArray.imageProcessing();
-        generateHeatmap();
+        if(data.getBildArray() != null)
+        {
+            generateHeatmap();
+            main.nailPositions(data.getNails());
+            
+            scrollPane.setDisable(false);
+            stringartTab.setDisable(false);
+        }
     }
 
     public double[][] recalculateImage(double[][][] array)
@@ -576,8 +583,12 @@ public class GuiController extends Application
     {
         // progressbarStringGenerator.setProgress(-1);
         generateArt.setDisable(true);
-        stringartGen.artGen(0); // Überarbeitung mit Button! -> Wie muss logik gestaltet werden?
-        stringartGen.artGen(1); 
+        
+        for(int j = 0; j < data.getColorMapping()[data.getColorMode()].length; j ++)
+        {
+            int mode = data.getColorMapping()[data.getColorMode()][j];
+            stringartGen.artGen(mode);
+        }
         drawLines();
         generateArt.setDisable(false);
         // progressbarStringGenerator.setProgress(0);
@@ -597,13 +608,13 @@ public class GuiController extends Application
         double scaleX = canvas.getWidth() / data.getWidth();
         double scaleY = canvas.getHeight() / data.getHeight();
 
+        gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
         for(int j = 0; j < data.getColorMapping()[data.getColorMode()].length; j ++)
         {
             int mode = data.getColorMapping()[data.getColorMode()][j];
             if(lineOrderArray[mode] != null && nailCoords != null && currentIteration[mode] > 0 && lineWidthDisplay[mode] > 0.0)
             {
-                gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
-                for(int i = 0; i < currentIteration[mode] && i < lineOrderArray.length; i++)
+                for(int i = 0; i < currentIteration[mode] && i < lineOrderArray[mode].length; i++)
                 {
                     double x1 = nailCoords[lineOrderArray[mode][i][0]][0] * scaleX;
                     double x2 = nailCoords[lineOrderArray[mode][i][1]][0] * scaleX;

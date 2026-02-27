@@ -52,9 +52,13 @@ public class Main {
             for(int j = 0; j < nailCoords.length; j++)
             {
 
-                int prev = (i - 1 + nailCoords.length) % nailCoords.length;
-                int next = (i + 1) % nailCoords.length;
-                if(i != j && i != prev && i != next)
+                // int prev = (i - 1 + nailCoords.length) % nailCoords.length;
+                // int next = (i + 1) % nailCoords.length;
+                // if(i != j && i != prev && i != next)
+                int diff = Math.abs(i - j);
+                int dist = Math.min(diff, nailCoords.length - diff);
+
+                if (i != j && dist > 2) 
                 {
                     double startNailX = nailCoords[i][0];
                     double startNailY = nailCoords[i][1];
@@ -78,7 +82,7 @@ public class Main {
                         double projY = startNailY + t * (endNailY - startNailY);
 
                         double distance = Math.sqrt(Math.pow(checkNailX - projX, 2) + Math.pow(checkNailY - projY, 2));
-                        
+
                         if(distance < (nailWidth + pinWidth) / 2)
                         {
                             colision = true;
@@ -91,7 +95,7 @@ public class Main {
 
                 }
             }
-            
+
             possibleNails[i] = new int[temporary.size()];
             int j = 0;
             while(!temporary.isEmpty())
@@ -99,14 +103,12 @@ public class Main {
                 possibleNails[i][j] = temporary.poll();
                 j++;
             }
-            
-            
-        }
 
+        }
         data.setPossibleNails(possibleNails);
-        // print();
+        print();
     }
-    
+
     public void print()
     {
         int[][] possibleNails = data.getPossibleNails();
@@ -115,7 +117,7 @@ public class Main {
             for(int j = 0; j < possibleNails[i].length; j++)
             {
                 System.out.print(possibleNails[i][j] + "   ");
-                
+
             }
             System.out.println();
         }
@@ -123,20 +125,20 @@ public class Main {
 
     // public double calculateStringLength()
     // {
-        // double length = 0;
-        // double[][] nailCoords = data.getNailCoords();
-        // double mmProPixel = data.getMmProPixel();
-        // int[][] lineOrderArray = data.getlineOrderArray();
-        // int currentIteration = data.getCurrentIteration();
+    // double length = 0;
+    // double[][] nailCoords = data.getNailCoords();
+    // double mmProPixel = data.getMmProPixel();
+    // int[][] lineOrderArray = data.getlineOrderArray();
+    // int currentIteration = data.getCurrentIteration();
 
-        // if(lineOrderArray != null)
-            // for(int i = 0; i < lineOrderArray.length && i < currentIteration; i++)
-            // {
-                // length = length + Math.sqrt(Math.pow(nailCoords[lineOrderArray[i][01]][0] - nailCoords[lineOrderArray[i][0]][0], 2) + Math.pow(nailCoords[lineOrderArray[i][1]][1] - nailCoords[lineOrderArray[i][1]][1], 2)) * mmProPixel;
-            // }
+    // if(lineOrderArray != null)
+    // for(int i = 0; i < lineOrderArray.length && i < currentIteration; i++)
+    // {
+    // length = length + Math.sqrt(Math.pow(nailCoords[lineOrderArray[i][01]][0] - nailCoords[lineOrderArray[i][0]][0], 2) + Math.pow(nailCoords[lineOrderArray[i][1]][1] - nailCoords[lineOrderArray[i][1]][1], 2)) * mmProPixel;
+    // }
 
-        // data.setStringLength(length);
-        // return length;
+    // data.setStringLength(length);
+    // return length;
     // }
 
     public void setScale(double pDiameter) {

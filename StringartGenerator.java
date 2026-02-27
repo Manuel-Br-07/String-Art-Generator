@@ -19,7 +19,6 @@ public class StringartGenerator
 
     double[] lineStrength;
     int[] maxIterations;
-    
 
     /**
      * Konstruktor für Objekte der Klasse StringartGenerator
@@ -31,12 +30,12 @@ public class StringartGenerator
     }
 
     public void artGen(int colorChannel) {
-        bildArray = data.getBildArray();
+        bildArray = duplicateArray(data.getBildArray());
         maxIterations = data.getMaxIterations();
         possibleNails = data.getPossibleNails();
-        
+
         lineStrength = data.getLineStrength();
-        
+
         int startNail = 0;
         int iterations = 0;
         int[] linePos;
@@ -60,7 +59,7 @@ public class StringartGenerator
             }
 
             // System.out.println("xmin " + nailCoords[startNail][0] + " ymin " + nailCoords[startNail][1] + " xmax " + nailCoords[bestEndNail][0] + " ymax " + nailCoords[bestEndNail][1]);
-            // System.out.println("Start " + startNail + " Ende " + bestEndNail);
+            System.out.println("i " + i + " Start " + startNail + " Ende " + bestEndNail);
             if (bestEndNail != -1) {
 
                 linePos = new int[]{startNail, bestEndNail};
@@ -69,7 +68,7 @@ public class StringartGenerator
                 lightenLine(startNail, bestEndNail, lineStrength[colorChannel], colorChannel);
                 startNail = bestEndNail;
                 iterations++;
-                
+
             }
         }
 
@@ -78,8 +77,8 @@ public class StringartGenerator
     }
 
     public double calculateLineScore(int startNail, int endNail, int colorChannel) {
+        
         nailCoords = data.getNailCoords();
-        bildArray = data.getBildArray();
         
         // Reelle Start- und Endkoordinaten
         double startX = nailCoords[startNail][0];
@@ -116,7 +115,8 @@ public class StringartGenerator
         return countedPoints > 0 ? score / countedPoints : 0.0;
     }
 
-    public void lightenLine(int startNail, int endNail, double increment, int colorChannel) {
+    public void lightenLine(int startNail, int endNail, double increment, int colorChannel)
+    {
         // Reelle Start- und Endkoordinaten
         double startX = nailCoords[startNail][0];
         double startY = nailCoords[startNail][1];
@@ -228,37 +228,39 @@ public class StringartGenerator
 
     // public double averageColour()
     // {
-        // double summ = 0;
-        // double ans = 0;
+    // double summ = 0;
+    // double ans = 0;
 
-        // for (int y = 0; y < height; y++)
-        // {
-            // for (int x = 0; x < width; x++)
-            // {
-                // if (bildArray[y][x][colorMode] != -1)
-                // {
-                    // summ = summ + bildArray[y][x];
-                    // ans++;
-                // }
-            // }
-        // }
-        // return summ / ans;
-    // }
-
-    // private double[][] generateArray(double[][] pArray)
+    // for (int y = 0; y < height; y++)
     // {
-        // int x = pArray.length;
-        // int y = pArray[0].length;
-        // double[][] array = new double[x][y];
-
-        // for(int i = 0; i < x; i++)
-        // {
-            // for(int j = 0; j < y; j++)
-            // {
-                // array[i][j] = pArray[i][j];
-            // }
-        // }
-
-        // return array;
+    // for (int x = 0; x < width; x++)
+    // {
+    // if (bildArray[y][x][colorMode] != -1)
+    // {
+    // summ = summ + bildArray[y][x];
+    // ans++;
     // }
+    // }
+    // }
+    // return summ / ans;
+    // }
+
+    private double[][][] duplicateArray(double[][][] pArray)
+    {
+        int x = pArray.length;
+        int y = pArray[0].length;
+        int c = pArray[0][0].length;
+        double[][][] array = new double[x][y][c];
+        
+        for(int i = 0; i < x; i++)
+        for(int j = 0; j < y; j++)
+        {
+            for(int k = 0; k < c; k++)
+            {
+                array[i][j][k] = pArray[i][j][k];
+            }
+        }
+
+        return array;
+    }
 }
