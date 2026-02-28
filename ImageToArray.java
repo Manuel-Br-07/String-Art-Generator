@@ -80,7 +80,6 @@ public class ImageToArray
             width = image.getWidth();
             height = image.getHeight();
 
-
             if(colorMode == 0)
             {
                 black(image);
@@ -108,7 +107,7 @@ public class ImageToArray
     public void black(BufferedImage image)
     {
         // 2. Array für Grauwerte (zwischen 0 und 1)
-        bildArray = new double[height][width][4];
+        bildArray = new double[height][width][5];
 
         // 3. Pixel auslesen
         for (int y = 0; y < height; y++)
@@ -143,7 +142,7 @@ public class ImageToArray
     public void blackWhite(BufferedImage image)
     {
         // 2. Array für Grauwerte (zwischen 0 und 1)
-        bildArray = new double[height][width][4];
+        bildArray = new double[height][width][5];
 
         // 3. Pixel auslesen
         for (int y = 0; y < height; y++)
@@ -178,7 +177,45 @@ public class ImageToArray
 
     public void cmyk(BufferedImage image)
     {
+        // 2. Array für Grauwerte (zwischen 0 und 1)
+        bildArray = new double[height][width][5];
 
+        // 3. Pixel auslesen
+        for (int y = 0; y < height; y++)
+        {
+            for (int x = 0; x < width; x++)
+            {
+                int rgb = image.getRGB(x, y);
+
+                // 4. Farbkanäle extrahieren
+                int r = (rgb >> 16) & 0xFF;
+                int g = (rgb >> 8) & 0xFF;
+                int b = rgb & 0xFF;
+
+                double nR = r / 255;
+                double nG = g / 255;
+                double nB = b / 255;
+
+                double cC = 0;
+                double cM = 0;
+                double cY = 0;
+                double cK = 1 - Math.max(nR, Math.max(nG, nB));
+
+                if(cK < 1)
+                {
+                    cC = (1 - nR - cK) / (1 - cK);
+                    cM = (1 - nG - cK) / (1 - cK);
+                    cY = (1 - nB - cK) / (1 - cK);
+                }
+
+                
+                // 6. in Array schreiben
+                bildArray[y][x][0] = cK;
+                bildArray[y][x][2] = cC;
+                bildArray[y][x][3] = cM;
+                bildArray[y][x][4] = cY;
+            }
+        }
     }
 
     // ---------------- Kreis-Maske ----------------
