@@ -543,25 +543,36 @@ public class GuiController extends Application
         }
     }
 
-    public double[][] recalculateImage(double[][][] array)
+    public double[][][] recalculateImage(double[][][] array)
     {
-        double[][] bildArray = new double[array.length][array[0].length];
+        double[][][] bildArray = new double[array.length][array[0].length][3];
         int colorMode = data.getColorMode();
-        for(int x = 0; x < bildArray.length; x ++)
+        for(int i = 0; i < bildArray.length; i ++)
         {
-            for(int y = 0; y < bildArray.length; y ++)
+            for(int j = 0; j < bildArray.length; j ++)
             {
-                if(colorMode == 0)
+                if(colorMode == 0 || colorMode == 1)
                 {
-                    bildArray[x][y] = array[x][y][0];
-                }
-                else if(colorMode == 1)
-                {
-                    bildArray[x][y] = array[x][y][0];
+                    bildArray[i][j][0] = array[i][j][0];
+                    bildArray[i][j][1] = array[i][j][0];
+                    bildArray[i][j][2] = array[i][j][0];
                 }
                 else if(colorMode == 2)
                 {
-
+                    if(array[i][j][0] == -1)
+                    {
+                        bildArray[i][j][0] = -1;
+                        continue;
+                    }
+                    
+                    double c = 1 - array[i][j][2];
+                    double m = 1 - array[i][j][3];
+                    double y = 1 - array[i][j][4];
+                    double k = 1 - array[i][j][0];
+                    
+                    bildArray[i][j][0] = (1 - c) * (1 - k);
+                    bildArray[i][j][1] = (1 - m) * (1 - k);
+                    bildArray[i][j][2] = (1 - y) * (1 - k);
                 }
             }
         }

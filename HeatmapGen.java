@@ -16,7 +16,7 @@ public class HeatmapGen
     { 
     }
 
-    public WritableImage createHeatmap(double[][] data)
+    public WritableImage createHeatmap(double[][][] data)
     {
         int h = data.length;
         int w = data[0].length;
@@ -25,16 +25,20 @@ public class HeatmapGen
 
         for (int y = 0; y < h; y++) {
             for (int x = 0; x < w; x++) {
-                double v = data[y][x];
+                double r = data[y][x][0];
+                double g = data[y][x][1];
+                double b = data[y][x][2];
                 Color c;
-                if(v == -1)
+                if(r == -1)
                 {
                     c = Color.color(1, 0, 0);
                 }
                 else
                 {
-                    v = Math.max(0, Math.min(1, v));
-                    c = Color.color(v, v, v);
+                    r = Math.max(0, Math.min(1, r));
+                    g = Math.max(0, Math.min(1, g));
+                    b = Math.max(0, Math.min(1, b));
+                    c = Color.color(r, g, b);
                 }
                 pw.setColor(x, y, c);
             }

@@ -122,16 +122,12 @@ public class ImageToArray
                 int b = rgb & 0xFF;
 
                 // 5. Grau berechnen (Luminanz)
-                double gray = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
+                double gray = (0.299 * r + 0.587 * g + 0.114 * b) / 255.0;
 
                 if (gray > 1)
-                {
                     gray = 1;
-                }
                 else if (gray < 0)
-                {
                     gray = 0;
-                }
 
                 // 6. in Array schreiben
                 bildArray[y][x][0] = gray;
@@ -157,16 +153,12 @@ public class ImageToArray
                 int b = rgb & 0xFF;
 
                 // 5. Grau berechnen (Luminanz)
-                double gray = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
+                double gray = (0.299 * r + 0.587 * g + 0.114 * b) / 255.0;
 
                 if (gray > 1)
-                {
                     gray = 1;
-                }
                 else if (gray < 0)
-                {
                     gray = 0;
-                }
 
                 // 6. in Array schreiben
                 bildArray[y][x][0] = gray;
@@ -192,28 +184,27 @@ public class ImageToArray
                 int g = (rgb >> 8) & 0xFF;
                 int b = rgb & 0xFF;
 
-                double nR = r / 255;
-                double nG = g / 255;
-                double nB = b / 255;
+                double nR = r / 255.0;
+                double nG = g / 255.0;
+                double nB = b / 255.0;
 
                 double cC = 0;
                 double cM = 0;
                 double cY = 0;
-                double cK = 1 - Math.max(nR, Math.max(nG, nB));
+                double cK = 1.0 - Math.max(nR, Math.max(nG, nB));
 
                 if(cK < 1)
                 {
-                    cC = (1 - nR - cK) / (1 - cK);
-                    cM = (1 - nG - cK) / (1 - cK);
-                    cY = (1 - nB - cK) / (1 - cK);
+                    cC = (1.0 - nR - cK) / (1.0 - cK);
+                    cM = (1.0 - nG - cK) / (1.0 - cK);
+                    cY = (1.0 - nB - cK) / (1.0 - cK);
                 }
 
-                
                 // 6. in Array schreiben
-                bildArray[y][x][0] = cK;
-                bildArray[y][x][2] = cC;
-                bildArray[y][x][3] = cM;
-                bildArray[y][x][4] = cY;
+                bildArray[y][x][0] = 1 - cK;
+                bildArray[y][x][2] = 1 - cC;
+                bildArray[y][x][3] = 1 - cM;
+                bildArray[y][x][4] = 1 - cY;
             }
         }
     }

@@ -59,7 +59,7 @@ public class StringartGenerator
             }
 
             // System.out.println("xmin " + nailCoords[startNail][0] + " ymin " + nailCoords[startNail][1] + " xmax " + nailCoords[bestEndNail][0] + " ymax " + nailCoords[bestEndNail][1]);
-            System.out.println("i " + i + " Start " + startNail + " Ende " + bestEndNail);
+            // System.out.println("i " + i + " Start " + startNail + " Ende " + bestEndNail);
             if (bestEndNail != -1) {
 
                 linePos = new int[]{startNail, bestEndNail};
@@ -77,9 +77,9 @@ public class StringartGenerator
     }
 
     public double calculateLineScore(int startNail, int endNail, int colorChannel) {
-        
+
         nailCoords = data.getNailCoords();
-        
+
         // Reelle Start- und Endkoordinaten
         double startX = nailCoords[startNail][0];
         double startY = nailCoords[startNail][1];
@@ -251,15 +251,11 @@ public class StringartGenerator
         int y = pArray[0].length;
         int c = pArray[0][0].length;
         double[][][] array = new double[x][y][c];
-        
+
         for(int i = 0; i < x; i++)
-        for(int j = 0; j < y; j++)
-        {
-            for(int k = 0; k < c; k++)
-            {
-                array[i][j][k] = pArray[i][j][k];
-            }
-        }
+            for(int j = 0; j < y; j++)
+                for(int k = 0; k < c; k++)
+                    array[i][j][k] = pArray[i][j][k];
 
         return array;
     }
