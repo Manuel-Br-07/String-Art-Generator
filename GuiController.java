@@ -231,44 +231,6 @@ public class GuiController extends Application
 
             });
 
-        // //setNails
-        // spinnerAnzahlNaegel.valueProperty().addListener((obs, oldValue, newValue) -> {
-
-        // main.nailPositions(newValue);
-        // main.setScale(data.getDiameter());
-        // double abstand = data.getNailDistance();
-        // labelNagelabstand.setText("Nagelabstand: " + abstand + " mm");
-        // if(abstand <= data.getNailWidth() + data.getPinWidth() + 0.5 || abstand >= 1000000)
-        // {
-        // textAreaAusgabe.setText("Fehler: \n Nagelabstand darf " + (data.getNailWidth() + data.getPinWidth() + 0.5) + " mm nicht unterschreiten!");
-        // generateArt.setDisable(true);
-        // }
-        // else
-        // {
-        // generateArt.setDisable(false);
-        // textAreaAusgabe.setText("");
-        // }
-        // });
-
-        // //setScale
-        // spinnerDurchmesser.valueProperty().addListener((obs, oldValue, newValue) -> {
-
-        // main.setScale(newValue);
-        // double abstand = data.getNailDistance();
-        // labelNagelabstand.setText("Nagelabstand: " + abstand + " mm");
-        // if(abstand <= data.getNailWidth() + data.getPinWidth() + 0.5 || abstand >= 1000000)
-        // {
-        // textAreaAusgabe.setText("Fehler: \n Nagelabstand darf " + (data.getNailWidth() + data.getPinWidth() + 0.5) + " mm nicht unterschreiten!");
-        // generateArt.setDisable(true);
-        // }
-        // else
-        // {
-        // generateArt.setDisable(false);
-        // textAreaAusgabe.setText("");
-        // }
-        // });
-
-        //setlineWidth
         sliderLinienbreite.valueProperty().addListener((obs, oldVal, newVal) ->
                 data.setLineWidth((double)newVal, data.getColorChannel())
         );
@@ -367,7 +329,7 @@ public class GuiController extends Application
         //---------- 2. Seite ----------
 
         setChannelPicker(data.getColorMode(), comboBoxKanal);
-        
+
         setIntSpinner(spinnerMaxIterations, data.getMaxIterations()[colorChannel]);
 
         setSlider(sliderCurrentIteration, data.getCurrentIteration()[colorChannel]);
@@ -388,7 +350,7 @@ public class GuiController extends Application
         setColor(colorPickerLinie, data.getLineColor()[colorChannel]);
 
         //---------- 3. Seite ----------
-        
+
         setIntSpinner(spinnerZHop, data.getZHop());
 
         setIntSpinner(spinnerGeschwKurve, data.getSpeedCircle());
@@ -537,7 +499,7 @@ public class GuiController extends Application
         {
             generateHeatmap();
             main.nailPositions(data.getNails());
-            
+
             scrollPane.setDisable(false);
             stringartTab.setDisable(false);
         }
@@ -564,12 +526,12 @@ public class GuiController extends Application
                         bildArray[i][j][0] = -1;
                         continue;
                     }
-                    
+
                     double c = 1 - array[i][j][2];
                     double m = 1 - array[i][j][3];
                     double y = 1 - array[i][j][4];
                     double k = 1 - array[i][j][0];
-                    
+
                     bildArray[i][j][0] = (1 - c) * (1 - k);
                     bildArray[i][j][1] = (1 - m) * (1 - k);
                     bildArray[i][j][2] = (1 - y) * (1 - k);
@@ -594,7 +556,7 @@ public class GuiController extends Application
     {
         // progressbarStringGenerator.setProgress(-1);
         generateArt.setDisable(true);
-        
+
         for(int j = 0; j < data.getColorMapping()[data.getColorMode()].length; j ++)
         {
             int mode = data.getColorMapping()[data.getColorMode()][j];
@@ -625,6 +587,9 @@ public class GuiController extends Application
             int mode = data.getColorMapping()[data.getColorMode()][j];
             if(lineOrderArray[mode] != null && nailCoords != null && currentIteration[mode] > 0 && lineWidthDisplay[mode] > 0.0)
             {
+                if(!data.getVisibleLines()[mode])
+                    continue;
+
                 for(int i = 0; i < currentIteration[mode] && i < lineOrderArray[mode].length; i++)
                 {
                     double x1 = nailCoords[lineOrderArray[mode][i][0]][0] * scaleX;
@@ -663,11 +628,11 @@ public class GuiController extends Application
     public void changeColorParams()
     {
         int colorChannel = data.getColorChannel();
-        
+
         // Setzt die Parameter auf den Wert des Farbkanales.
-        
+
         setIntSpinner(spinnerMaxIterations, data.getMaxIterations()[colorChannel]);
-        
+
         setSlider(sliderCurrentIteration, data.getCurrentIteration()[colorChannel]);
         setLabel(labelCurrentIteration, data.getCurrentIteration()[colorChannel] + "");
 

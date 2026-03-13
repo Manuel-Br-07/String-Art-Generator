@@ -58,6 +58,7 @@ public class Data
     //GuiControllerSettings  
     private int[] maxIterations = {481, 481, 481, 481,481};
     private int[] currentIteration = {481, 481, 481, 481, 481};
+    private boolean[] visibleLines = {true, true, true, true, true};
     private double[] lineStrength = {0.796, 0.796, 0.796, 0.796, 0.796};
     private double[] lineWidthDisplay = {0.448, 0.448, 0.448, 0.448, 0.448};
     private double distanceToNail;
@@ -179,7 +180,7 @@ public class Data
     public void setClippingMaxValue(double clippingMaxValue) {
         this.clippingMaxValue = clippingMaxValue;
     }
-    
+
     public int getColorMode() {
         return colorMode;
     }
@@ -187,7 +188,7 @@ public class Data
     public void setColorMode(int colorMode) {
         this.colorMode = colorMode;
     }
-    
+
     public int getColorChannel() {
         return colorChannel;
     }
@@ -195,13 +196,13 @@ public class Data
     public void setColorChannel(int colorChannel) {
         this.colorChannel = colorChannel;
     }
-    
+
     public int[][] getColorMapping() {
         return colorMapping;
     }
 
     // public void setColorChannel(int[][] colorMapping) {
-        // this.colorMapping = colorMapping;
+    // this.colorMapping = colorMapping;
     // }
 
     public int[][][] getLineOrderArray() {
@@ -219,7 +220,7 @@ public class Data
     public void setNails(int nails) {
         this.nails = nails;
     }
-    
+
     public double getNailDistance() {
         return nailDistance;
     }
@@ -275,7 +276,7 @@ public class Data
     public void setNailWidth(double nailWidth) {
         this.nailWidth = nailWidth;
     }
-    
+
     public double getPinWidth() {
         return pinWidth;
     }
@@ -323,6 +324,14 @@ public class Data
     public void setCurrentIteration(int currentIteration, int channel) {
         this.currentIteration[channel] = currentIteration;
     }
+
+    public boolean[] getVisibleLines() {
+        return visibleLines;
+    }
+
+    public void setVisibleLines(boolean visibleLines, int channel) {
+        this.visibleLines[channel] = visibleLines;
+    }    
 
     public double[] getLineStrength() {
         return lineStrength;
@@ -467,5 +476,5 @@ public class Data
     public void setTextOutputStrings(String textOutputStrings) {
         this.textOutputStrings = textOutputStrings;
     }
-    
+
 }
