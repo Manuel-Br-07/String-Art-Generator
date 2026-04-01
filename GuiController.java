@@ -650,6 +650,26 @@ public class GuiController extends Application
 
         setColor(colorPickerLinie, data.getLineColor()[colorChannel]);
     }
+    
+    @FXML
+    public void openVisibility() throws IOException {
+
+        FXMLLoader loader = new FXMLLoader(
+                getClass().getResource("/FXML/StringVisibility.fxml")
+            );
+
+        StringVisibilityController visibility = new StringVisibilityController(data, main);
+        loader.setController(visibility);
+
+        Parent root = loader.load();
+
+        Stage visibilityStage = new Stage();
+        visibilityStage.setTitle("Reihenfolge & Sichtbarkeit");
+        visibilityStage.setScene(new Scene(root));
+        visibilityStage.initModality(Modality.APPLICATION_MODAL);
+        visibilityStage.setResizable(false);
+        visibilityStage.showAndWait();
+    }
 
     //---------- 3. Seite ----------
 
