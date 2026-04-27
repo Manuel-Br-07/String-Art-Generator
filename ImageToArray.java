@@ -94,7 +94,7 @@ public class ImageToArray
             }
 
             System.out.println("Breite: " + width + ", Höhe: " + height);
-            System.out.println("Pixelwert (0,0): " + bildArray[0][0]);
+            System.out.println("Pixelwert (0,0): " + bildArray[0][0][0]);
             data.setMmProPixel(data.getDiameter() / width);
 
         } catch (Exception e)

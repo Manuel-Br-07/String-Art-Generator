@@ -423,18 +423,14 @@ public class GuiController extends Application
     @FXML
     private void setChannelPicker(int colorMode, ComboBox comboBox)
     {
-        if(colorMode == 0)
+        comboBox.getItems().setAll("");
+        String[] colorNames = data.getColorNames();
+        int[] colorMapping = data.getColorMapping()[colorMode];
+        
+        for(int i = 0; i < data.getColorMapping()[colorMode].length; i++)
         {
-            comboBox.getItems().setAll("Schwarz");
+            comboBox.getItems().addAll(colorNames[colorMapping[i]]);
         }
-        else if(colorMode == 1)
-        {
-            comboBox.getItems().setAll("Schwarz", "Weiß");
-        }
-        else if(colorMode == 2)
-        {
-            comboBox.getItems().setAll("Schwarz", "Cyan", "Magenta", "Gelb");
-        }    
     }
 
     //---------- 1. Seite ----------

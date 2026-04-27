@@ -36,10 +36,12 @@
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="263.0" prefWidth="271.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="318.0" prefWidth="271.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <ListView fx:id="listViewColors" layoutX="7.0" layoutY="7.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="15.0" />
+      <ListView fx:id="listViewColors" layoutX="7.0" layoutY="7.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="55.0" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="15.0" />
       <Button layoutX="230.0" layoutY="60.0" mnemonicParsing="false" text="▲" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="95.0" />
-      <Button layoutX="230.0" layoutY="116.0" mnemonicParsing="false" text="▼" AnchorPane.bottomAnchor="95.0" AnchorPane.rightAnchor="15.0" />
+      <Button layoutX="230.0" layoutY="116.0" mnemonicParsing="false" text="▼" AnchorPane.bottomAnchor="150.0" AnchorPane.rightAnchor="15.0" />
+      <Button layoutX="197.0" layoutY="272.0" mnemonicParsing="false" onAction="#save" text="Fertig" AnchorPane.bottomAnchor="15.0" AnchorPane.rightAnchor="15.0" />
+      <Button layoutX="136.0" layoutY="278.0" mnemonicParsing="false" onAction="#cancel" text="Abbruch" AnchorPane.bottomAnchor="15.0" />
    </children>
 </AnchorPane>
