@@ -13,23 +13,11 @@ import javafx.stage.DirectoryChooser;
 import java.io.File;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.Button;
-import javafx.scene.control.Tab;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.Spinner;
-import javafx.scene.control.SpinnerValueFactory;
-import javafx.scene.control.Label;
-import javafx.scene.control.Slider;
-import javafx.scene.control.ColorPicker;
+import javafx.scene.control.*;
 import javafx.scene.paint.Color;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.control.ProgressBar;
-import javafx.scene.control.ComboBox;
 import javafx.stage.Modality;
 
 import javafx.scene.image.WritableImage;
@@ -50,6 +38,8 @@ public class GuiController extends Application
     private HeatmapGen heatmapGen = new HeatmapGen();
     private JsonGenerator jsonGen = new JsonGenerator();
     private GraphicsContext gc;
+    
+    private int[][] initialColorMapping = data.getColorMapping();
 
     //---------- 1. Seite ----------
     @FXML
@@ -616,9 +606,9 @@ public class GuiController extends Application
     public void changeColorChannel()
     {
         int channel = comboBoxKanal.getItems().indexOf(comboBoxKanal.getValue());
-        data.setColorChannel(data.getColorMapping()[data.getColorMode()][channel]);
+        data.setColorChannel(initialColorMapping[data.getColorMode()][channel]);
         changeColorParams();
-        System.out.println("Farbe: " + data.getColorMapping()[data.getColorMode()][channel]);
+        System.out.println("Farbe: " + initialColorMapping[data.getColorMode()][channel]);
     }
 
     public void changeColorParams()
@@ -665,6 +655,11 @@ public class GuiController extends Application
         visibilityStage.initModality(Modality.APPLICATION_MODAL);
         visibilityStage.setResizable(false);
         visibilityStage.showAndWait();
+        
+        if(visibility.isSaved())
+        {
+            drawLines();
+        }
     }
 
     //---------- 3. Seite ----------

@@ -60,6 +60,7 @@ public class Data
     private int[] maxIterations = {481, 481, 481, 481,481};
     private int[] currentIteration = {481, 481, 481, 481, 481};
     private boolean[] visibleLines = {true, true, true, true, true};
+    // private boolean[] renderedLines = {true, true, true, true, true};
     private double[] lineStrength = {0.796, 0.796, 0.796, 0.796, 0.796};
     private double[] lineWidthDisplay = {0.448, 0.448, 0.448, 0.448, 0.448};
     private double distanceToNail;
@@ -202,9 +203,9 @@ public class Data
         return colorMapping;
     }
 
-    // public void setColorChannel(int[][] colorMapping) {
-    // this.colorMapping = colorMapping;
-    // }
+    public void setColorMapping(int[] colorMapping, int channel) {
+    this.colorMapping[channel] = colorMapping;
+    }
 
     public String[] getColorNames() {
         return colorNames;

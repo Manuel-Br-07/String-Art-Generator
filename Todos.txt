@@ -30,3 +30,8 @@ y    - Bild Array zu 3Achs Array (x,y, channel)
          - 4. 4. Farbe
          - 5. 5. Farbe
          -> Alle Frbkanäle sind +1 verschoben
+         
+         
+         
+         
+         !!!!!!! Farbauswahl stimmt noch nicht mit den aktuellen ZAhlen überein.
