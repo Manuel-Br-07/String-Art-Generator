@@ -1,17 +1,8 @@
 Multi Farb
 Timeline
 
-1. Bildbearbeitung:
-y    - Bild Array zu 3Achs Array (x,y, channel)
-    - Algorythmen für Farbtrennung
-    - Farbanpassung?
-
 2. Generator:
-    - Kanalauswahl (für Parameter)
-    - Kanalauswahl (Anzeige)
-    - Kanalsortierung
-    - Parameter zu Array machen (jeder Kanal 1 Wert)
-    - Linien Farbauswahl (pro Kanal)
+
     - calculate String length überarbeiten
 
 3. G-Code Generator:

@@ -28,8 +28,8 @@ public class Data
     private double clippingMaxValue = 1;
     private int colorMode = 2;  // 0. Schwarz, 1. Schwarzweiß, 2. CMYK
     private int colorChannel = 0; // 0. Schwarz, 1. Weiß, 2. Cyan, 3. Magenta, 4. Gelb
-    private int[][] colorMapping = {{0}, {0, 1}, {0, 2, 3, 4}}; // mapping der Farbkanäle zu modus
-    private String[] colorNames = {"Schwarz", "Weiß", "Cyan", "Magenta", "Yellow"};
+    private final int[][] colorMapping = {{0}, {0, 1}, {0, 2, 3, 4}}; // mapping der Farbkanäle zu modus
+    private final String[] colorNames = {"Schwarz", "Weiß", "Cyan", "Magenta", "Yellow"};
 
     //listToArray
     private int[][][] lineOrderArray = new int[5][][]; // [Farbkanal][][0] -> Startnagel      [Farbkanal][][1] -> Endnagel

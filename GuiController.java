@@ -38,7 +38,7 @@ public class GuiController extends Application
     private HeatmapGen heatmapGen = new HeatmapGen();
     private JsonGenerator jsonGen = new JsonGenerator();
     private GraphicsContext gc;
-    
+
     private int[][] initialColorMapping = data.getColorMapping();
 
     //---------- 1. Seite ----------
@@ -415,11 +415,14 @@ public class GuiController extends Application
     {
         comboBox.getItems().setAll("");
         String[] colorNames = data.getColorNames();
-        int[] colorMapping = data.getColorMapping()[colorMode];
-        
-        for(int i = 0; i < data.getColorMapping()[colorMode].length; i++)
+        int[] colorMapping = initialColorMapping[colorMode];
+
+        for(int i = 0; i < initialColorMapping[colorMode].length; i++)
         {
-            comboBox.getItems().addAll(colorNames[colorMapping[i]]);
+            if(i == 0)
+                comboBox.getItems().setAll(colorNames[colorMapping[i]]);
+            else
+                comboBox.getItems().addAll(colorNames[colorMapping[i]]);
         }
     }
 
@@ -636,7 +639,7 @@ public class GuiController extends Application
 
         setColor(colorPickerLinie, data.getLineColor()[colorChannel]);
     }
-    
+
     @FXML
     public void openVisibility() throws IOException {
 
@@ -655,7 +658,7 @@ public class GuiController extends Application
         visibilityStage.initModality(Modality.APPLICATION_MODAL);
         visibilityStage.setResizable(false);
         visibilityStage.showAndWait();
-        
+
         if(visibility.isSaved())
         {
             drawLines();
